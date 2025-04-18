@@ -22,6 +22,29 @@ class Quote_Manager_Settings {
         register_setting('quote_manager_company_settings', 'quote_manager_company_phone');
         register_setting('quote_manager_company_settings', 'quote_manager_company_email');
         register_setting('quote_manager_company_settings', 'quote_manager_company_logo');
+        register_setting('quote_manager_company_settings', 'quote_manager_default_terms', array(
+            'sanitize_callback' => function($input) {
+                // Preserve more HTML including line breaks
+                return wp_kses($input, array(
+                    'p'      => array('style' => array()),
+                    'br'     => array(),
+                    'em'     => array(),
+                    'strong' => array(),
+                    'ul'     => array('style' => array()),
+                    'ol'     => array('style' => array()),
+                    'li'     => array('style' => array()),
+                    'span'   => array('style' => array()),
+                    'div'    => array('style' => array(), 'class' => array()),
+                    'h1'     => array('style' => array()),
+                    'h2'     => array('style' => array()),
+                    'h3'     => array('style' => array()),
+                    'h4'     => array('style' => array()),
+                    'h5'     => array('style' => array()),
+                    'h6'     => array('style' => array()),
+                    'a'      => array('href' => array(), 'target' => array()),
+                ));
+            }
+        ));
         
         // Add section
         add_settings_section(
@@ -85,6 +108,15 @@ class Quote_Manager_Settings {
             'quote_manager_company_section',
             ['label_for' => 'quote_manager_company_logo']
         );
+		
+        add_settings_field(
+            'quote_manager_default_terms',
+            __('Default Terms & Conditions', 'quote-manager-system-for-woocommerce'),
+            array($this, 'textarea_field_callback'),
+            'quote_manager_company_settings',
+            'quote_manager_company_section',
+            ['label_for' => 'quote_manager_default_terms']
+        );		
     }
 
     /**
@@ -100,6 +132,49 @@ class Quote_Manager_Settings {
     public function text_field_callback($args) {
         $option = get_option($args['label_for']);
         echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="' . esc_attr($args['label_for']) . '" value="' . esc_attr($option) . '" class="regular-text" />';
+    }
+
+    /**
+     * Terms Textarea field callback
+     */
+    public function textarea_field_callback($args) {
+        $option = get_option($args['label_for']);
+        
+        // Define editor settings with specific configuration for line breaks
+        $editor_settings = array(
+            'textarea_name' => $args['label_for'],
+            'textarea_rows' => 10,
+            'media_buttons' => false,
+            'teeny'         => false,
+            'quicktags'     => true,
+            'tinymce'       => array(
+                'forced_root_block' => 'div',  // Use div instead of p to better preserve formatting
+                'keep_styles'       => true,   // Keep styles when switching between visual/text
+                'entities'          => '38,amp,60,lt,62,gt', // Preserve entities
+                'fix_list_elements' => true,   // Fix list elements
+                'preserve_cdata'    => true,   // Preserve CDATA
+                'remove_redundant_brs' => false, // Don't remove BRs that might be intended
+            ),
+        );
+        
+        // Output the editor
+        wp_editor($option, 'quote_default_terms_editor', $editor_settings);
+        
+        // Display description with placeholders
+        echo '<p class="description">' . __('These terms will be used as the default for all quotes. You can customize them per quote.', 'quote-manager-system-for-woocommerce') . '</p>';
+        echo '<p class="description">' . __('Available placeholders:', 'quote-manager-system-for-woocommerce') . ' 
+            <code>{{customer_name}}</code>, 
+            <code>{{customer_first_name}}</code>, 
+            <code>{{customer_last_name}}</code>,
+            <code>{{quote_id}}</code>,
+            <code>{{quote_expiry}}</code>,
+            <code>{{company_name}}</code>,
+            <code>{{today}}</code>
+        </p>';
+
+        echo '<p class="description"><small>' . 
+            __('Tip: Use Shift+Enter for line breaks, Enter for new paragraphs, and the toolbar buttons for formatting.', 'quote-manager-system-for-woocommerce') . 
+            '</small></p>';		
     }
 
     /**

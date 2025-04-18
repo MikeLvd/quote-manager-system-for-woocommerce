@@ -381,7 +381,22 @@ class Quote_Manager_PDF_Generator {
                     border-top: 1px dashed <?php echo $border_color; ?>;
                     padding-bottom: 20px;
                 }
+ 
+                .quote-terms-section {
+                    font-size: 9pt;
+                    color: <?php echo $text_color; ?>;
+                    margin-top: 15px;
+                    border-top: 1px solid <?php echo $border_color; ?>;
+                    padding-top: 10px;
+                }
                 
+                .quote-terms-section h3 {
+                    font-size: 11pt;
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                    color: <?php echo $primary_color; ?>;
+                }
+ 
                 /* Bottom Area */
                 .page-bottom {
                     background-color: <?php echo $primary_color; ?>;
@@ -612,13 +627,37 @@ class Quote_Manager_PDF_Generator {
                     <div class="notes-area">
                         <p><?php _e('This quote is valid until the date specified above, unless otherwise indicated.', 'quote-manager-system-for-woocommerce'); ?></p>
                         <?php 
+                        // Add custom quote notes if available
                         $quote_notes = get_post_meta($quote_id, '_quote_notes', true);
                         if (!empty($quote_notes)): 
                         ?>
                         <p style="margin-top: 10px;"><?php echo esc_html($quote_notes); ?></p>
+                        <?php endif; 
+                        
+                        // Add terms & conditions
+                        $quote_terms = get_post_meta($quote_id, '_quote_terms', true);
+                        if (empty($quote_terms)) {
+                            $quote_terms = get_option('quote_manager_default_terms', '');
+                        }
+                        
+                        if (!empty($quote_terms)):
+                            // Parse the placeholders in the terms
+                            $parsed_terms = $this->parse_terms_placeholders($quote_terms, [
+                                'customer_first_name' => get_post_meta($quote_id, '_customer_first_name', true),
+                                'customer_last_name'  => get_post_meta($quote_id, '_customer_last_name', true),
+                                'customer_name'       => trim(get_post_meta($quote_id, '_customer_first_name', true) . ' ' . get_post_meta($quote_id, '_customer_last_name', true)),
+                                'quote_id'            => $quote_id,
+                                'quote_expiry'        => $expiration_date,
+                                'company_name'        => $company_name,
+                                'today'               => date_i18n('d/m/Y'),
+                            ]);
+                        ?>
+                        <div class="quote-terms-section" style="margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 10px;">
+                            <h3 style="font-size: 12pt; margin-bottom: 8px;"><?php _e('Terms & Conditions', 'quote-manager-system-for-woocommerce'); ?></h3>
+                            <?php echo wp_kses_post($parsed_terms); ?>
+                        </div>
                         <?php endif; ?>
                     </div>
-                </div>
                 
                 <!-- Bottom Area -->
                 <div class="page-bottom">
@@ -651,4 +690,26 @@ class Quote_Manager_PDF_Generator {
         $dompdf->stream($filename, ['Attachment' => $attachment]);
         exit;
     }
+	
+    /**
+     * Parse placeholders in terms and conditions
+     *
+     * @param string $template Terms and conditions template with placeholders
+     * @param array $data Data to replace placeholders
+     * @return string Processed terms and conditions
+     */
+    private function parse_terms_placeholders($template, $data) {
+        $replacements = [
+            '{{customer_name}}'        => $data['customer_name'] ?? '',
+            '{{customer_first_name}}'  => $data['customer_first_name'] ?? '',
+            '{{customer_last_name}}'   => $data['customer_last_name'] ?? '',
+            '{{quote_id}}'             => $data['quote_id'] ?? '',
+            '{{quote_expiry}}'         => $data['quote_expiry'] ?? '',
+            '{{company_name}}'         => $data['company_name'] ?? '',
+            '{{today}}'                => $data['today'] ?? date_i18n('d/m/Y'),
+        ];
+    
+        return strtr($template, $replacements);
+    }
+
 }

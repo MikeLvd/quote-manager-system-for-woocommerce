@@ -183,6 +183,15 @@ class Quote_Manager_System_For_Woocommerce_Admin {
                 );
                 
                 wp_localize_script('quote-manager-admin-js', 'quoteManagerData', $localization_data);
+                
+                // Load settings JS for the terms functionality
+                wp_enqueue_script(
+                    'quote-manager-settings-js',
+                    QUOTE_MANAGER_URL . 'admin/js/quote-manager-settings.js',
+                    array('jquery'),
+                    $this->version,
+                    true
+                );
             }
             
             // Load a specific script for the settings page if needed

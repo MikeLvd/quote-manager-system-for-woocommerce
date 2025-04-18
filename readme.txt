@@ -61,6 +61,28 @@ You can choose from Media Library or insert a remote image URL.
 
 == Changelog ==
 
+= 1.4.9 =
+New Feature
+
+*Added Terms & Conditions metabox for quotes with rich text editor
+*Added default Terms & Conditions setting in plugin settings page
+*Added support for Terms & Conditions section in PDF output
+*Added "Reset to Default Terms" button for quick restoration of default terms
+
+Enhancements
+
+*Terms & Conditions support placeholders for dynamic content (customer name, quote ID, etc.)
+*Added formatting capabilities (bold, bullets, etc.) for professional-looking terms
+*Improved PDF layout with dedicated Terms & Conditions section
+*Added proper HTML sanitization to maintain security while preserving formatting
+
+Technical Improvements
+
+*Added proper script loading on both settings and quote edit pages
+*Added proper data localization for JavaScript functionality
+*Enhanced TinyMCE configuration for a better editing experience
+*Added CSS styling for terms in PDF output
+
 = 1.4.5 =
 * The whole plugin refactored from the ground
 * Renamed the plugin name and directory from: offer-manager-for-woocommerce ------> quote-manager-system-for-woocommerce

@@ -68,6 +68,15 @@ class Quote_Manager_Metaboxes {
             'normal',
             'default'
         );
+		
+        add_meta_box(
+            'quote_terms_meta',
+            __('📝 Terms & Conditions', 'quote-manager-system-for-woocommerce'),
+            array($this, 'render_quote_terms_meta'),
+            'customer_quote',
+            'normal',
+            'default'
+        );		
     }
     
     /**
@@ -552,7 +561,69 @@ class Quote_Manager_Metaboxes {
             </div>';
         }
     }
+
+    public function render_quote_terms_meta($post) {
+        // Get the quote-specific terms, or use the default if none exist
+        $quote_terms = get_post_meta($post->ID, '_quote_terms', true);
+        $default_terms = get_option('quote_manager_default_terms', '');
+        
+        if (empty($quote_terms) && !empty($default_terms)) {
+            $quote_terms = $default_terms;
+        }
     
+        // Add a hidden nonce for security
+        wp_nonce_field('quote_manager_save_terms', 'quote_manager_nonce_terms');
+        
+        // Create editor settings
+        $editor_settings = array(
+            'textarea_name' => 'quote_terms',
+            'textarea_rows' => 10,
+            'media_buttons' => false,
+            'teeny'         => false,
+            'quicktags'     => true,
+            'tinymce'       => array(
+                'forced_root_block' => 'div',  // Use div instead of p to better preserve formatting
+                'keep_styles'       => true,   // Keep styles when switching between visual/text
+                'entities'          => '38,amp,60,lt,62,gt', // Preserve entities
+                'fix_list_elements' => true,   // Fix list elements
+                'preserve_cdata'    => true,   // Preserve CDATA
+                'remove_redundant_brs' => false, // Don't remove BRs that might be intended
+            ),
+        );
+        
+        // Show a reset button
+        echo '<div style="margin-bottom:10px;">';
+        echo '<button type="button" id="reset-to-default-terms" class="button">' . __('Reset to Default Terms', 'quote-manager-system-for-woocommerce') . '</button>';
+        echo '</div>';
+        
+        // Show the editor
+        wp_editor($quote_terms, 'quote_terms_editor', $editor_settings);
+
+        // Show placeholders help
+        echo '<p class="description">' . __('Available placeholders:', 'quote-manager-system-for-woocommerce') . ' 
+            <code>{{customer_name}}</code>, 
+            <code>{{customer_first_name}}</code>, 
+            <code>{{customer_last_name}}</code>,
+            <code>{{quote_id}}</code>,
+            <code>{{quote_expiry}}</code>,
+            <code>{{company_name}}</code>,
+            <code>{{today}}</code>
+        </p>';
+		
+        echo '<p class="description"><small>' . 
+            __('Tip: Use Shift+Enter for line breaks, Enter for new paragraphs, and the toolbar buttons for formatting.', 'quote-manager-system-for-woocommerce') . 
+            '</small></p>';
+			
+        wp_localize_script('quote-manager-settings-js', 'quote_manager_vars', array(
+            'default_terms' => $default_terms
+        ));
+        
+        wp_localize_script('quote-manager-settings-js', 'quote_manager_i18n', array(
+            'reset_terms_confirm' => __('Reset to default terms? This will replace your current text.', 'quote-manager-system-for-woocommerce')
+        ));
+        
+    }
+
     /**
      * Save meta box data when the Customer Quote post is saved.
      */
@@ -634,7 +705,7 @@ class Quote_Manager_Metaboxes {
             } else {
                 update_post_meta($post_id, '_quote_include_vat', '0');
             }
-            
+          
             // Handle expiration date
             if (isset($_POST['quote_expiration_days'])) {
                 $expiration_days = sanitize_text_field($_POST['quote_expiration_days']);
@@ -652,9 +723,17 @@ class Quote_Manager_Metaboxes {
                     update_post_meta($post_id, '_quote_expiration_date', $expiration_date);
                 }
             }
+            
+            // Save terms & conditions if nonce is valid
+            if (isset($_POST['quote_manager_nonce_terms']) && wp_verify_nonce($_POST['quote_manager_nonce_terms'], 'quote_manager_save_terms')) {
+                if (isset($_POST['quote_terms'])) {
+                    $terms = wp_kses_post(wp_unslash($_POST['quote_terms']));
+                    update_post_meta($post_id, '_quote_terms', $terms);
+                }
+            }
         }
     }
-    
+	
     /**
      * Render modals in admin footer for email sending.
      */

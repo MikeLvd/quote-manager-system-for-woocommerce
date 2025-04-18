@@ -6,7 +6,7 @@
  * Plugin Name:       Quote Manager System For WooCommerce
  * Plugin URI:        https://github.com/MikeLvd/quote-manager-system-for-woocommerce
  * Description:       A custom WordPress plugin that allows you to create detailed product offers inside the WooCommerce backend. Ideal for retail stores, B2B sales, and client advanced quotations.
- * Version:           1.4.5
+ * Version:           1.4.9
  * Author:            Mike Lvd
  * Author URI:        https://goldenbath.gr/
  * Requires at least: 5.9
@@ -29,7 +29,7 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('QUOTE_MANAGER_VERSION', '1.4.5');
+define('QUOTE_MANAGER_VERSION', '1.4.9');
 define('QUOTE_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('QUOTE_MANAGER_URL', plugin_dir_url(__FILE__));
 
@@ -67,7 +67,7 @@ function quote_manager_check_woocommerce_dependency() {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
             deactivate_plugins(plugin_basename(__FILE__));
 
-            // Remove the "Plugin activated" notice
+            // Remove "Plugin activated" notice
             if (isset($_GET['activate'])) {
                 unset($_GET['activate']);
             }
@@ -83,7 +83,7 @@ function quote_manager_check_woocommerce_dependency() {
          * Actions to perform on plugin activation
          */
         function quote_manager_activate() {
-            // Create the protected upload directory for PDFs
+            // Create protected upload directory for PDFs
             require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
             $email_manager = new Quote_Manager_Email_Manager();
             $email_manager->create_protection_htaccess();
