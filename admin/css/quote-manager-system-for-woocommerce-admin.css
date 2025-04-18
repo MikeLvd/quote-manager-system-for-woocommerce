@@ -1,0 +1,737 @@
+/* ================= QUOTE MANAGER ADMIN STYLES ================= */
+
+/* Style for TableDnD dragged row */
+.dragging {
+    background-color: #f0f8ff !important;
+    border: 2px solid #0073aa !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+    opacity: 0.9 !important;
+}
+
+.tablednd-dragging-row td {
+    border: 1px solid #0073aa !important;
+}
+
+/* Style for number column (drag handle) */
+.quote-td-number {
+    cursor: move;
+    position: relative;
+    background-color: #f8f8f8;
+    transition: background-color 0.2s;
+}
+
+.quote-td-number:hover {
+    background-color: #e8e8e8;
+}
+
+.quote-td-number::before {
+    content: '☰';
+    margin-right: 5px;
+    color: #0073aa;
+}
+
+/* Project details */
+.quote-field label[for="project_name"] {
+    font-size: 14px;
+    color: #0073aa;
+}
+
+.quote-field input#project_name {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 10px;
+    height: 36px;
+}
+
+/* Price columns in quote table */
+.quote-th-purchase, .quote-td-purchase {
+    text-align: center;
+    width: 100px;
+}
+.quote-th-listprice, .quote-td-listprice,
+.quote-th-discount, .quote-td-discount,
+.quote-th-final-excl, .quote-td-final-excl,
+.quote-th-final-incl, .quote-td-final-incl {
+    text-align: center;
+    width: 100px;
+}
+.quote-th-final-incl, .quote-td-final-incl {
+    color: #0073aa;
+}
+
+/* VAT toggle style */
+.quote-vat-toggle {
+    font-weight: 600;
+    margin-top: 10px;
+}
+.quote-vat-toggle input {
+    margin-right: 5px;
+}
+
+/* Layout */
+.quote-wrapper {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+}
+
+/* Each section (Customer, Shipping, etc.) */
+.quote-section {
+    flex: 1;
+    min-width: 300px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.quote-section-title {
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+/* Customer Form Area */
+.quote-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+}
+
+.quote-field label {
+    display: block;
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 3px;
+    color: #333;
+}
+
+.quote-input {
+    width: 100%;
+    padding: 4px 7px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff;
+    height: 30px;
+    line-height: 1.2;
+}
+
+/* Product Search */
+.quote-search-wrap {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.quote-search-input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Toolbar with search and add button */
+.quote-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+.quote-toolbar .quote-search-wrap {
+    margin-bottom: 0;
+    flex: 1;
+}
+.add-manual-product {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 13px;
+    border: none;
+    border-radius: 4px;
+    background: #0073aa;
+    color: #fff;
+    cursor: pointer;
+}
+.add-manual-product:hover {
+    background: #005b8e;
+}
+
+.quote-suggestions {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    width: 100%;
+    z-index: 9999;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.suggestion-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Search dropdown items */
+.suggestion-item {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestion-item:hover {
+    background: #f1f1f1;
+}
+
+.suggestion-item img {
+    height: 32px;
+    width: 32px;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+/* Products Table */
+.quote-product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    table-layout: fixed;
+}
+
+.quote-product-table input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.quote-product-table th,
+.quote-product-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.quote-product-table th {
+    background: #f0f0f0;
+    font-size: 12px;
+}
+
+.quote-product-row td input {
+    width: 100%;
+    padding: 5px;
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+/* Price field tooltip - improved styling */
+.price-tooltip {
+    position: absolute;
+    background: linear-gradient(to bottom, #dc2626, #dc2626);
+    padding: 8px 12px;
+    border: 1px solid #e6d292;
+    border-radius: 4px;
+    z-index: 100;
+    font-size: 12px;
+    width: 220px;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    line-height: 1.4;
+}
+
+.price-tooltip:before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 15px;
+    width: 12px;
+    height: 12px;
+    background: #dc2626;
+    transform: rotate(45deg);
+    border-left: 1px solid #e6d292;
+    border-top: 1px solid #e6d292;
+}
+
+.price-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animation for attention */
+@keyframes pulseWarning {
+    0% { box-shadow: 0 0 0 0 rgba(230, 210, 146, 0.6); }
+    70% { box-shadow: 0 0 0 6px rgba(230, 210, 146, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(230, 210, 146, 0); }
+}
+
+input.price-error {
+    animation: pulseWarning 1.5s infinite;
+    border-color: #e6d292 !important;
+    background-color: #fffef5 !important;
+}
+/* end */
+
+/* Column widths */
+.quote-th-number,
+.quote-td-number {
+    width: 30px;
+    text-align: center;
+}
+
+.quote-th-image,
+.quote-td-image {
+    width: 60px;
+    text-align: center;
+}
+
+.quote-th-title,
+.quote-td-title {
+    width: 35%;
+    text-align: left !important;
+}
+
+.quote-th-sku,
+.quote-td-sku {
+    width: 100px;
+    text-align: center;
+}
+	
+.quote-th-purchase,
+.quote-td-purchase {
+    width: 40px;
+    text-align: center;
+}
+
+.quote-th-listprice,
+.quote-td-listprice {
+    width: 40px;
+    text-align: center;
+}
+
+.quote-th-discount,
+.quote-td-discount {
+    width: 40px;
+    text-align: center;
+}
+
+.quote-th-final-excl,
+.quote-td-final-excl {
+    width: 40px;
+    text-align: center;
+}	
+.quote-th-final-incl,
+.quote-td-final-incl {
+    width: 40px;
+    text-align: center;
+}	
+.quote-th-qty,
+.quote-td-qty {
+    width: 30px;
+    text-align: center;
+}
+	
+.quote-th-total,
+.quote-td-total {
+    width: 40px;
+    text-align: center;
+}
+
+.quote-th-final-incl,
+.quote-td-final-incl {
+    color: #0073aa;
+}
+
+.quote-th-remove,
+.quote-td-remove {
+    width: 15px;
+    text-align: center !important;
+    vertical-align: middle;
+}
+
+.remove-row {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.remove-row:hover {
+    transform: scale(1.3);
+}
+
+/* Product Image */
+.quote-img-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    margin: auto;
+}
+
+.quote-img-wrapper:hover {
+    box-shadow: 0 0 0 2px #0073aa;
+}
+
+.quote-img,
+.quote-img-selectable {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Custom Modal */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-modal-content {
+    background: #fff;
+    padding: 30px 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.custom-modal-content h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.custom-modal-content button {
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background: #0073aa;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.custom-modal-content button:hover {
+    background: #005b8e;
+}
+
+/* Email Modal */
+.quote-email-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: none;
+}
+
+.quote-email-modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 900px;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.quote-email-modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.quote-email-modal-content .form-group {
+    margin-bottom: 15px;
+}
+
+.quote-email-modal-content input[type="text"],
+.quote-email-modal-content textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Email History Modal */
+.email-message-modal {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.email-message-modal-content {
+    background: #fff;
+    max-width: 800px;
+    width: 90%;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    margin: auto;
+    position: relative;
+}
+
+.email-message-modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.email-message-modal-content pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.email-message-modal-content .close-message-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+}
+.email-message-modal-content .close-message-modal:hover {
+    color: #000;
+}
+
+.email-tracking-icon {
+    cursor: help;
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 6px;
+    color: #0073aa;
+}
+        
+/* Internal Quote Information */
+.quote-internal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #333;
+    background: #fff;
+}
+
+.quote-internal-table th,
+.quote-internal-table td {
+    border: 1px solid #e5e5e5;
+    padding: 8px 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.quote-internal-table thead th {
+    background: #f9f9f9;
+    font-weight: 600;
+    color: #222;
+}
+
+.quote-td-title,
+.quote-th-title {
+    text-align: left;
+    padding-left: 12px;
+}
+
+.quote-summary-row:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+.quote-summary-total {
+    background-color: #f0f0f0;
+}
+
+.quote-summary-profit {
+    background-color: #e8f9e8;
+}
+
+.quote-td-num {
+    width: 40px;
+    font-weight: bold;
+    color: #666;
+}
+
+.quote-td-cost,
+.quote-th-cost {
+    color: #444;
+    width: 220px;
+}
+
+.quote-th-total-cost {
+	width: 120px;
+}
+
+.quote-th-total-price {
+	width: 120px;
+}
+
+.quote-td-markup,
+.quote-th-markup {
+    color: #0073aa;
+    width: 120px;
+}
+
+.quote-td-margin,
+.quote-th-margin {
+    color: #2a7f2e;
+    width: 120px;
+}
+
+.quote-td-cost-total {
+    font-weight: bold;
+    font-size: 14px;
+    color: #007c1f;
+}
+
+.quote-td-markup-avg,
+.quote-td-margin-avg {
+    font-weight: bold;
+    font-size: 13px;
+    color: #0073aa;
+}
+
+.quote-product-table td.quote-td-label {
+    font-weight: bold;
+    text-align: right;
+    background: #f6f6f6;
+    padding-right: 10px;
+}
+.quote-td-profit {
+	text-align: center !important;
+    font-size: 18px !important;
+}
+
+/* Email Tracking Icon Tooltip */
+.quote-tracking-icon {
+    display: inline-block;
+    cursor: default;
+    position: relative;
+    font-size: 18px;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.quote-tracking-icon.faded {
+    opacity: 0.3;
+}
+
+/* Custom styled tooltip using data-tooltip instead of title */
+.quote-tracking-icon:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 9999;
+    font-size: 13px;
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Optional: triangle (arrow) for tooltip */
+.quote-tracking-icon:hover::before {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #222 transparent transparent transparent;
+    z-index: 9998;
+}
+
+.logo-preview img {
+    max-width: 300px;
+    height: auto;
+    margin-top: 10px;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .quote-product-table {
+        font-size: 11px;
+    }
+
+    .quote-product-table input {
+        padding: 4px;
+        font-size: 11px;
+    }
+
+    .quote-th-title,
+    .quote-td-title {
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .quote-wrapper {
+        flex-direction: column;
+    }
+
+    .quote-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .suggestion-item span {
+        font-size: 13px;
+    }
+
+    .quote-product-table {
+        font-size: 11px;
+    }
+
+    .quote-th-title,
+    .quote-td-title {
+        width: auto;
+    }
+}

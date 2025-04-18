@@ -1,0 +1,614 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Quote Manager System For WooCommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-17 23:45+0000\n"
+"PO-Revision-Date: 2025-04-18 10:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: Ελληνικά\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.7.2; wp-6.8\n"
+"X-Domain: quote-manager-system-for-woocommerce"
+
+#: includes/class-metaboxes.php:303
+msgid "#"
+msgstr "#"
+
+#: includes/class-metaboxes.php:310
+msgid "% Margin"
+msgstr "% Περιθώριο"
+
+#: includes/class-metaboxes.php:309
+msgid "% Markup"
+msgstr "% Προσαύξηση"
+
+#: includes/class-metaboxes.php:404
+msgid ""
+"*The above information is only visible to administrators and is not included "
+"in the quote PDF."
+msgstr ""
+"*Οι παραπάνω πληροφορίες είναι ορατές μόνο στους διαχειριστές και δεν "
+"περιλαμβάνονται στο PDF προσφοράς."
+
+#: includes/class-metaboxes.php:431
+msgid "15 Days"
+msgstr "15 Μέρες"
+
+#: includes/class-metaboxes.php:432
+msgid "30 Days"
+msgstr "30 Ημέρες"
+
+#: includes/class-metaboxes.php:433
+msgid "45 Days"
+msgstr "45 Ημέρες"
+
+#: includes/class-metaboxes.php:430
+msgid "5 Days"
+msgstr "5 Ημέρες"
+
+#: includes/class-metaboxes.php:434
+msgid "60 Days"
+msgstr "60 Ημέρες"
+
+#. Description of the plugin
+msgid ""
+"A custom WordPress plugin that allows you to create detailed product offers "
+"inside the WooCommerce backend. Ideal for retail stores, B2B sales, and "
+"client advanced quotations."
+msgstr ""
+"Ένα προσαρμοσμένο πρόσθετο WordPress που σας επιτρέπει να δημιουργείτε "
+"λεπτομερείς προσφορές προϊόντων μέσα στο backend του WooCommerce. Ιδανικό "
+"για καταστήματα λιανικής, πωλήσεις B2B και προηγμένες προσφορές πελατών."
+
+#: includes/class-ajax-handlers.php:20
+msgid "Access denied"
+msgstr "Η πρόσβαση απορρίφθηκε"
+
+#: includes/class-post-type.php:22
+msgid "Add New Quote"
+msgstr "Προσθήκη Νέας Προσφοράς"
+
+#: includes/class-settings.php:46
+msgid "Address"
+msgstr "Διεύθυνση"
+
+#: includes/class-metaboxes.php:124 includes/class-metaboxes.php:136
+msgid "Address:"
+msgstr "Διεύθυνση:"
+
+#: includes/class-metaboxes.php:125 includes/class-metaboxes.php:137
+msgid "Area:"
+msgstr "Περιοχή:"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:164
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: includes/class-settings.php:55
+msgid "City & Postal Code"
+msgstr "Πόλη & Ταχυδρομικός Κώδικας"
+
+#: includes/class-metaboxes.php:139
+msgid "City:"
+msgstr "Πόλη:"
+
+#: includes/class-settings.php:29 includes/class-settings.php:159
+msgid "Company Details"
+msgstr "Στοιχεία Εταιρείας"
+
+#: includes/class-settings.php:116
+msgid "Company Logo"
+msgstr "Λογότυπο Εταιρείας"
+
+#: includes/class-settings.php:37
+msgid "Company Name"
+msgstr "Όνομα Εταιρείας"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:163
+msgid "Confirm"
+msgstr "Επιβεβαίωση"
+
+#: includes/class-metaboxes.php:192 includes/class-metaboxes.php:243
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:174
+msgid "Cost"
+msgstr "Κόστος"
+
+#: includes/class-metaboxes.php:435
+msgid "Custom Date"
+msgstr "Προσαρμοσμένη Ημερομηνία"
+
+#: includes/class-metaboxes.php:120 includes/class-post-type.php:51
+msgid "Customer"
+msgstr "Πελάτης"
+
+#: includes/class-post-type.php:20
+msgid "Customer Quote"
+msgstr "Προσφορά Πελάτη"
+
+#: includes/class-post-type.php:19
+msgid "Customer Quotes"
+msgstr "Προσφορές Πελατών"
+
+#: includes/class-pdf-generator.php:471
+#: includes/class-pdf-generator-raw.php:476
+msgid "Date:"
+msgstr "Ημερομηνία:"
+
+#: includes/class-metaboxes.php:446
+msgid "dd/mm/yyyy"
+msgstr "ηη/μμ/εεεε"
+
+#: includes/class-pdf-generator.php:503 includes/class-pdf-generator.php:549
+#: includes/class-pdf-generator-raw.php:508
+#: includes/class-pdf-generator-raw.php:554
+msgid "Disc(%)"
+msgstr "Έκπ(%)"
+
+#: includes/class-metaboxes.php:194
+msgid "Discount (%)"
+msgstr "Έκπ (%)"
+
+#: includes/class-metaboxes.php:476
+msgid "Download PDF"
+msgstr "Λήψη PDF"
+
+#: includes/class-post-type.php:23
+msgid "Edit Quote"
+msgstr "Επεξεργασία Προσφοράς"
+
+#: includes/class-settings.php:73
+msgid "Email"
+msgstr "Email"
+
+#: includes/class-metaboxes.php:520
+#, php-format
+msgid "Email opened at %s"
+msgstr "Το email ανοίχθηκε στις %s"
+
+#: includes/class-metaboxes.php:127
+msgid "Email:"
+msgstr "Email:"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:161
+msgid "Enter Image URL"
+msgstr "Εισαγωγή URL εικόνας"
+
+#: includes/class-settings.php:94
+msgid "Enter your company details that will appear on the quote PDF."
+msgstr ""
+"Εισάγετε τα στοιχεία της εταιρείας σας που θα εμφανίζονται στο PDF προσφοράς."
+
+#: includes/class-post-type.php:53
+msgid "Expiration Date"
+msgstr "Ημερομηνία Λήξης"
+
+#: includes/class-metaboxes.php:517
+msgid "Failed"
+msgstr "Απέτυχε"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:170
+msgid "Failed to send."
+msgstr "Αποτυχία αποστολής."
+
+#: includes/class-metaboxes.php:122 includes/class-metaboxes.php:134
+msgid "First Name:"
+msgstr "Όνομα:"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:160
+msgid "From URL"
+msgstr "Από URL"
+
+#. URI of the plugin
+msgid "https://github.com/MikeLvd/quote-manager-system-for-woocommerce"
+msgstr "https://github.com/MikeLvd/quote-manager-system-for-woocommerce"
+
+#. Author URI of the plugin
+msgid "https://goldenbath.gr/"
+msgstr "https://goldenbath.gr/"
+
+#: includes/class-pdf-generator.php:500 includes/class-pdf-generator.php:546
+#: includes/class-pdf-generator-raw.php:505
+#: includes/class-pdf-generator-raw.php:551 includes/class-metaboxes.php:189
+msgid "Image"
+msgstr "Εικόνα"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:177
+msgid "incl. VAT"
+msgstr "με ΦΠΑ"
+
+#: includes/class-metaboxes.php:413
+msgid "Include VAT in quote"
+msgstr "Συμπερίληψη ΦΠΑ στην προσφορά"
+
+#: includes/class-pdf-generator.php:29
+msgid "Invalid quote ID."
+msgstr "Μη έγκυρο ID προσφοράς."
+
+#: includes/class-metaboxes.php:123 includes/class-metaboxes.php:135
+msgid "Last Name:"
+msgstr "Επώνυμο:"
+
+#: includes/class-settings.php:82
+msgid "Logo"
+msgstr "Λογότυπο"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:159
+msgid "Media Library"
+msgstr "Βιβλιοθήκη πολυμέσων"
+
+#. Author of the plugin
+msgid "Mike Lvd"
+msgstr "Mike Lvd"
+
+#: includes/class-post-type.php:21 includes/class-post-type.php:24
+msgid "New Quote"
+msgstr "Νέα Προσφορά"
+
+#: includes/class-metaboxes.php:495
+msgid "No email history recorded."
+msgstr "Δεν καταγράφηκε ιστορικό email."
+
+#: includes/class-post-type.php:27
+msgid "No Quotes found"
+msgstr "Δεν βρέθηκαν Προσφορές"
+
+#: includes/class-post-type.php:28
+msgid "No Quotes found in Trash"
+msgstr "Δεν βρέθηκαν Προσφορές στον Κάδο"
+
+#: includes/class-metaboxes.php:523
+msgid "Not yet opened"
+msgstr "Δεν έχει ανοιχτεί ακόμα"
+
+#: includes/class-post-type.php:49
+msgid "Number"
+msgstr "Αριθμός"
+
+#: includes/class-pdf-generator.php:467
+#: includes/class-pdf-generator-raw.php:472
+msgid "Number:"
+msgstr "Αριθμός:"
+
+#: includes/class-settings.php:64
+msgid "Phone"
+msgstr "Τηλέφωνο"
+
+#: includes/class-metaboxes.php:126
+msgid "Phone:"
+msgstr "Τηλέφωνο:"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:155
+#, php-format
+msgid ""
+"Please enter a value with one monetary decimal point (%s) without thousand "
+"separators and currency symbols."
+msgstr ""
+"Παρακαλώ εισάγετε μια τιμή με ένα δεκαδικό σημείο (%s) χωρίς διαχωριστικά "
+"χιλιάδων και σύμβολα νομισμάτων."
+
+#: includes/class-metaboxes.php:138
+msgid "Postal Code:"
+msgstr "Ταχυδρομικός Κώδικας:"
+
+#: includes/class-metaboxes.php:475
+msgid "Preview PDF"
+msgstr "Προεπισκόπηση PDF"
+
+#: includes/class-pdf-generator.php:502 includes/class-pdf-generator.php:548
+#: includes/class-pdf-generator-raw.php:507
+#: includes/class-pdf-generator-raw.php:553 includes/class-metaboxes.php:193
+msgid "Price"
+msgstr "Τιμή"
+
+#: includes/class-pdf-generator.php:501 includes/class-pdf-generator.php:547
+#: includes/class-pdf-generator-raw.php:506
+#: includes/class-pdf-generator-raw.php:552 includes/class-metaboxes.php:304
+msgid "Product"
+msgstr "Προϊόν"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:181
+msgid "Product search failed:"
+msgstr "Η αναζήτηση προϊόντος απέτυχε:"
+
+#: includes/class-post-type.php:52
+msgid "Project"
+msgstr "Έργο"
+
+#: includes/class-metaboxes.php:144
+msgid "Project Details"
+msgstr "Λεπτομέρειες Έργου"
+
+#: includes/class-pdf-generator.php:484
+#: includes/class-pdf-generator-raw.php:489
+msgid "Project:"
+msgstr "Έργο:"
+
+#: includes/class-metaboxes.php:305
+msgid "Purchase Price (excl. VAT)"
+msgstr "Τιμή Αγοράς (χωρίς ΦΠΑ)"
+
+#: includes/class-pdf-generator.php:508 includes/class-pdf-generator.php:554
+#: includes/class-pdf-generator-raw.php:513
+#: includes/class-pdf-generator-raw.php:559
+msgid "Qty"
+msgstr "Ποσότητα"
+
+#: includes/class-metaboxes.php:198 includes/class-metaboxes.php:306
+msgid "Quantity"
+msgstr "Ποσότητα"
+
+#: includes/class-pdf-generator.php:438
+#: includes/class-pdf-generator-raw.php:443
+msgid "QUOTE"
+msgstr "ΠΡΟΣΦΟΡΑ"
+
+#: includes/class-pdf-generator.php:89 includes/class-pdf-generator-raw.php:94
+msgid "Quote"
+msgstr "Προσφορά"
+
+#. Parent menu
+#: includes/class-settings.php:129 includes/class-settings.php:156
+msgid "Quote Manager Settings"
+msgstr "Ρυθμίσεις Διαχειριστή Προσφορών"
+
+#. Name of the plugin
+msgid "Quote Manager System For WooCommerce"
+msgstr "Σύστημα Διαχείρισης Προσφορών για WooCommerce"
+
+#: quote-manager-system-for-woocommerce.php:59
+#, php-format
+msgid ""
+"Quote Manager System For WooCommerce requires %s to be installed and "
+"activated."
+msgstr ""
+"Το Σύστημα Διαχείρισης Προσφορών για WooCommerce απαιτεί την εγκατάσταση και "
+"ενεργοποίηση του %s."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:63
+msgid "Quote Manager: PDF directory protection has been set up."
+msgstr "Διαχειριστής Προσφορών: Η προστασία του καταλόγου PDF έχει ρυθμιστεί."
+
+#: includes/class-post-type.php:50
+msgid "Quote Name"
+msgstr "Όνομα Προσφοράς"
+
+#: includes/class-metaboxes.php:417
+msgid "Quote Validity:"
+msgstr "Ισχύς Προσφοράς:"
+
+#: includes/class-metaboxes.php:254
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:175
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: includes/class-post-type.php:26
+msgid "Search Quotes"
+msgstr "Αναζήτηση Προσφορών"
+
+#: includes/class-settings.php:113
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:158
+msgid "Select Image"
+msgstr "Επιλογή Εικόνας"
+
+#: includes/class-metaboxes.php:447
+msgid "Select specific expiration date"
+msgstr "Επιλογή συγκεκριμένης ημερομηνίας λήξης"
+
+#: includes/class-metaboxes.php:516
+msgid "Sent"
+msgstr "Εστάλη"
+
+#. Page title
+#: includes/class-settings.php:130
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: includes/class-metaboxes.php:132
+msgid "Shipping"
+msgstr "Αποστολή"
+
+#: includes/class-pdf-generator.php:607
+#: includes/class-pdf-generator-raw.php:612
+msgid "Signature"
+msgstr "Υπογραφή"
+
+#: includes/class-metaboxes.php:191
+msgid "SKU"
+msgstr "Κωδικός"
+
+#: includes/class-pdf-generator.php:588
+#: includes/class-pdf-generator-raw.php:593 includes/class-metaboxes.php:264
+msgid "Subtotal:"
+msgstr "Υποσύνολο:"
+
+#: includes/class-pdf-generator.php:427 includes/class-pdf-generator.php:455
+#: includes/class-pdf-generator-raw.php:432
+#: includes/class-pdf-generator-raw.php:460
+msgid "Tel:"
+msgstr "Τηλ:"
+
+#: includes/class-pdf-generator.php:613
+#: includes/class-pdf-generator-raw.php:618
+msgid ""
+"This quote is valid until the date specified above, unless otherwise "
+"indicated."
+msgstr ""
+"Αυτή η προσφορά ισχύει μέχρι την ημερομηνία που αναφέρεται παραπάνω, εκτός "
+"αν αναφέρεται διαφορετικά."
+
+#: includes/class-metaboxes.php:190
+msgid "Title"
+msgstr "Τίτλος"
+
+#: includes/class-pdf-generator.php:447
+#: includes/class-pdf-generator-raw.php:452
+msgid "TO"
+msgstr "ΠΡΟΣ"
+
+#: includes/class-pdf-generator.php:509 includes/class-pdf-generator.php:555
+#: includes/class-pdf-generator-raw.php:514
+#: includes/class-pdf-generator-raw.php:560
+msgid "Total"
+msgstr "Σύνολο"
+
+#: includes/class-metaboxes.php:199
+msgid "Total (€)"
+msgstr "Σύνολο (€)"
+
+#: includes/class-metaboxes.php:307
+msgid "Total Cost"
+msgstr "Συνολικό Κόστος"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:178
+msgid "Total Net Profit"
+msgstr "Συνολικό καθαρό κέρδος"
+
+#: includes/class-metaboxes.php:398
+msgid "Total Net Profit:"
+msgstr "Συνολικό Καθαρό Κέρδος:"
+
+#: includes/class-metaboxes.php:308
+msgid "Total Price"
+msgstr "Συνολική Τιμή"
+
+#: includes/class-pdf-generator.php:598
+#: includes/class-pdf-generator-raw.php:603
+msgid "TOTAL:"
+msgstr "ΣΥΝΟΛΟ:"
+
+#: includes/class-metaboxes.php:275
+msgid "Total:"
+msgstr "Σύνολο:"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:176
+msgid "Totals"
+msgstr "Σύνολα"
+
+#: includes/class-metaboxes.php:387
+msgid "Totals:"
+msgstr "Σύνολα:"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:162
+msgid "Use this image"
+msgstr "Χρησιμοποιήστε αυτήν την εικόνα"
+
+#: includes/class-pdf-generator.php:475
+#: includes/class-pdf-generator-raw.php:480
+msgid "Valid until:"
+msgstr "Ισχύει μέχρι:"
+
+#: includes/class-pdf-generator.php:504 includes/class-pdf-generator.php:550
+#: includes/class-pdf-generator-raw.php:509
+#: includes/class-pdf-generator-raw.php:555 includes/class-metaboxes.php:195
+msgid "Value"
+msgstr "Αξία"
+
+#: includes/class-pdf-generator.php:506 includes/class-pdf-generator.php:552
+#: includes/class-pdf-generator-raw.php:511
+#: includes/class-pdf-generator-raw.php:557 includes/class-metaboxes.php:197
+msgid "Value (incl. VAT)"
+msgstr "Αξία (με ΦΠΑ)"
+
+#: includes/class-pdf-generator.php:593
+#: includes/class-pdf-generator-raw.php:598 includes/class-metaboxes.php:270
+msgid "VAT:"
+msgstr "ΦΠΑ:"
+
+#: includes/class-metaboxes.php:530
+msgid "View full message"
+msgstr "Δείτε το πλήρες μήνυμα"
+
+#: includes/class-post-type.php:25
+msgid "View Quote"
+msgstr "Προβολή Προσφοράς"
+
+#: includes/class-email-manager.php:170
+#, php-format
+msgid "Your quote from %s"
+msgstr "Η προσφορά σας από %s"
+
+#: includes/class-metaboxes.php:47
+msgid "⚙️ Quote Tools"
+msgstr "⚙️ Εργαλεία Προσφοράς"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:168
+msgid "✅ Email sent successfully."
+msgstr "✅ Το email στάλθηκε επιτυχώς."
+
+#: includes/class-metaboxes.php:504
+msgid "✅ Result"
+msgstr "✅ Αποτέλεσμα"
+
+#: includes/class-metaboxes.php:502
+msgid "✉️ Subject"
+msgstr "✉️ Θέμα"
+
+#: includes/class-metaboxes.php:181
+msgid "✚ Add Product"
+msgstr "✚ Προσθήκη Προϊόντος"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:171
+#| msgid "❌ Error while sending request."
+msgid "❌ Error while sending email."
+msgstr "❌ Σφάλμα κατά την αποστολή του email."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:169
+msgid "❌ Error:"
+msgstr "❌ Σφάλμα:"
+
+#: includes/class-metaboxes.php:505
+msgid "👁️ Viewed"
+msgstr "👁️ Προβλήθηκε"
+
+#: includes/class-metaboxes.php:500
+msgid "📅 Date"
+msgstr "📅 Ημερομηνία"
+
+#: includes/class-metaboxes.php:38
+msgid "📤 Quote Actions"
+msgstr "📤 Ενέργειες Προσφοράς"
+
+#: includes/class-metaboxes.php:65
+msgid "📧 Email History"
+msgstr "📧 Ιστορικό Email"
+
+#: includes/class-metaboxes.php:501
+msgid "📧 Recipient"
+msgstr "📧 Παραλήπτης"
+
+#: includes/class-metaboxes.php:485
+msgid "📧 Send Quote Email"
+msgstr "📧 Αποστολή με Email"
+
+#: includes/class-metaboxes.php:503
+msgid "📨 Message"
+msgstr "📨 Μήνυμα"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:167
+msgid "📨 Sending in progress..."
+msgstr "📨 Αποστολή σε εξέλιξη..."
+
+#: includes/class-metaboxes.php:549
+msgid "📩 Full Message"
+msgstr "📩 Πλήρες Μήνυμα"
+
+#: includes/class-metaboxes.php:178
+msgid "🔍 Search products..."
+msgstr "🔍 Αναζήτηση προϊόντων..."
+
+#: includes/class-metaboxes.php:56 includes/class-metaboxes.php:300
+msgid "🔐 Internal Quote Information"
+msgstr "🔐 Εσωτερικές Πληροφορίες Προσφοράς"
+
+#: includes/class-metaboxes.php:29
+msgid "🛒 Quote Products"
+msgstr "🛒 Προϊόντα Προσφοράς"
+
+#: includes/class-metaboxes.php:20
+msgid "🧾 Customer & Shipping Details"
+msgstr "🧾 Στοιχεία Πελάτη & Αποστολής"
