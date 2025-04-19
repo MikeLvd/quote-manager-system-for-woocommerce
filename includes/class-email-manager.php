@@ -181,10 +181,44 @@ class Quote_Manager_Email_Manager {
                 'quote_id'            => $quote_id,
                 'quote_expiry'        => $quote_expiry,
             ])));
-    
-            // Email headers & attachments
-            $headers     = ['Content-Type: text/html; charset=UTF-8'];
+            
+            // Prepare file attachments
             $attachments = [$pdf_path];
+            
+            // Add custom attachments
+            $quote_attachments = get_post_meta($quote_id, '_quote_attachments', true);
+            if (is_array($quote_attachments) && !empty($quote_attachments)) {
+                // Collect attachment paths
+                foreach ($quote_attachments as $attachment) {
+                    if (isset($attachment['url']) && !empty($attachment['url'])) {
+                        // Convert URL to local path
+                        $attachment_path = $this->url_to_local_path($attachment['url']);
+                        if ($attachment_path && file_exists($attachment_path)) {
+                            $attachments[] = $attachment_path;
+                        }
+                    }
+                }
+                
+                // Add attachment list to email
+                $attachments_list = '<br><br><hr><p style="font-weight: bold;">' . __('Attachments:', 'quote-manager-system-for-woocommerce') . '</p><ul>';
+                $attachments_list .= '<li>' . __('Quote PDF', 'quote-manager-system-for-woocommerce') . '</li>';
+                
+                // Get all attachments for this quote
+                $quote_attachments = get_post_meta($quote_id, '_quote_attachments', true);
+                if (is_array($quote_attachments) && !empty($quote_attachments)) {
+                    foreach ($quote_attachments as $attachment) {
+                        if (isset($attachment['filename']) && !empty($attachment['filename'])) {
+                            $attachments_list .= '<li>' . esc_html($attachment['filename']) . '</li>';
+                        }
+                    }
+                }
+                $attachments_list .= '</ul>';
+                            
+                $message .= $attachments_list;
+            }
+    
+            // Email headers
+            $headers = ['Content-Type: text/html; charset=UTF-8'];
     
             // Logging before sending
             $existing_logs = get_post_meta($quote_id, '_quote_email_logs', true);
@@ -229,6 +263,24 @@ class Quote_Manager_Email_Manager {
             error_log('Error in send_quote_email: ' . $e->getMessage());
             return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
         }
+    }
+    
+    /**
+     * Convert URL to local file path
+     *
+     * @param string $url File URL
+     * @return string|false Local path or false if conversion failed
+     */
+    private function url_to_local_path($url) {
+        $upload_dir = wp_upload_dir();
+        
+        // Check if URL is within uploads directory
+        if (strpos($url, $upload_dir['baseurl']) === 0) {
+            $path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $url);
+            return $path;
+        }
+        
+        return false;
     }
 	
     /**

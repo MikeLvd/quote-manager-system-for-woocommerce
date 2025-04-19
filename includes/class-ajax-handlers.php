@@ -166,5 +166,167 @@ class Quote_Manager_Ajax_Handlers {
             wp_send_json_error(['message' => $result['message']]);
         }
         exit;
+    }	
+	
+    /**
+     * Handle file upload for quote attachments
+     */
+    public function upload_attachment() {
+        // Check nonce for security
+        if (!check_ajax_referer('quote_attachment_upload', 'security', false)) {
+            wp_send_json_error(['message' => __('Security check failed.', 'quote-manager-system-for-woocommerce')]);
+        }
+        
+        // Check permissions (allow only shop managers or admins)
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(['message' => __('Access denied', 'quote-manager-system-for-woocommerce')]);
+        }
+        
+        // Check if file was uploaded
+        if (empty($_FILES['file'])) {
+            wp_send_json_error(['message' => __('No file was uploaded.', 'quote-manager-system-for-woocommerce')]);
+        }
+        
+        // Get quote ID
+        $quote_id = isset($_POST['quote_id']) ? intval($_POST['quote_id']) : 0;
+        if (!$quote_id) {
+            wp_send_json_error(['message' => __('Invalid quote ID.', 'quote-manager-system-for-woocommerce')]);
+        }
+        
+        // Create upload directory if it doesn't exist
+        $upload_dir = wp_upload_dir();
+        $quote_attachments_dir = $upload_dir['basedir'] . '/quote-manager/attachments/' . $quote_id;
+        
+        if (!file_exists($quote_attachments_dir)) {
+            wp_mkdir_p($quote_attachments_dir);
+            
+            // Create .htaccess to protect direct access
+            $htaccess_content = <<<HTACCESS
+            # Disable directory browsing
+            Options -Indexes
+            
+            # Deny access to .htaccess
+            <Files .htaccess>
+                Order allow,deny
+                Deny from all
+            </Files>
+            
+            # Allow access only through WordPress
+            <IfModule mod_rewrite.c>
+                RewriteEngine On
+                RewriteCond %{HTTP_REFERER} !^.*wp-admin.* [NC]
+                RewriteRule .* - [F]
+            </IfModule>
+            HTACCESS;
+            
+            file_put_contents($quote_attachments_dir . '/.htaccess', $htaccess_content);
+        }
+        
+        // Handle the file upload
+        $file = $_FILES['file'];
+        $filename = sanitize_file_name($file['name']);
+        $file_path = $quote_attachments_dir . '/' . $filename;
+        
+        // Check if file with the same name exists
+        if (file_exists($file_path)) {
+            // Add timestamp to filename to make it unique
+            $filename_parts = pathinfo($filename);
+            $filename = $filename_parts['filename'] . '-' . time() . '.' . $filename_parts['extension'];
+            $file_path = $quote_attachments_dir . '/' . $filename;
+        }
+        
+        // Move uploaded file
+        if (move_uploaded_file($file['tmp_name'], $file_path)) {
+            // Generate URL for the file
+            $file_url = $upload_dir['baseurl'] . '/quote-manager/attachments/' . $quote_id . '/' . $filename;
+            
+            // Return success response
+            wp_send_json_success([
+                'id' => uniqid('attach_'),
+                'url' => $file_url,
+                'filename' => $filename,
+                'type' => $file['type']
+            ]);
+        } else {
+            wp_send_json_error(['message' => __('Failed to upload file.', 'quote-manager-system-for-woocommerce')]);
+        }
+    }
+	
+    /**
+     * Delete attachment file
+     */
+    public function delete_attachment() {
+        // Check nonce for security
+        if (!check_ajax_referer('quote_attachment_delete', 'security', false)) {
+            wp_send_json_error(['message' => __('Security check failed.', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
+        // Check permissions (allow only shop managers or admins)
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(['message' => __('Access denied', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
+        // Get file URL and attachment data
+        $file_url = isset($_POST['file_url']) ? esc_url_raw($_POST['file_url']) : '';
+        $attachment_id = isset($_POST['attachment_id']) ? sanitize_text_field($_POST['attachment_id']) : '';
+        $quote_id = isset($_POST['quote_id']) ? intval($_POST['quote_id']) : 0;
+        
+        if (empty($file_url) || empty($quote_id)) {
+            wp_send_json_error(['message' => __('Missing required information.', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
+        // Convert URL to file path
+        $upload_dir = wp_upload_dir();
+        $file_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $file_url);
+        
+        // Security check - make sure it's in our upload directory
+        if (strpos($file_path, $upload_dir['basedir']) !== 0) {
+            wp_send_json_error(['message' => __('Invalid file path.', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
+        // Get the current attachments list
+        $attachments = get_post_meta($quote_id, '_quote_attachments', true);
+        if (!is_array($attachments)) {
+            $attachments = [];
+        }
+        
+        // Find and remove the attachment from the array
+        $updated_attachments = [];
+        $file_found = false;
+        
+        foreach ($attachments as $attachment) {
+            if (isset($attachment['url']) && $attachment['url'] === $file_url) {
+                $file_found = true;
+                // Skip this attachment (removing it from the list)
+                continue;
+            }
+            $updated_attachments[] = $attachment;
+        }
+        
+        if (!$file_found) {
+            wp_send_json_error(['message' => __('Attachment not found in quote data.', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
+        // Update the post meta with the new attachments list
+        update_post_meta($quote_id, '_quote_attachments', $updated_attachments);
+        
+        // Delete the physical file if it exists
+        if (file_exists($file_path)) {
+            if (!unlink($file_path)) {
+                // Even if file deletion fails, we've updated the meta data
+                wp_send_json_success([
+                    'message' => __('Attachment removed from quote, but file could not be deleted from server.', 'quote-manager-system-for-woocommerce'),
+                    'partial' => true
+                ]);
+                return;
+            }
+        }
+        
+        wp_send_json_success(['message' => __('Attachment deleted successfully.', 'quote-manager-system-for-woocommerce')]);
     }
 }

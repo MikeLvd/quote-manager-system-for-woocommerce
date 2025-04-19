@@ -61,6 +61,10 @@ You can choose from Media Library or insert a remote image URL.
 
 == Changelog ==
 
+= 1.5.0 =
+New Feature
+*Added feature for additional attachments files to the quote
+
 = 1.4.9 =
 New Feature
 
@@ -80,7 +84,7 @@ Technical Improvements
 
 *Added proper script loading on both settings and quote edit pages
 *Added proper data localization for JavaScript functionality
-*Enhanced TinyMCE configuration for a better editing experience
+*Enhanced TinyMCE configuration for better editing experience
 *Added CSS styling for terms in PDF output
 
 = 1.4.5 =

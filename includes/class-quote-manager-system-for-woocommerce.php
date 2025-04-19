@@ -142,6 +142,8 @@ class Quote_Manager_System_For_Woocommerce {
         $this->loader->add_action('wp_ajax_quote_preview_pdf', $ajax, 'generate_pdf_preview');
         $this->loader->add_action('wp_ajax_quote_download_pdf', $ajax, 'generate_pdf_download');
         $this->loader->add_action('wp_ajax_quote_manager_send_email', $ajax, 'send_email');
+        $this->loader->add_action('wp_ajax_quote_manager_upload_attachment', $ajax, 'upload_attachment');
+		$this->loader->add_action('wp_ajax_quote_delete_attachment', $ajax, 'delete_attachment');
         
         // Settings
         $settings = new Quote_Manager_Settings();

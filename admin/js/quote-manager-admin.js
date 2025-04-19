@@ -48,6 +48,9 @@
             // Initialize internal info table
             this.updateInternalInfo();
             
+            // Initialize attachments handling
+            this.handleAttachments();
+            
             // Check if TinyMCE is available and initialize it for quote_email_message
             if (typeof tinyMCE !== 'undefined' && document.getElementById('quote_email_message')) {
                 this.initEditor();
@@ -1028,6 +1031,214 @@
             `;
             
             $internalTable.find('tbody').append(summaryHtml);
+        },
+
+        /**
+         * Handle file attachments
+         */
+        handleAttachments: function() {
+            const self = this;
+            
+            // Add attachment button
+            $('#add-attachment').on('click', function() {
+                // Create a file input
+                const fileInput = $('<input type="file" style="display:none;" />');
+                $('body').append(fileInput);
+                
+                fileInput.on('change', function(e) {
+                    if (this.files.length === 0) {
+                        return;
+                    }
+                    
+                    const file = this.files[0];
+                    const statusEl = $('#attachment-upload-status');
+                    
+                    // Create form data
+                    const formData = new FormData();
+                    formData.append('action', 'quote_manager_upload_attachment');
+                    formData.append('security', quoteManagerData.attachmentNonce);
+                    formData.append('quote_id', quoteManagerData.quoteId);
+                    formData.append('file', file);
+                    
+                    // Show uploading status
+                    statusEl.text(quoteManagerData.i18n.uploadingFile);
+                    
+                    // Upload the file
+                    $.ajax({
+                        url: quoteManagerData.ajaxUrl,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            if (response.success) {
+                                statusEl.text(quoteManagerData.i18n.fileUploaded);
+                                
+                                // Add the file to the list
+                                self.addAttachmentItem(response.data);
+                                
+                                // Clear status after a delay
+                                setTimeout(function() {
+                                    statusEl.text('');
+                                }, 3000);
+                            } else {
+                                statusEl.text(quoteManagerData.i18n.uploadError + ' ' + (response.data?.message || ''));
+                            }
+                        },
+                        error: function() {
+                            statusEl.text(quoteManagerData.i18n.uploadError + ' ' + quoteManagerData.i18n.errorWhileSending);
+                        }
+                    });
+                    
+                    // Remove the file input
+                    fileInput.remove();
+                });
+                
+                // Trigger click on the file input
+                fileInput.trigger('click');
+            });
+            
+            // Remove attachment
+            $(document).on('click', '.remove-attachment', function() {
+                const $item = $(this).closest('.quote-attachment-item');
+                const fileUrl = $item.find('input[name*="[url]"]').val();
+                const attachmentId = $item.find('input[name*="[id]"]').val();
+                
+                // Confirm deletion
+                if (confirm(quoteManagerData.i18n.confirmDeleteFile || 'Are you sure you want to delete this file?')) {
+                    // Send AJAX request to delete the file
+                    $.ajax({
+                        url: quoteManagerData.ajaxUrl,
+                        type: 'POST',
+                        data: {
+                            action: 'quote_delete_attachment',
+                            security: quoteManagerData.attachmentDeleteNonce,
+                            file_url: fileUrl,
+                            attachment_id: attachmentId,
+                            quote_id: quoteManagerData.quoteId
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Remove the item from the UI
+                                $item.fadeOut(300, function() {
+                                    $(this).remove();
+                                });
+                                
+                                if (response.data && response.data.partial) {
+                                    alert(response.data.message);
+                                }
+                            } else {
+                                // Show error message
+                                alert(response.data.message || 'Error deleting file.');
+                            }
+                        },
+                        error: function() {
+                            alert(quoteManagerData.i18n.errorDeletingFile || 'Error deleting file.');
+                        }
+                    });
+                }
+            });
+        },
+        
+        /**
+         * Add attachment item to the list
+         */
+        addAttachmentItem: function(data) {
+            const template = $('#attachment-item-template').html();
+            const $list = $('#quote-attachment-list');
+            
+            // Get next index
+            const index = this.getNextAttachmentIndex();
+            
+            // Get file icon based on type
+            const icon = this.getFileIcon(data.type);
+            
+            // Get file type label
+            const typeLabel = this.getFileTypeLabel(data.type);
+            
+            // Replace placeholders in template
+            let item = template
+                .replace(/{index}/g, index)
+                .replace(/{id}/g, data.id)
+                .replace(/{url}/g, data.url)
+                .replace(/{filename}/g, data.filename)
+                .replace(/{type}/g, data.type)
+                .replace(/{icon}/g, icon)
+                .replace(/{typelabel}/g, typeLabel);
+            
+            // Add to list
+            $list.append(item);
+        },
+        
+        /**
+         * Get next attachment index
+         */
+        getNextAttachmentIndex: function() {
+            let maxIndex = -1;
+            $('.quote-attachment-item').each(function() {
+                const index = parseInt($(this).data('index'), 10);
+                if (!isNaN(index) && index > maxIndex) {
+                    maxIndex = index;
+                }
+            });
+            return maxIndex + 1;
+        },
+        
+        /**
+         * Get file icon based on mime type
+         */
+        getFileIcon: function(mimeType) {
+            switch (mimeType) {
+                case 'application/pdf':
+                    return '📄';
+                case 'application/msword':
+                case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                    return '📝';
+                case 'application/vnd.ms-excel':
+                case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                    return '📊';
+                case 'application/vnd.ms-powerpoint':
+                case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                    return '📺';
+                case 'image/jpeg':
+                case 'image/png':
+                case 'image/gif':
+                    return '🖼️';
+                case 'application/zip':
+                case 'application/x-rar-compressed':
+                    return '📦';
+                default:
+                    return '📎';
+            }
+        },
+        
+        /**
+         * Get file type label based on mime type
+         */
+        getFileTypeLabel: function(mimeType) {
+            switch (mimeType) {
+                case 'application/pdf':
+                    return 'PDF Document';
+                case 'application/msword':
+                case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                    return 'Word Document';
+                case 'application/vnd.ms-excel':
+                case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                    return 'Excel Spreadsheet';
+                case 'application/vnd.ms-powerpoint':
+                case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                    return 'PowerPoint Presentation';
+                case 'image/jpeg':
+                case 'image/png':
+                case 'image/gif':
+                    return 'Image';
+                case 'application/zip':
+                    return 'ZIP Archive';
+                case 'application/x-rar-compressed':
+                    return 'RAR Archive';
+                default:
+                    return 'File';
+            }
         }
     };
 

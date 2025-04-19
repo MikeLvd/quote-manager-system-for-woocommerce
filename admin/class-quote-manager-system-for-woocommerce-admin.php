@@ -148,6 +148,9 @@ class Quote_Manager_System_For_Woocommerce_Admin {
                     'thousandSeparator'  => $thousand_separator,
                     'decimalSeparator'   => $decimal_separator,
                     'decimals'           => $decimals,
+                    'quoteId'            => $post->ID,
+                    'attachmentNonce'    => wp_create_nonce('quote_attachment_upload'),
+					'attachmentDeleteNonce' => wp_create_nonce('quote_attachment_delete'),
                     
                     // Add translations
                     'i18n' => array(
@@ -178,7 +181,15 @@ class Quote_Manager_System_For_Woocommerce_Admin {
                         'totalNetProfit' => __('Total Net Profit', 'quote-manager-system-for-woocommerce'),
                         
                         // Error messages
-                        'productSearchFailed' => __('Product search failed:', 'quote-manager-system-for-woocommerce')
+                        'productSearchFailed' => __('Product search failed:', 'quote-manager-system-for-woocommerce'),
+                        
+                        // Attachment text
+                        'uploadingFile' => __('Uploading file...', 'quote-manager-system-for-woocommerce'),
+                        'fileUploaded' => __('File uploaded successfully.', 'quote-manager-system-for-woocommerce'),
+                        'uploadError' => __('Error uploading file:', 'quote-manager-system-for-woocommerce'),
+                        'selectFile' => __('Select File', 'quote-manager-system-for-woocommerce'),
+                        'removeAttachment' => __('Remove Attachment', 'quote-manager-system-for-woocommerce'),
+                        'viewFile' => __('View File', 'quote-manager-system-for-woocommerce')
                     )
                 );
                 

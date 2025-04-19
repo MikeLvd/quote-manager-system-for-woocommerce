@@ -77,6 +77,15 @@ class Quote_Manager_Metaboxes {
             'normal',
             'default'
         );		
+
+        add_meta_box(
+            'quote_attachments_meta',
+            __('📎 Attachments', 'quote-manager-system-for-woocommerce'),
+            array($this, 'render_quote_attachments_meta'),
+            'customer_quote',
+            'normal',
+            'default'
+        );
     }
     
     /**
@@ -625,6 +634,134 @@ class Quote_Manager_Metaboxes {
     }
 
     /**
+     * Render the Attachments meta box.
+     */
+    public function render_quote_attachments_meta($post) {
+        // Get saved attachments
+        $attachments = get_post_meta($post->ID, '_quote_attachments', true);
+        if (!is_array($attachments)) {
+            $attachments = array();
+        }
+    
+        wp_nonce_field('quote_manager_save_attachments', 'quote_manager_nonce_attachments', false);
+        
+        ?>
+        <div class="quote-attachments-container">
+            <p><?php _e('Add technical documents, specifications, or any other files that should be attached to this quote.', 'quote-manager-system-for-woocommerce'); ?></p>
+            
+            <div class="quote-attachment-list" id="quote-attachment-list">
+                <?php if (!empty($attachments)): ?>
+                    <?php foreach ($attachments as $index => $attachment): ?>
+                        <div class="quote-attachment-item" data-index="<?php echo esc_attr($index); ?>">
+                            <input type="hidden" name="quote_attachments[<?php echo esc_attr($index); ?>][id]" value="<?php echo esc_attr($attachment['id'] ?? ''); ?>">
+                            <input type="hidden" name="quote_attachments[<?php echo esc_attr($index); ?>][url]" value="<?php echo esc_attr($attachment['url'] ?? ''); ?>">
+                            <input type="hidden" name="quote_attachments[<?php echo esc_attr($index); ?>][filename]" value="<?php echo esc_attr($attachment['filename'] ?? ''); ?>">
+                            <input type="hidden" name="quote_attachments[<?php echo esc_attr($index); ?>][type]" value="<?php echo esc_attr($attachment['type'] ?? ''); ?>">
+                            
+                            <div class="attachment-icon">
+                                <?php echo $this->get_file_icon($attachment['type'] ?? ''); ?>
+                            </div>
+                            <div class="attachment-details">
+                                <div class="attachment-filename"><?php echo esc_html($attachment['filename'] ?? ''); ?></div>
+                                <div class="attachment-type"><?php echo esc_html($this->get_file_type_label($attachment['type'] ?? '')); ?></div>
+                            </div>
+                            <div class="attachment-actions">
+                                <a href="<?php echo esc_url($attachment['url'] ?? ''); ?>" class="button button-small" target="_blank" title="<?php esc_attr_e('View File', 'quote-manager-system-for-woocommerce'); ?>">👁️</a>
+                                <button type="button" class="button button-small remove-attachment" title="<?php esc_attr_e('Remove File', 'quote-manager-system-for-woocommerce'); ?>">❌</button>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+            
+            <div class="quote-attachment-controls">
+                <button type="button" id="add-attachment" class="button">
+                    <?php _e('Add Attachment', 'quote-manager-system-for-woocommerce'); ?>
+                </button>
+                <div id="attachment-upload-status"></div>
+            </div>
+        </div>
+        <template id="attachment-item-template">
+            <div class="quote-attachment-item" data-index="{index}">
+                <input type="hidden" name="quote_attachments[{index}][id]" value="{id}">
+                <input type="hidden" name="quote_attachments[{index}][url]" value="{url}">
+                <input type="hidden" name="quote_attachments[{index}][filename]" value="{filename}">
+                <input type="hidden" name="quote_attachments[{index}][type]" value="{type}">
+                
+                <div class="attachment-icon">
+                    {icon}
+                </div>
+                <div class="attachment-details">
+                    <div class="attachment-filename">{filename}</div>
+                    <div class="attachment-type">{typelabel}</div>
+                </div>
+                <div class="attachment-actions">
+                    <a href="{url}" class="button button-small" target="_blank" title="<?php esc_attr_e('View File', 'quote-manager-system-for-woocommerce'); ?>">👁️</a>
+                    <button type="button" class="button button-small remove-attachment" title="<?php esc_attr_e('Remove File', 'quote-manager-system-for-woocommerce'); ?>">❌</button>
+                </div>
+            </div>
+        </template>
+        <?php
+    }
+    
+    /**
+     * Get appropriate icon based on file type
+     */
+    private function get_file_icon($file_type) {
+        switch ($file_type) {
+            case 'application/pdf':
+                return '📄';
+            case 'application/msword':
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                return '📝';
+            case 'application/vnd.ms-excel':
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                return '📊';
+            case 'application/vnd.ms-powerpoint':
+            case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                return '📺';
+            case 'image/jpeg':
+            case 'image/png':
+            case 'image/gif':
+                return '🖼️';
+            case 'application/zip':
+            case 'application/x-rar-compressed':
+                return '📦';
+            default:
+                return '📎';
+        }
+    }
+    
+    /**
+     * Get human-readable file type label
+     */
+    private function get_file_type_label($file_type) {
+        switch ($file_type) {
+            case 'application/pdf':
+                return __('PDF Document', 'quote-manager-system-for-woocommerce');
+            case 'application/msword':
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                return __('Word Document', 'quote-manager-system-for-woocommerce');
+            case 'application/vnd.ms-excel':
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                return __('Excel Spreadsheet', 'quote-manager-system-for-woocommerce');
+            case 'application/vnd.ms-powerpoint':
+            case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                return __('PowerPoint Presentation', 'quote-manager-system-for-woocommerce');
+            case 'image/jpeg':
+            case 'image/png':
+            case 'image/gif':
+                return __('Image', 'quote-manager-system-for-woocommerce');
+            case 'application/zip':
+                return __('ZIP Archive', 'quote-manager-system-for-woocommerce');
+            case 'application/x-rar-compressed':
+                return __('RAR Archive', 'quote-manager-system-for-woocommerce');
+            default:
+                return __('File', 'quote-manager-system-for-woocommerce');
+        }
+    }
+
+    /**
      * Save meta box data when the Customer Quote post is saved.
      */
     public function save_quote_post($post_id) {
@@ -637,7 +774,7 @@ class Quote_Manager_Metaboxes {
         if (!current_user_can('edit_post', $post_id)) {
             return;
         }
-
+    
         // Save customer fields if nonce is valid.
         if (isset($_POST['quote_manager_nonce_customer']) && wp_verify_nonce($_POST['quote_manager_nonce_customer'], 'quote_manager_save_customer')) {
             $fields = array(
@@ -661,7 +798,7 @@ class Quote_Manager_Metaboxes {
                 }
             }
         }
-
+    
         // Save products fields if nonce is valid.
         if (isset($_POST['quote_manager_nonce_products']) && wp_verify_nonce($_POST['quote_manager_nonce_products'], 'quote_manager_save_products')) {
             if (!empty($_POST['quote_products']) && is_array($_POST['quote_products'])) {
@@ -689,7 +826,7 @@ class Quote_Manager_Metaboxes {
                         'qty', 'id'
                     );
                 }
-
+    
                 if (!empty($products_data)) {
                     update_post_meta($post_id, '_quote_products', $products_data);
                 } else {
@@ -705,7 +842,7 @@ class Quote_Manager_Metaboxes {
             } else {
                 update_post_meta($post_id, '_quote_include_vat', '0');
             }
-          
+            
             // Handle expiration date
             if (isset($_POST['quote_expiration_days'])) {
                 $expiration_days = sanitize_text_field($_POST['quote_expiration_days']);
@@ -723,15 +860,36 @@ class Quote_Manager_Metaboxes {
                     update_post_meta($post_id, '_quote_expiration_date', $expiration_date);
                 }
             }
-            
-            // Save terms & conditions if nonce is valid
-            if (isset($_POST['quote_manager_nonce_terms']) && wp_verify_nonce($_POST['quote_manager_nonce_terms'], 'quote_manager_save_terms')) {
-                if (isset($_POST['quote_terms'])) {
-                    $terms = wp_kses_post(wp_unslash($_POST['quote_terms']));
-                    update_post_meta($post_id, '_quote_terms', $terms);
+        }
+        
+        // Save attachments if nonce is valid
+        if (isset($_POST['quote_manager_nonce_attachments']) && wp_verify_nonce($_POST['quote_manager_nonce_attachments'], 'quote_manager_save_attachments')) {
+            if (!empty($_POST['quote_attachments']) && is_array($_POST['quote_attachments'])) {
+                $attachments_data = array();
+                
+                foreach ($_POST['quote_attachments'] as $item) {
+                    $attachment_id = isset($item['id']) ? sanitize_text_field($item['id']) : '';
+                    $url = isset($item['url']) ? esc_url_raw($item['url']) : '';
+                    $filename = isset($item['filename']) ? sanitize_text_field($item['filename']) : '';
+                    $type = isset($item['type']) ? sanitize_text_field($item['type']) : '';
+                    
+                    if (empty($url) || empty($filename)) {
+                        continue;
+                    }
+                    
+                    $attachments_data[] = compact('id', 'url', 'filename', 'type');
                 }
+                
+                if (!empty($attachments_data)) {
+                    update_post_meta($post_id, '_quote_attachments', $attachments_data);
+                } else {
+                    delete_post_meta($post_id, '_quote_attachments');
+                }
+            } else {
+                delete_post_meta($post_id, '_quote_attachments');
             }
         }
+    
     }
 	
     /**
@@ -823,9 +981,26 @@ class Quote_Manager_Metaboxes {
                 <!-- Hidden field for quote ID -->
                 <input type="hidden" id="modal-quote-id" value="<?php echo esc_attr($post->ID); ?>" />
 
-                <!-- PDF Attachment -->
+                <!-- PDF Attachment and additional attachments -->
                 <div class="form-group">
-                    📎 <strong>Attachment:</strong> <code>QUOTE_<?php echo esc_attr($post->ID); ?>.pdf</code>
+                    <strong>📎 <?php _e('Attachments:', 'quote-manager-system-for-woocommerce'); ?></strong>
+                    <ul class="email-attachments-list">
+                        <li><code>QUOTE_<?php echo esc_attr($post->ID); ?>.pdf</code> (<?php _e('Quote PDF', 'quote-manager-system-for-woocommerce'); ?>)</li>
+                        
+                        <?php
+                        // Get all attachments for this quote
+                        $attachments = get_post_meta($post->ID, '_quote_attachments', true);
+                        if (is_array($attachments) && !empty($attachments)):
+                            foreach ($attachments as $attachment):
+                                if (isset($attachment['filename']) && !empty($attachment['filename'])):
+                                ?>
+                                <li><code><?php echo esc_html($attachment['filename']); ?></code> (<?php _e('Attachment', 'quote-manager-system-for-woocommerce'); ?>)</li>
+                                <?php
+                                endif;
+                            endforeach;
+                        endif;
+                        ?>
+                    </ul>
                 </div>
 
                 <!-- Send Buttons -->

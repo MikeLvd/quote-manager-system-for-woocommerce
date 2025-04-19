@@ -378,20 +378,19 @@ class Quote_Manager_PDF_Generator {
                     color: <?php echo $light_text_color; ?>;
                     text-align: left;
                     font-style: italic;
-                    border-top: 1px dashed <?php echo $border_color; ?>;
                     padding-bottom: 20px;
                 }
  
                 .quote-terms-section {
                     font-size: 9pt;
                     color: <?php echo $text_color; ?>;
-                    margin-top: 15px;
+                    margin-top: 10px;
                     border-top: 1px solid <?php echo $border_color; ?>;
                     padding-top: 10px;
                 }
                 
                 .quote-terms-section h3 {
-                    font-size: 11pt;
+                    font-size: 10pt;
                     font-weight: bold;
                     margin-bottom: 8px;
                     color: <?php echo $primary_color; ?>;
@@ -405,6 +404,8 @@ class Quote_Manager_PDF_Generator {
                     font-size: 9pt;
                     text-align: center;
                     position: absolute;
+					left: 0;
+					right: 0;
                     bottom: 0;
                     width: 100%;
                     box-sizing: border-box;
@@ -622,24 +623,24 @@ class Quote_Manager_PDF_Generator {
                             <div class="signature-line"><?php _e('Signature', 'quote-manager-system-for-woocommerce'); ?></div>
                         </div>
                     </div>
-                    
+					
                     <!-- Notes and Terms -->
-                    <div class="notes-area">
-                        <p><?php _e('This quote is valid until the date specified above, unless otherwise indicated.', 'quote-manager-system-for-woocommerce'); ?></p>
+                    <div class="notes-area">                   
                         <?php 
                         // Add custom quote notes if available
                         $quote_notes = get_post_meta($quote_id, '_quote_notes', true);
                         if (!empty($quote_notes)): 
                         ?>
-                        <p style="margin-top: 10px;"><?php echo esc_html($quote_notes); ?></p>
-                        <?php endif; 
+                            <p class="quote-notes-text"><?php echo esc_html($quote_notes); ?></p>
+                        <?php 
+                        endif; 
                         
                         // Add terms & conditions
                         $quote_terms = get_post_meta($quote_id, '_quote_terms', true);
                         if (empty($quote_terms)) {
                             $quote_terms = get_option('quote_manager_default_terms', '');
                         }
-                        
+                    
                         if (!empty($quote_terms)):
                             // Parse the placeholders in the terms
                             $parsed_terms = $this->parse_terms_placeholders($quote_terms, [
@@ -651,14 +652,29 @@ class Quote_Manager_PDF_Generator {
                                 'company_name'        => $company_name,
                                 'today'               => date_i18n('d/m/Y'),
                             ]);
-                        ?>
-                        <div class="quote-terms-section" style="margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 10px;">
-                            <h3 style="font-size: 12pt; margin-bottom: 8px;"><?php _e('Terms & Conditions', 'quote-manager-system-for-woocommerce'); ?></h3>
-                            <?php echo wp_kses_post($parsed_terms); ?>
-                        </div>
+                            ?>
+                            <div class="quote-terms-section">
+                                <h3 class="quote-terms-title"><?php _e('Terms & Conditions', 'quote-manager-system-for-woocommerce'); ?></h3>
+                                <?php echo wp_kses_post($parsed_terms); ?>
+                            </div>
                         <?php endif; ?>
                     </div>
-                
+					
+					<!-- Show attachment if exists -->
+                    <?php
+                    $attachments = get_post_meta($quote_id, '_quote_attachments', true);
+                    if (is_array($attachments) && !empty($attachments)) :
+                    ?>
+                        <div class="attachments-area" style="margin-top: 30px; font-size: 9pt;">
+                            <h3 style="color: <?php echo $primary_color; ?>; font-size: 10pt;"><?php _e('Attached Files', 'quote-manager-system-for-woocommerce'); ?></h3>
+                            <ul>
+                                <?php foreach ($attachments as $file) : ?>
+                                    <li><?php echo esc_html($file['filename']); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+					
                 <!-- Bottom Area -->
                 <div class="page-bottom">
                     <?php echo esc_html($company_name . ' - ' . $company_address . ', ' . $company_city); ?>

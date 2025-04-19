@@ -6,7 +6,7 @@
  * Plugin Name:       Quote Manager System For WooCommerce
  * Plugin URI:        https://github.com/MikeLvd/quote-manager-system-for-woocommerce
  * Description:       A custom WordPress plugin that allows you to create detailed product offers inside the WooCommerce backend. Ideal for retail stores, B2B sales, and client advanced quotations.
- * Version:           1.4.9
+ * Version:           1.5.0
  * Author:            Mike Lvd
  * Author URI:        https://goldenbath.gr/
  * Requires at least: 5.9
@@ -29,7 +29,7 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('QUOTE_MANAGER_VERSION', '1.4.9');
+define('QUOTE_MANAGER_VERSION', '1.5.0');
 define('QUOTE_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('QUOTE_MANAGER_URL', plugin_dir_url(__FILE__));
 
@@ -83,10 +83,39 @@ function quote_manager_check_woocommerce_dependency() {
          * Actions to perform on plugin activation
          */
         function quote_manager_activate() {
-            // Create protected upload directory for PDFs
+            // Create the protected upload directory for PDFs
             require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
             $email_manager = new Quote_Manager_Email_Manager();
             $email_manager->create_protection_htaccess();
+            
+            // Create directory for attachments
+            $upload_dir = wp_upload_dir();
+            $attachments_dir = $upload_dir['basedir'] . '/quote-manager/attachments/';
+            
+            if (!file_exists($attachments_dir)) {
+                wp_mkdir_p($attachments_dir);
+                
+                // Create .htaccess to protect direct access
+                $htaccess_content = <<<HTACCESS
+                # Disable directory browsing
+                Options -Indexes
+                
+                # Deny access to .htaccess
+                <Files .htaccess>
+                    Order allow,deny
+                    Deny from all
+                </Files>
+                
+                # Allow access only through WordPress
+                <IfModule mod_rewrite.c>
+                    RewriteEngine On
+                    RewriteCond %{HTTP_REFERER} !^.*wp-admin.* [NC]
+                    RewriteRule .* - [F]
+                </IfModule>
+                HTACCESS;
+                
+                file_put_contents($attachments_dir . '.htaccess', $htaccess_content);
+            }
         }
         
         // Run the plugin
