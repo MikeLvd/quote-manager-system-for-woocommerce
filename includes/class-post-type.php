@@ -40,22 +40,23 @@ class Quote_Manager_Post_Type {
         ));
     }
 
-    /**
-     * Add columns to the quotes list table
-     */
-    public function set_custom_columns($columns) {
-        $new_columns = array();
-        $new_columns['cb'] = $columns['cb']; // Checkbox
-        $new_columns['quote_id'] = __('Number', 'quote-manager-system-for-woocommerce');
-        $new_columns['title'] = __('Quote Name', 'quote-manager-system-for-woocommerce');
-        $new_columns['customer'] = __('Customer', 'quote-manager-system-for-woocommerce');
-        $new_columns['project_name'] = __('Project', 'quote-manager-system-for-woocommerce');
-        $new_columns['expiration'] = __('Expiration Date', 'quote-manager-system-for-woocommerce');
-        $new_columns['date'] = $columns['date']; // Keep original date column
-		$new_columns['email_tracking'] = __('Email Tracking', 'quote-manager-system-for-woocommerce');
-        
-        return $new_columns;
-    }
+/**
+ * Add columns to the quotes list table
+ */
+public function set_custom_columns($columns) {
+    $new_columns = array();
+    $new_columns['cb'] = $columns['cb']; // Checkbox
+    $new_columns['quote_id'] = __('Number', 'quote-manager-system-for-woocommerce');
+    $new_columns['title'] = __('Quote Name', 'quote-manager-system-for-woocommerce');
+    $new_columns['customer'] = __('Customer', 'quote-manager-system-for-woocommerce');
+    $new_columns['project_name'] = __('Project', 'quote-manager-system-for-woocommerce');
+    $new_columns['expiration'] = __('Expiration Date', 'quote-manager-system-for-woocommerce');
+    $new_columns['date'] = $columns['date']; // Keep original date column
+    $new_columns['email_tracking'] = __('Email Tracking', 'quote-manager-system-for-woocommerce');
+	$new_columns['status'] = __('Status', 'quote-manager-system-for-woocommerce');
+    
+    return $new_columns;
+}
 
     /**
      * Display content for custom columns
@@ -76,6 +77,15 @@ class Quote_Manager_Post_Type {
                 }
                 break;
 
+            case 'company':
+                $company = get_post_meta($post_id, '_customer_company', true);
+                if (!empty($company)) {
+                    echo esc_html($company);
+                } else {
+                    echo '—';
+                }
+                break;
+			
             case 'project_name':
                 $project_name = get_post_meta($post_id, '_project_name', true);
                 if (!empty($project_name)) {
@@ -137,6 +147,20 @@ class Quote_Manager_Post_Type {
                     }
                 }
                 break;
+				
+				
+            case 'status':
+                $status = get_post_meta($post_id, '_quote_status', true);
+                if (empty($status)) {
+                    $status = Quote_Manager_System_For_Woocommerce::STATUS_DRAFT;
+                    update_post_meta($post_id, '_quote_status', $status);
+                }
+                
+                $status_label = Quote_Manager_System_For_Woocommerce::get_status_label($status);
+                $status_class = 'quote-status-' . $status;
+                
+                echo '<span class="quote-status-badge ' . esc_attr($status_class) . '">' . esc_html($status_label) . '</span>';
+                break;				
         }
     }
 
@@ -148,6 +172,7 @@ class Quote_Manager_Post_Type {
         $columns['customer'] = 'customer';
         $columns['project_name'] = 'project_name';
         $columns['expiration'] = 'expiration';
+		$columns['status'] = 'status';
         return $columns;
     }
 
@@ -179,5 +204,10 @@ class Quote_Manager_Post_Type {
             $query->set('meta_key', '_offer_expiration_date');
             $query->set('orderby', 'meta_value');
         }
+		
+        if ('status' === $orderby) {
+            $query->set('meta_key', '_quote_status');
+            $query->set('orderby', 'meta_value');
+        }		
     }
 }

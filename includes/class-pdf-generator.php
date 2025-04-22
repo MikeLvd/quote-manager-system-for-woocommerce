@@ -617,12 +617,26 @@ class Quote_Manager_PDF_Generator {
                         </table>
                     </div>
                     
-                    <!-- Signature -->
-                    <div class="footer-content">
-                        <div class="signature-area">
-                            <div class="signature-line"><?php _e('Signature', 'quote-manager-system-for-woocommerce'); ?></div>
-                        </div>
-                    </div>
+<!-- Signature Area -->
+<div class="footer-content">
+    <div class="signature-area">
+        <?php
+        // Check if we should include customer signature
+        $include_signature = get_post_meta($quote_id, '_include_signature_in_pdf', true);
+        $customer_signature = get_post_meta($quote_id, '_customer_signature', true);
+        
+        if ($include_signature && !empty($customer_signature)):
+            // Display customer signature
+            ?>
+            <div class="customer-signature">
+                <img src="<?php echo esc_attr($customer_signature); ?>" alt="<?php esc_attr_e('Customer Signature', 'quote-manager-system-for-woocommerce'); ?>" style="max-width: 300px; max-height: 100px;">
+            </div>
+            <div class="signature-line" style="margin-top: 5px;"><?php _e('Customer Signature', 'quote-manager-system-for-woocommerce'); ?></div>
+        <?php else: ?>
+            <div class="signature-line"><?php _e('Signature', 'quote-manager-system-for-woocommerce'); ?></div>
+        <?php endif; ?>
+    </div>
+</div>
 					
                     <!-- Notes and Terms -->
                     <div class="notes-area">                   

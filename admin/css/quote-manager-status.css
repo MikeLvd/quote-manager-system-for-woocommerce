@@ -1,0 +1,80 @@
+/* Quote Status Styles */
+.quote-status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 70px;
+}
+
+/* Status colors */
+.quote-status-draft {
+    background-color: #f0f0f0;
+    color: #646970;
+    border: 1px solid #c3c4c7;
+}
+
+.quote-status-sent {
+    background-color: #f0f6fc;
+    color: #1d2327;
+    border: 1px solid #72aee6;
+}
+
+.quote-status-accepted {
+    background-color: #edfaef;
+    color: #116329;
+    border: 1px solid #4ab866;
+}
+
+.quote-status-rejected {
+    background-color: #fcf0f1;
+    color: #82071e;
+    border: 1px solid #e35d6a;
+}
+
+.quote-status-expired {
+    background-color: #fcf9e8;
+    color: #804d0f;
+    border: 1px solid #dba617;
+}
+
+/* CSS for Status Dropdown in Metabox */
+#quote_status {
+    font-weight: 500;
+    min-height: 32px;
+}
+
+#quote_status option[value="draft"] {
+    color: #646970;
+}
+
+#quote_status option[value="sent"] {
+    color: #2271b1;
+}
+
+#quote_status option[value="accepted"] {
+    color: #116329;
+}
+
+#quote_status option[value="rejected"] {
+    color: #82071e;
+}
+
+#quote_status option[value="expired"] {
+    color: #804d0f;
+}
+
+/* Status section in metabox */
+.quote-status-section {
+    margin-bottom: 15px;
+}
+
+#status-updated-message {
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 3px;
+}

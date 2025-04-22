@@ -662,6 +662,29 @@ public function render_customer_info_meta($post) {
      * Render the Quote Actions meta box (Preview / Download PDF).
      */
     public function render_quote_actions_meta($post) {
+        // Get current status
+        $current_status = get_post_meta($post->ID, '_quote_status', true);
+        if (empty($current_status)) {
+            $current_status = Quote_Manager_System_For_Woocommerce::STATUS_DRAFT;
+        }
+        
+        // Status dropdown
+        echo '<div class="quote-status-section">';
+        echo '<p><label style="font-weight:600;">' . esc_html__('Quote Status:', 'quote-manager-system-for-woocommerce') . '</label></p>';
+        
+        echo '<select name="quote_status" id="quote_status" style="width:100%; margin-bottom:10px;">';
+        
+        $statuses = Quote_Manager_System_For_Woocommerce::get_quote_statuses();
+        foreach ($statuses as $status_key => $status_label) {
+            echo '<option value="' . esc_attr($status_key) . '" ' . selected($current_status, $status_key, false) . '>' . esc_html($status_label) . '</option>';
+        }
+        
+        echo '</select>';
+        echo '<div id="status-updated-message" style="display:none; margin-bottom:10px; padding:5px; background-color:#f0f8ff; border:1px solid #c3d9ea; border-radius:3px; font-size:12px; color:#0073aa;"></div>';
+        echo '</div>';
+        
+        echo '<hr style="margin:10px 0;">';
+        
         // VAT Checkbox
         $checked = get_post_meta($post->ID, '_quote_include_vat', true) === '1' ? 'checked' : '';
         echo '<p><label style="font-weight:600;"><input type="checkbox" name="quote_include_vat" value="1" ' . $checked . ' /> ' . esc_html__('Include VAT in quote', 'quote-manager-system-for-woocommerce') . '</label></p>';
@@ -1110,6 +1133,12 @@ public function render_customer_info_meta($post) {
                 }
             }
         }
+
+        // Save status if present
+        if (isset($_POST['quote_status'])) {
+            $status = sanitize_text_field($_POST['quote_status']);
+            update_post_meta($post_id, '_quote_status', $status);
+        }
         
         // Save attachments if nonce is valid
         if (isset($_POST['quote_manager_nonce_attachments']) && wp_verify_nonce($_POST['quote_manager_nonce_attachments'], 'quote_manager_save_attachments')) {
@@ -1164,23 +1193,7 @@ public function render_customer_info_meta($post) {
         $quote_expiry = get_post_meta($post->ID, '_quote_expiration_date', true) ?: '–';
 
         // Default template
-        $default_template = 
-        'Dear {{customer_first_name}},
-
-        Thank you for your interest in our products and services. We are pleased to present you with a customized solution for your needs.
-        
-        Attached you will find our detailed quote (no. #{{quote_id}}) in PDF format, which has been prepared specifically for you.
-        
-        Important information:
-        - Quote valid until: {{quote_expiry}}
-        - For immediate assistance: (+30) 210 XXX XXXX
-        
-        Please review the quote and do not hesitate to contact us for any clarifications or adjustments you would like. We are always available to discuss how we can better meet your needs.
-        
-        Thank you for choosing our company and we look forward to working with you!
-        
-        Best regards,
-        Your Company';
+        $default_template = Quote_Manager_System_For_Woocommerce::get_default_email_template();
         
         // Parse placeholders
         $default_message = $this->parse_email_placeholders($default_template, [
@@ -1197,13 +1210,10 @@ public function render_customer_info_meta($post) {
 
                 <!-- Email Subject -->
                 <div class="form-group">
-                    <label for="quote-email-subject"><strong>Subject:</strong></label>
-                    <input type="text" id="quote-email-subject" class="regular-text" value="Your quote from <?php echo esc_html(get_bloginfo('name')); ?>" />
-                </div>
-
-                <!-- Email Message with TinyMCE editor -->
-                <div class="form-group">
                     <label for="quote_email_message"><strong>Message:</strong></label>
+                    <p class="description">
+                        Use <code>{{quote_view_url}}</code> to include a link where customers can view and respond to this quote.
+                    </p>
                     <?php
                     wp_editor(
                         $default_message,
@@ -1223,7 +1233,8 @@ public function render_customer_info_meta($post) {
                         <code>{{customer_last_name}}</code>,
                         <code>{{customer_name}}</code>,
                         <code>{{quote_id}}</code>,
-                        <code>{{quote_expiry}}</code>
+                        <code>{{quote_expiry}}</code>,
+                        <code>{{quote_view_url}}</code>
                     </p>
                 </div>
 

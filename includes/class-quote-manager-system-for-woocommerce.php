@@ -71,6 +71,41 @@ class Quote_Manager_System_For_Woocommerce {
     }
 
     /**
+     * Quote statuses
+     */
+    const STATUS_DRAFT = 'draft';
+    const STATUS_SENT = 'sent';
+    const STATUS_ACCEPTED = 'accepted';
+    const STATUS_REJECTED = 'rejected';
+    const STATUS_EXPIRED = 'expired';
+    
+    /**
+     * Get all available quote statuses
+     * 
+     * @return array Array of status keys and labels
+     */
+    public static function get_quote_statuses() {
+        return array(
+            self::STATUS_DRAFT => __('Draft', 'quote-manager-system-for-woocommerce'),
+            self::STATUS_SENT => __('Sent', 'quote-manager-system-for-woocommerce'),
+            self::STATUS_ACCEPTED => __('Accepted', 'quote-manager-system-for-woocommerce'),
+            self::STATUS_REJECTED => __('Rejected', 'quote-manager-system-for-woocommerce'),
+            self::STATUS_EXPIRED => __('Expired', 'quote-manager-system-for-woocommerce'),
+        );
+    }
+    
+    /**
+     * Get status label from status key
+     * 
+     * @param string $status Status key
+     * @return string Status label
+     */
+    public static function get_status_label($status) {
+        $statuses = self::get_quote_statuses();
+        return isset($statuses[$status]) ? $statuses[$status] : __('Unknown', 'quote-manager-system-for-woocommerce');
+    }
+
+    /**
      * Setup email tracking functionality
      */
     private function setup_email_tracking() {
@@ -169,6 +204,8 @@ class Quote_Manager_System_For_Woocommerce {
 		$this->loader->add_action('wp_ajax_quote_delete_attachment', $ajax, 'delete_attachment');
 		$this->loader->add_action('wp_ajax_quote_manager_get_states', $ajax, 'get_states');
 		$this->loader->add_action('wp_ajax_quote_manager_create_customer', $ajax, 'create_customer_from_quote');
+		$this->loader->add_action('wp_ajax_quote_manager_update_status', $ajax, 'update_quote_status');
+		$this->loader->add_action('wp_ajax_quote_manager_check_expired', $ajax, 'check_expired_quotes');
         
         // Settings
         $settings = new Quote_Manager_Settings();
@@ -184,11 +221,15 @@ class Quote_Manager_System_For_Woocommerce {
      * @access   private
      */
     private function define_public_hooks() {
-        $plugin_public = new Quote_Manager_System_For_Woocommerce_Public($this->get_plugin_name(), $this->get_version());
-        
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
-    }
+    $plugin_public = new Quote_Manager_System_For_Woocommerce_Public($this->get_plugin_name(), $this->get_version());
+    
+    $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+    $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+    
+    // Init Response Handler
+    require_once QUOTE_MANAGER_PATH . 'public/class-quote-response-handler.php';
+    $response_handler = new Quote_Manager_Response_Handler();
+}
 
     /**
      * Run the loader to execute all of the hooks with WordPress.
@@ -228,5 +269,34 @@ class Quote_Manager_System_For_Woocommerce {
      */
     public function get_version() {
         return $this->version;
+    }
+    
+    /**
+     * Get the default email template with placeholders
+     *
+     * @return string Default email template
+     */
+    public static function get_default_email_template() {
+        return '
+        <p>Dear {{customer_first_name}},</p>
+        
+        <p>Thank you for your interest in our products and services. We are pleased to present you with a customized solution for your needs.</p>
+    
+    
+        
+        <p>Attached you will find our detailed quote (no. #{{quote_id}}) in PDF format, which has been prepared specifically for you.</p>
+        
+        <p><strong>You can also view and respond to this quote online at:</strong> <a href="{{quote_view_url}}">{{quote_view_url}}</a></p>
+        
+        <p><strong>Important information:</strong><br>
+        - Quote valid until: {{quote_expiry}}<br>
+        - For immediate assistance: (+30) 210 XXX XXXX</p>
+        
+        <p>Please review the quote and do not hesitate to contact us for any clarifications or adjustments you would like. We are always available to discuss how we can better meet your needs.</p>
+        
+        <p>Thank you for choosing our company and we look forward to working with you!</p>
+        
+        <p>Best regards,<br>
+        {{site_name}}</p>';
     }
 }

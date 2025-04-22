@@ -6,7 +6,7 @@
  * Plugin Name:       Quote Manager System For WooCommerce
  * Plugin URI:        https://github.com/MikeLvd/quote-manager-system-for-woocommerce
  * Description:       A custom WordPress plugin that allows you to create detailed product offers inside the WooCommerce backend. Ideal for retail stores, B2B sales, and client advanced quotations.
- * Version:           1.6.0
+ * Version:           1.6.5
  * Author:            Mike Lvd
  * Author URI:        https://goldenbath.gr/
  * Requires at least: 5.9
@@ -29,7 +29,7 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('QUOTE_MANAGER_VERSION', '1.6.0');
+define('QUOTE_MANAGER_VERSION', '1.6.5');
 define('QUOTE_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('QUOTE_MANAGER_URL', plugin_dir_url(__FILE__));
 
