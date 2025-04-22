@@ -52,6 +52,7 @@ class Quote_Manager_Post_Type {
         $new_columns['project_name'] = __('Project', 'quote-manager-system-for-woocommerce');
         $new_columns['expiration'] = __('Expiration Date', 'quote-manager-system-for-woocommerce');
         $new_columns['date'] = $columns['date']; // Keep original date column
+		$new_columns['email_tracking'] = __('Email Tracking', 'quote-manager-system-for-woocommerce');
         
         return $new_columns;
     }
@@ -92,6 +93,48 @@ class Quote_Manager_Post_Type {
                     $quote_post = get_post($post_id);
                     // Default to 30 days if not set
                     echo esc_html(date_i18n('d/m/Y', strtotime('+30 days', strtotime($quote_post->post_date))));
+                }
+                break;
+				
+            case 'email_tracking':
+                $logs = get_post_meta($post_id, '_quote_email_logs', true);
+                
+                if (!is_array($logs) || empty($logs)) {
+                    echo '<span class="no-emails-sent">—</span>';
+                } else {
+                    $sent_count = count($logs);
+                    $opened_logs = array_filter($logs, function($log) {
+                        return !empty($log['opened_at']);
+                    });
+                    $opened_count = count($opened_logs);
+                    
+                    if ($opened_count > 0) {
+                        // Sort opened logs by date (newest first)
+                        usort($opened_logs, function($a, $b) {
+                            return strtotime($b['opened_at']) - strtotime($a['opened_at']);
+                        });
+                        
+                        $last_opened = $opened_logs[0]['opened_at'];
+                        $formatted_date = date_i18n('d/m/Y', strtotime($last_opened));
+                        $formatted_time = date_i18n('H:i', strtotime($last_opened));
+                        
+                        echo '<div class="email-tracking-status opened">';
+                        printf(
+                            __('Sent: %1$d, Opened: %2$d<br>Last: %3$s at %4$s', 'quote-manager-system-for-woocommerce'),
+                            $sent_count,
+                            $opened_count,
+                            $formatted_date,
+                            $formatted_time
+                        );
+                        echo '</div>';
+                    } else {
+                        echo '<div class="email-tracking-status not-opened">';
+                        printf(
+                            __('Sent: %d (not opened)', 'quote-manager-system-for-woocommerce'),
+                            $sent_count
+                        );
+                        echo '</div>';
+                    }
                 }
                 break;
         }

@@ -2,7 +2,7 @@
 Plugin Name:       Quote Manager System For WooCommerce
 Plugin URI:        https://github.com/MikeLvd/quote-manager-system-for-woocommerce
 Description:       A custom WordPress plugin that allows you to create detailed product offers inside the WooCommerce backend. Ideal for retail stores, B2B sales, and client advanced quotations.
-Version:           1.0.5
+Version:           1.6.0
 Author:            Mike Lvd
 Author URI:        https://goldenbath.gr/
 Requires at least: 5.9
@@ -61,9 +61,50 @@ You can choose from Media Library or insert a remote image URL.
 
 == Changelog ==
 
-= 1.5.0 =
-New Feature
-*Added feature for additional attachments files to the quote
+= 1.6.0 =
+Enhancements
+• Redesigned Customer & Shipping Details layout to match WooCommerce admin interface
+• Added side-by-side field layouts for better space utilization
+• Added field icons for improved visual cues
+• Added "Save as New Customer" feature to easily convert quotes to customers
+• Restricted country list to only show countries enabled in WooCommerce settings
+• Added file type restrictions to only allow JPG, JPEG, PNG, and PDF file uploads
+• Implemented file size limit of 2MB per uploaded attachment
+• Set maximum attachment limit to 10 files per quote
+
+Security Enhancements
+• Added MIME type validation for uploaded files using WordPress's wp_check_filetype()
+• Implemented proper security with .htaccess protection for both quotes and attachments directories
+
+Fixes
+• Fixed an issue where attachments weren't being deleted from the server when removed
+• Fixed the "Attachment not found in quote data" error when removing newly uploaded files before saving
+• Resolved directory creation issues during plugin activation
+• Fixed shipping phone field not saving when creating a new customer
+• Prevented automatic welcome emails when creating customers through the Quote Manager
+• Fixed JavaScript issues in the address interaction handlers
+• Improved field styling with proper margins and visual hierarchy
+• Added proper input validation and error handling for the customer creation process
+
+Code Improvements
+• Reorganized activation code to use the dedicated Activator class
+• Added a more reliable directory structure with separate folders for quotes and attachments
+• Added multiple fallback mechanisms to ensure required directories exist
+• Improved error logging for easier troubleshooting
+• Moved inline JavaScript to external files for better maintenance
+• Added dynamic state/county fields based on selected country
+• Implemented better success/error notifications for user actions
+• Added CSS classes for better styling control
+• Optimized AJAX handlers for country/state selection
+
+Directory Structure
+• Changed storage path for quotes from /quote-manager/ to /quote-manager/quotes/
+• Created a more organized and consistent file structure
+
+New Features
+• Added plugin setting to control whether to delete files on uninstallation
+• Implemented a proper uninstall script that respects user preferences
+• Added warning message for data deletion during uninstallation
 
 = 1.4.9 =
 New Feature

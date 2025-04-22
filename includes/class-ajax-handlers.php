@@ -124,6 +124,157 @@ class Quote_Manager_Ajax_Handlers {
         wp_send_json($results);
     }
 
+
+    /**
+     * AJAX handler for getting states for a country
+     */
+    public function get_states() {
+        // Verify nonce
+        if (!check_ajax_referer('quote_manager_get_states', 'security', false)) {
+            wp_send_json_error(__('Security check failed.', 'quote-manager-system-for-woocommerce'));
+        }
+        
+        // Check permissions
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Access denied', 'quote-manager-system-for-woocommerce'));
+        }
+        
+        // Get country code from request
+        $country = isset($_POST['country']) ? sanitize_text_field($_POST['country']) : '';
+        
+        if (empty($country)) {
+            wp_send_json_error(__('Country is required', 'quote-manager-system-for-woocommerce'));
+        }
+        
+        // Get states for the country
+        $states = WC()->countries->get_states($country);
+        
+        if (is_array($states) && !empty($states)) {
+            wp_send_json_success($states);
+        } else {
+            wp_send_json_error(__('No states found for this country', 'quote-manager-system-for-woocommerce'));
+        }
+    }
+
+    /**
+     * Create a new WooCommerce customer from quote data
+     */
+    public function create_customer_from_quote() {
+        // Verify nonce
+        check_ajax_referer('create_customer_from_quote', 'security');
+        
+        // Check permissions
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(['message' => __('Access denied', 'quote-manager-system-for-woocommerce')]);
+        }
+        
+        // Get quote ID
+        $quote_id = isset($_POST['quote_id']) ? intval($_POST['quote_id']) : 0;
+        if (!$quote_id) {
+            wp_send_json_error(['message' => __('Invalid quote ID', 'quote-manager-system-for-woocommerce')]);
+        }
+        
+        // Get customer details from quote
+        $first_name = get_post_meta($quote_id, '_customer_first_name', true);
+        $last_name = get_post_meta($quote_id, '_customer_last_name', true);
+        $email = get_post_meta($quote_id, '_customer_email', true);
+        $phone = get_post_meta($quote_id, '_customer_phone', true);
+        $company = get_post_meta($quote_id, '_customer_company', true);
+        
+        // Required fields check
+        if (empty($email)) {
+            wp_send_json_error(['message' => __('Customer email is required', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
+        // Check if email already exists
+        if (email_exists($email)) {
+            wp_send_json_error([
+                'message' => __('A user with this email already exists', 'quote-manager-system-for-woocommerce'),
+                'customer_id' => get_user_by('email', $email)->ID
+            ]);
+            return;
+        }
+        
+        // Generate username from email if first/last name not provided
+        $username = sanitize_user(current(explode('@', $email)), true);
+        
+        // Ensure username is unique
+        $counter = 1;
+        $new_username = $username;
+        while (username_exists($new_username)) {
+            $new_username = $username . $counter;
+            $counter++;
+        }
+        $username = $new_username;
+        
+        // Generate a random password
+        $password = wp_generate_password(12, true);
+        
+        // Create user data
+        $userdata = array(
+            'user_login' => $username,
+            'user_pass'  => $password,
+            'user_email' => $email,
+            'first_name' => $first_name,
+            'last_name'  => $last_name,
+            'role'       => 'customer'
+        );
+        
+        // Insert user directly with WordPress function
+        $customer_id = wp_insert_user($userdata);
+        
+        // If an error occurred creating the customer
+        if (is_wp_error($customer_id)) {
+            wp_send_json_error(['message' => $customer_id->get_error_message()]);
+            return;
+        }
+        
+        // Update customer data
+        update_user_meta($customer_id, 'billing_first_name', $first_name);
+        update_user_meta($customer_id, 'billing_last_name', $last_name);
+        update_user_meta($customer_id, 'billing_company', $company);
+        update_user_meta($customer_id, 'billing_address_1', get_post_meta($quote_id, '_customer_address', true));
+        update_user_meta($customer_id, 'billing_city', get_post_meta($quote_id, '_customer_city', true));
+        update_user_meta($customer_id, 'billing_postcode', get_post_meta($quote_id, '_customer_postcode', true));
+        update_user_meta($customer_id, 'billing_country', get_post_meta($quote_id, '_customer_country', true));
+        update_user_meta($customer_id, 'billing_state', get_post_meta($quote_id, '_customer_state', true));
+        update_user_meta($customer_id, 'billing_phone', $phone);
+        update_user_meta($customer_id, 'billing_email', $email);
+        
+        // Set shipping details
+        update_user_meta($customer_id, 'shipping_first_name', get_post_meta($quote_id, '_shipping_first_name', true));
+        update_user_meta($customer_id, 'shipping_last_name', get_post_meta($quote_id, '_shipping_last_name', true));
+        update_user_meta($customer_id, 'shipping_company', get_post_meta($quote_id, '_shipping_company', true));
+        update_user_meta($customer_id, 'shipping_address_1', get_post_meta($quote_id, '_shipping_address', true));
+        update_user_meta($customer_id, 'shipping_city', get_post_meta($quote_id, '_shipping_city', true));
+        update_user_meta($customer_id, 'shipping_postcode', get_post_meta($quote_id, '_shipping_postcode', true));
+        update_user_meta($customer_id, 'shipping_country', get_post_meta($quote_id, '_shipping_country', true));
+        update_user_meta($customer_id, 'shipping_state', get_post_meta($quote_id, '_shipping_state', true));
+        update_user_meta($customer_id, 'shipping_phone', get_post_meta($quote_id, '_shipping_phone', true));
+        
+        // Set additional WooCommerce data
+        update_user_meta($customer_id, 'paying_customer', '0');
+        update_user_meta($customer_id, '_created_via', 'quote_manager');
+        
+        // Update the user's WordPress capabilities
+        $customer = new WC_Customer($customer_id);
+        $customer->set_role('customer');
+        
+        // Store customer ID in quote meta
+        update_post_meta($quote_id, '_customer_user_id', $customer_id);
+        
+        // Get customer dashboard URL
+        $edit_url = admin_url('user-edit.php?user_id=' . $customer_id);
+        
+        // Return success with customer ID and edit URL
+        wp_send_json_success([
+            'message' => __('Customer created successfully', 'quote-manager-system-for-woocommerce'),
+            'customer_id' => $customer_id,
+            'edit_url' => $edit_url
+        ]);
+    }
+
     /**
      * Generate PDF Preview
      */
@@ -193,6 +344,48 @@ class Quote_Manager_Ajax_Handlers {
             wp_send_json_error(['message' => __('Invalid quote ID.', 'quote-manager-system-for-woocommerce')]);
         }
         
+        // Check file size limit (2MB = 2 * 1024 * 1024 bytes)
+        $max_size = 2 * 1024 * 1024; // 2MB in bytes
+        if ($_FILES['file']['size'] > $max_size) {
+            wp_send_json_error(['message' => __('File size exceeds the 2MB limit.', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
+        // Check maximum number of attachments (10)
+        $max_attachments = 10;
+        $attachments = get_post_meta($quote_id, '_quote_attachments', true);
+        if (is_array($attachments) && count($attachments) >= $max_attachments) {
+            wp_send_json_error(['message' => sprintf(__('Maximum number of attachments (%d) reached.', 'quote-manager-system-for-woocommerce'), $max_attachments)]);
+            return;
+        }
+        
+        // Check file type/extension for security
+        $file = $_FILES['file'];
+        $filename = sanitize_file_name($file['name']);
+        $file_extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        
+        // Define allowed file types
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'pdf'];
+        
+        if (!in_array($file_extension, $allowed_extensions)) {
+            wp_send_json_error(['message' => __('Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed.', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
+        // Additional MIME type check for better security
+        $allowed_mime_types = [
+            'image/jpeg',
+            'image/png',
+            'application/pdf'
+        ];
+        
+        // Use wp_check_filetype for more reliable mime type detection
+        $file_type_check = wp_check_filetype($filename, null);
+        if (empty($file_type_check['type']) || !in_array($file_type_check['type'], $allowed_mime_types)) {
+            wp_send_json_error(['message' => __('Invalid file type detected. Only JPG, JPEG, PNG and PDF files are allowed.', 'quote-manager-system-for-woocommerce')]);
+            return;
+        }
+        
         // Create upload directory if it doesn't exist
         $upload_dir = wp_upload_dir();
         $quote_attachments_dir = $upload_dir['basedir'] . '/quote-manager/attachments/' . $quote_id;
@@ -222,9 +415,6 @@ class Quote_Manager_Ajax_Handlers {
             file_put_contents($quote_attachments_dir . '/.htaccess', $htaccess_content);
         }
         
-        // Handle the file upload
-        $file = $_FILES['file'];
-        $filename = sanitize_file_name($file['name']);
         $file_path = $quote_attachments_dir . '/' . $filename;
         
         // Check if file with the same name exists
@@ -245,7 +435,7 @@ class Quote_Manager_Ajax_Handlers {
                 'id' => uniqid('attach_'),
                 'url' => $file_url,
                 'filename' => $filename,
-                'type' => $file['type']
+                'type' => $file_type_check['type']
             ]);
         } else {
             wp_send_json_error(['message' => __('Failed to upload file.', 'quote-manager-system-for-woocommerce')]);
@@ -278,55 +468,63 @@ class Quote_Manager_Ajax_Handlers {
             return;
         }
         
-        // Convert URL to file path
+        // Extract the filename from the URL
+        $url_parts = parse_url($file_url);
+        $path_parts = pathinfo($url_parts['path']);
+        $filename = $path_parts['basename'];
+        
+        // Construct file path
         $upload_dir = wp_upload_dir();
-        $file_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $file_url);
+        $file_path = $upload_dir['basedir'] . '/quote-manager/attachments/' . $quote_id . '/' . $filename;
         
-        // Security check - make sure it's in our upload directory
-        if (strpos($file_path, $upload_dir['basedir']) !== 0) {
-            wp_send_json_error(['message' => __('Invalid file path.', 'quote-manager-system-for-woocommerce')]);
-            return;
-        }
+        // Check if file exists
+        $file_exists = file_exists($file_path);
         
-        // Get the current attachments list
+        // Try to delete the file if it exists
+        $deletion_success = $file_exists ? @unlink($file_path) : false;
+        
+        // If the attachment is not yet saved in the database, we consider it a success
+        // even though it's not found in the stored attachments
         $attachments = get_post_meta($quote_id, '_quote_attachments', true);
         if (!is_array($attachments)) {
             $attachments = [];
         }
         
-        // Find and remove the attachment from the array
+        // Find and remove the attachment from the array if it exists
         $updated_attachments = [];
-        $file_found = false;
+        $file_found_in_db = false;
         
         foreach ($attachments as $attachment) {
             if (isset($attachment['url']) && $attachment['url'] === $file_url) {
-                $file_found = true;
+                $file_found_in_db = true;
                 // Skip this attachment (removing it from the list)
                 continue;
             }
             $updated_attachments[] = $attachment;
         }
         
-        if (!$file_found) {
-            wp_send_json_error(['message' => __('Attachment not found in quote data.', 'quote-manager-system-for-woocommerce')]);
-            return;
+        // Update the database only if we found the attachment in it
+        if ($file_found_in_db) {
+            update_post_meta($quote_id, '_quote_attachments', $updated_attachments);
         }
         
-        // Update the post meta with the new attachments list
-        update_post_meta($quote_id, '_quote_attachments', $updated_attachments);
-        
-        // Delete the physical file if it exists
-        if (file_exists($file_path)) {
-            if (!unlink($file_path)) {
-                // Even if file deletion fails, we've updated the meta data
-                wp_send_json_success([
-                    'message' => __('Attachment removed from quote, but file could not be deleted from server.', 'quote-manager-system-for-woocommerce'),
-                    'partial' => true
-                ]);
-                return;
-            }
+        // Determine response based on what happened
+        if (!$file_exists) {
+            // File doesn't exist but we should still report success
+            wp_send_json_success([
+                'message' => __('Attachment removed successfully.', 'quote-manager-system-for-woocommerce')
+            ]);
+        } else if ($deletion_success) {
+            // File existed and was deleted successfully
+            wp_send_json_success([
+                'message' => __('Attachment deleted successfully.', 'quote-manager-system-for-woocommerce')
+            ]);
+        } else {
+            // File existed but could not be deleted
+            wp_send_json_success([
+                'message' => __('Attachment removed, but file could not be deleted from server.', 'quote-manager-system-for-woocommerce'),
+                'partial' => true
+            ]);
         }
-        
-        wp_send_json_success(['message' => __('Attachment deleted successfully.', 'quote-manager-system-for-woocommerce')]);
     }
 }

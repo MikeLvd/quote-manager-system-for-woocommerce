@@ -118,60 +118,296 @@ class Quote_Manager_Metaboxes {
         echo '</div>';
     }
     
-    /**
-     * Render the Customer Info & Shipping meta box.
-     */
-    public function render_customer_info_meta($post) {
-        // Get all meta in a single query for better performance
-        $post_meta = get_post_meta($post->ID);
-        
-        // Helper to get and escape meta value.
-        $get_meta = function($key) use ($post_meta) {
-            $full_key = '_' . $key;
-            return isset($post_meta[$full_key]) ? esc_attr($post_meta[$full_key][0]) : '';
-        };
+/**
+ * Get allowed countries from WooCommerce settings
+ * 
+ * @return array Allowed countries
+ */
+private function get_allowed_countries() {
+    // Get only allowed countries
+    $countries_setting = get_option('woocommerce_allowed_countries');
 
-        echo '<div class="quote-wrapper">';
-        
-        // Customer section
-        echo '<div class="quote-section">';
-        echo '<h4 class="quote-section-title">' . esc_html__('Customer', 'quote-manager-system-for-woocommerce') . '</h4>';
-        echo '<div class="quote-grid">';
-        $this->render_quote_field(__('First Name:', 'quote-manager-system-for-woocommerce'), 'customer_first_name', $get_meta('customer_first_name'));
-        $this->render_quote_field(__('Last Name:', 'quote-manager-system-for-woocommerce'), 'customer_last_name', $get_meta('customer_last_name'));
-        $this->render_quote_field(__('Address:', 'quote-manager-system-for-woocommerce'), 'customer_address', $get_meta('customer_address'));
-        $this->render_quote_field(__('Area:', 'quote-manager-system-for-woocommerce'), 'customer_area', $get_meta('customer_area'));
-        $this->render_quote_field(__('Phone:', 'quote-manager-system-for-woocommerce'), 'customer_phone', $get_meta('customer_phone'));
-        $this->render_quote_field(__('Email:', 'quote-manager-system-for-woocommerce'), 'customer_email', $get_meta('customer_email'));
-        echo '</div></div>';
-
-        // Shipping section
-        echo '<div class="quote-section">';
-        echo '<h4 class="quote-section-title">' . esc_html__('Shipping', 'quote-manager-system-for-woocommerce') . '</h4>';
-        echo '<div class="quote-grid">';
-        $this->render_quote_field(__('First Name:', 'quote-manager-system-for-woocommerce'), 'shipping_first_name', $get_meta('shipping_first_name'));
-        $this->render_quote_field(__('Last Name:', 'quote-manager-system-for-woocommerce'), 'shipping_last_name', $get_meta('shipping_last_name'));
-        $this->render_quote_field(__('Address:', 'quote-manager-system-for-woocommerce'), 'shipping_address', $get_meta('shipping_address'));
-        $this->render_quote_field(__('Area:', 'quote-manager-system-for-woocommerce'), 'shipping_area', $get_meta('shipping_area'));
-        $this->render_quote_field(__('Postal Code:', 'quote-manager-system-for-woocommerce'), 'shipping_postcode', $get_meta('shipping_postcode'));
-        $this->render_quote_field(__('City:', 'quote-manager-system-for-woocommerce'), 'shipping_city', $get_meta('shipping_city'));
-        echo '</div></div>';
-
-        // Project section
-        echo '<div class="quote-section" style="flex-basis: 100%;">';
-        echo '<h4 class="quote-section-title">' . esc_html__('Project Details', 'quote-manager-system-for-woocommerce') . '</h4>';
-        echo '<div class="quote-field">';
-        echo '<label for="project_name"><strong>🏗️ Project Name:</strong></label>';
-        echo '<input type="text" class="quote-input" id="project_name" name="project_name" value="' . esc_attr($get_meta('project_name')) . '" style="font-size:14px;" />';
-        echo '</div>';
-        echo '</div>';
-
-        // Close wrapper
-        echo '</div>';
-
-        // Nonce field for customer data
-        wp_nonce_field('quote_manager_save_customer', 'quote_manager_nonce_customer', false);
+    if ($countries_setting === 'specific') {
+        $specific_countries = get_option('woocommerce_specific_allowed_countries', array());
+        if (!empty($specific_countries)) {
+            return array_intersect_key(WC()->countries->get_countries(), array_flip($specific_countries));
+        }
+    } elseif ($countries_setting === 'all_except') {
+        $excepted_countries = get_option('woocommerce_all_except_countries', array());
+        return array_diff_key(WC()->countries->get_countries(), array_flip($excepted_countries));
     }
+    
+    // If set to 'all' or no specific setting, include all countries
+    return WC()->countries->get_countries();
+}
+
+/**
+ * Render the Customer Info & Shipping meta box.
+ */
+public function render_customer_info_meta($post) {
+    // Get all meta in a single query for better performance
+    $post_meta = get_post_meta($post->ID);
+    
+    // Helper to get and escape meta value.
+    $get_meta = function($key) use ($post_meta) {
+        $full_key = '_' . $key;
+        return isset($post_meta[$full_key]) ? esc_attr($post_meta[$full_key][0]) : '';
+    };
+
+    // Field icons mapping
+    $field_icons = array(
+        'first'    => '👤',
+        'last'     => '👤',
+        'name'     => '👤',
+        'company'  => '🏢',
+        'address'  => '🏠',
+        'area'     => '📍',
+        'postcode' => '🏷️',
+        'zip'      => '🏷️',
+        'city'     => '🏙️',
+        'country'  => '🌎',
+        'state'    => '🔍',
+        'county'   => '🔍',
+        'region'   => '🔍',
+        'phone'    => '📞',
+        'email'    => '✉️',
+        'project'  => '🏗️'
+    );
+
+    // Helper function to get icon for a field
+    $get_icon = function($field_name) use ($field_icons) {
+        foreach ($field_icons as $key => $icon) {
+            if (stripos($field_name, $key) !== false) {
+                return $icon . ' ';
+            }
+        }
+        return '🔹 '; // Default icon
+    };
+
+    // Get allowed countries once
+    $allowed_countries = $this->get_allowed_countries();
+
+    // Main wrapper
+    echo '<div class="quote-address-container">';
+    
+    // Billing column
+    echo '<div class="quote-address-column">';
+    echo '<div class="quote-address-heading">';
+    echo '<h3>' . esc_html__('Billing', 'quote-manager-system-for-woocommerce') . '</h3>';
+    echo '<a href="#" id="load-billing-address">' . esc_html__('Load billing address', 'quote-manager-system-for-woocommerce') . '</a>';
+    echo '</div>';
+    
+    // First and Last name - side by side
+    echo '<div class="quote-field-row">';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="customer_first_name" class="billing-label">' . $get_icon('first_name') . esc_html__('First name', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="customer_first_name" name="customer_first_name" value="' . esc_attr($get_meta('customer_first_name')) . '" />';
+    echo '</div>';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="customer_last_name" class="billing-label">' . $get_icon('last_name') . esc_html__('Last name', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="customer_last_name" name="customer_last_name" value="' . esc_attr($get_meta('customer_last_name')) . '" />';
+    echo '</div>';
+    
+    echo '</div>'; // End first/last name row
+    
+    // Company
+    echo '<div class="quote-field">';
+    echo '<label for="customer_company" class="billing-label">' . $get_icon('company') . esc_html__('Company', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="customer_company" name="customer_company" value="' . esc_attr($get_meta('customer_company')) . '" />';
+    echo '</div>';
+    
+    // Address lines
+    echo '<div class="quote-field">';
+    echo '<label for="customer_address" class="billing-label">' . $get_icon('address') . esc_html__('Address line 1', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="customer_address" name="customer_address" value="' . esc_attr($get_meta('customer_address')) . '" />';
+    echo '</div>';
+    
+    // City and postal code - side by side
+    echo '<div class="quote-field-row">';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="customer_city" class="billing-label">' . $get_icon('city') . esc_html__('City', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="customer_city" name="customer_city" value="' . esc_attr($get_meta('customer_area')) . '" />';
+    echo '</div>';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="customer_postcode" class="billing-label">' . $get_icon('postcode') . esc_html__('Postcode / ZIP', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="customer_postcode" name="customer_postcode" value="' . esc_attr($get_meta('customer_postcode')) . '" />';
+    echo '</div>';
+    
+    echo '</div>'; // End city/postcode row
+    
+    // Country/Region and State - side by side
+    echo '<div class="quote-field-row">';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="customer_country" class="billing-label">' . $get_icon('country') . esc_html__('Country / Region', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<select class="quote-select" id="customer_country" name="customer_country">';
+    
+    $selected_country = $get_meta('customer_country') ?: 'GR';
+    foreach ($allowed_countries as $code => $name) {
+        echo '<option value="' . esc_attr($code) . '" ' . selected($selected_country, $code, false) . '>' . esc_html($name) . '</option>';
+    }
+    
+    echo '</select>';
+    echo '</div>';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="customer_state" class="billing-label">' . $get_icon('state') . esc_html__('State / County', 'quote-manager-system-for-woocommerce') . '</label>';
+    
+    $selected_country = $get_meta('customer_country') ?: 'GR';
+    $selected_state = $get_meta('customer_state');
+    $states = WC()->countries->get_states($selected_country);
+    
+    if (is_array($states) && !empty($states)) {
+        echo '<select class="quote-select" id="customer_state" name="customer_state">';
+        foreach ($states as $code => $name) {
+            echo '<option value="' . esc_attr($code) . '" ' . selected($selected_state, $code, false) . '>' . esc_html($name) . '</option>';
+        }
+        echo '</select>';
+    } else {
+        echo '<input type="text" class="quote-input" id="customer_state" name="customer_state" value="' . esc_attr($selected_state) . '" />';
+    }
+    
+    echo '</div>';
+    
+    echo '</div>'; // End country/state row
+    
+    // Email and phone - side by side
+    echo '<div class="quote-field-row">';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="customer_email" class="billing-label">' . $get_icon('email') . esc_html__('Email address', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="email" class="quote-input" id="customer_email" name="customer_email" value="' . esc_attr($get_meta('customer_email')) . '" />';
+    echo '</div>';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="customer_phone" class="billing-label">' . $get_icon('phone') . esc_html__('Phone', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="customer_phone" name="customer_phone" value="' . esc_attr($get_meta('customer_phone')) . '" />';
+    echo '</div>';
+    
+    echo '</div>'; // End email/phone row
+    
+    echo '</div>'; // End billing column
+    
+    // Shipping column
+    echo '<div class="quote-address-column">';
+    echo '<div class="quote-address-heading">';
+    echo '<h3>' . esc_html__('Shipping', 'quote-manager-system-for-woocommerce') . '</h3>';
+    echo '<a href="#" id="copy-billing-address">' . esc_html__('Copy billing address', 'quote-manager-system-for-woocommerce') . '</a>';
+    echo '</div>';
+    
+    // First and Last name - side by side
+    echo '<div class="quote-field-row">';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="shipping_first_name" class="shipping-label">' . $get_icon('first_name') . esc_html__('First name', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="shipping_first_name" name="shipping_first_name" value="' . esc_attr($get_meta('shipping_first_name')) . '" />';
+    echo '</div>';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="shipping_last_name" class="shipping-label">' . $get_icon('last_name') . esc_html__('Last name', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="shipping_last_name" name="shipping_last_name" value="' . esc_attr($get_meta('shipping_last_name')) . '" />';
+    echo '</div>';
+    
+    echo '</div>'; // End first/last name row
+    
+    // Company
+    echo '<div class="quote-field">';
+    echo '<label for="shipping_company" class="shipping-label">' . $get_icon('company') . esc_html__('Company', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="shipping_company" name="shipping_company" value="' . esc_attr($get_meta('shipping_company')) . '" />';
+    echo '</div>';
+    
+    // Address lines
+    echo '<div class="quote-field">';
+    echo '<label for="shipping_address" class="shipping-label">' . $get_icon('address') . esc_html__('Address line 1', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="shipping_address" name="shipping_address" value="' . esc_attr($get_meta('shipping_address')) . '" />';
+    echo '</div>';
+    
+    // City and postal code - side by side
+    echo '<div class="quote-field-row">';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="shipping_city" class="shipping-label">' . $get_icon('city') . esc_html__('City', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="shipping_city" name="shipping_city" value="' . esc_attr($get_meta('shipping_area')) . '" />';
+    echo '</div>';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="shipping_postcode" class="shipping-label">' . $get_icon('postcode') . esc_html__('Postcode / ZIP', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="shipping_postcode" name="shipping_postcode" value="' . esc_attr($get_meta('shipping_postcode')) . '" />';
+    echo '</div>';
+    
+    echo '</div>'; // End city/postcode row
+    
+    // Country/Region and State - side by side
+    echo '<div class="quote-field-row">';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="shipping_country" class="shipping-label">' . $get_icon('country') . esc_html__('Country / Region', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<select class="quote-select" id="shipping_country" name="shipping_country">';
+    
+    $selected_country = $get_meta('shipping_country') ?: 'GR';
+    foreach ($allowed_countries as $code => $name) {
+        echo '<option value="' . esc_attr($code) . '" ' . selected($selected_country, $code, false) . '>' . esc_html($name) . '</option>';
+    }
+    
+    echo '</select>';
+    echo '</div>';
+    
+    echo '<div class="quote-field-col">';
+    echo '<label for="shipping_state" class="shipping-label">' . $get_icon('state') . esc_html__('State / County', 'quote-manager-system-for-woocommerce') . '</label>';
+    
+    $selected_country = $get_meta('shipping_country') ?: 'GR';
+    $selected_state = $get_meta('shipping_state');
+    $states = WC()->countries->get_states($selected_country);
+    
+    if (is_array($states) && !empty($states)) {
+        echo '<select class="quote-select" id="shipping_state" name="shipping_state">';
+        foreach ($states as $code => $name) {
+            echo '<option value="' . esc_attr($code) . '" ' . selected($selected_state, $code, false) . '>' . esc_html($name) . '</option>';
+        }
+        echo '</select>';
+    } else {
+        echo '<input type="text" class="quote-input" id="shipping_state" name="shipping_state" value="' . esc_attr($selected_state) . '" />';
+    }
+    
+    echo '</div>';
+    
+    echo '</div>'; // End country/state row
+    
+    // Phone
+    echo '<div class="quote-field">';
+    echo '<label for="shipping_phone" class="shipping-label">' . $get_icon('phone') . esc_html__('Phone', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="shipping_phone" name="shipping_phone" value="' . esc_attr($get_meta('shipping_phone')) . '" />';
+    echo '</div>';
+    
+    echo '</div>'; // End shipping column
+    
+    echo '</div>'; // End address container
+    
+    // Add "Save as Customer" button with WooCommerce styling
+    echo '<div class="save-as-customer-container">';
+    echo '<button type="button" id="save-as-customer-btn" class="button button-primary save-customer-button">' . 
+         '<span class="dashicons dashicons-admin-users"></span> ' . 
+         esc_html__('Save as New Customer', 'quote-manager-system-for-woocommerce') . 
+         '</button>';
+    echo '<span id="save-customer-status"></span>';
+    echo '</div>';
+	
+    // Project details section
+    echo '<div class="project-details">';
+    echo '<h3>' . esc_html__('Project Details', 'quote-manager-system-for-woocommerce') . '</h3>';
+    echo '<div class="quote-field">';
+    echo '<label for="project_name">' . $get_icon('project') . esc_html__('Project Name', 'quote-manager-system-for-woocommerce') . '</label>';
+    echo '<input type="text" class="quote-input" id="project_name" name="project_name" value="' . esc_attr($get_meta('project_name')) . '" />';
+    echo '</div>';
+    echo '</div>';
+	
+    // Nonce field for customer data
+    wp_nonce_field('quote_manager_save_customer', 'quote_manager_nonce_customer', false);
+}
     
     /**
      * Render the Quote Products meta box.
@@ -775,29 +1011,42 @@ class Quote_Manager_Metaboxes {
             return;
         }
     
-        // Save customer fields if nonce is valid.
-        if (isset($_POST['quote_manager_nonce_customer']) && wp_verify_nonce($_POST['quote_manager_nonce_customer'], 'quote_manager_save_customer')) {
-            $fields = array(
-                '_customer_first_name'   => 'customer_first_name',
-                '_customer_last_name'    => 'customer_last_name',
-                '_customer_address'      => 'customer_address',
-                '_customer_area'         => 'customer_area',
-                '_customer_phone'        => 'customer_phone',
-                '_customer_email'        => 'customer_email',
-                '_shipping_first_name'   => 'shipping_first_name',
-                '_shipping_last_name'    => 'shipping_last_name',
-                '_shipping_address'      => 'shipping_address',
-                '_shipping_area'         => 'shipping_area',
-                '_shipping_postcode'     => 'shipping_postcode',
-                '_shipping_city'         => 'shipping_city',
-                '_project_name'          => 'project_name',
-            );
-            foreach ($fields as $meta_key => $field_name) {
-                if (isset($_POST[$field_name])) {
+    // Save customer fields if nonce is valid.
+    if (isset($_POST['quote_manager_nonce_customer']) && wp_verify_nonce($_POST['quote_manager_nonce_customer'], 'quote_manager_save_customer')) {
+        $fields = array(
+            '_customer_first_name'    => 'customer_first_name',
+            '_customer_last_name'     => 'customer_last_name',
+            '_customer_company'       => 'customer_company',
+            '_customer_address'       => 'customer_address',
+            '_customer_area'          => 'customer_city',
+            '_customer_city'          => 'customer_city',
+            '_customer_postcode'      => 'customer_postcode',
+            '_customer_country'       => 'customer_country',
+            '_customer_state'         => 'customer_state',
+            '_customer_phone'         => 'customer_phone',
+            '_customer_email'         => 'customer_email',
+            '_shipping_first_name'    => 'shipping_first_name',
+            '_shipping_last_name'     => 'shipping_last_name',
+            '_shipping_company'       => 'shipping_company',
+            '_shipping_address'       => 'shipping_address',
+            '_shipping_area'          => 'shipping_city',
+            '_shipping_city'          => 'shipping_city',
+            '_shipping_postcode'      => 'shipping_postcode',
+            '_shipping_country'       => 'shipping_country',
+            '_shipping_state'         => 'shipping_state',
+            '_shipping_phone'         => 'shipping_phone',
+            '_project_name'           => 'project_name',
+        );
+        foreach ($fields as $meta_key => $field_name) {
+            if (isset($_POST[$field_name])) {
+                if ($field_name === 'customer_note') {
+                    update_post_meta($post_id, $meta_key, sanitize_textarea_field(wp_unslash($_POST[$field_name])));
+                } else {
                     update_post_meta($post_id, $meta_key, sanitize_text_field(wp_unslash($_POST[$field_name])));
                 }
             }
         }
+    }
     
         // Save products fields if nonce is valid.
         if (isset($_POST['quote_manager_nonce_products']) && wp_verify_nonce($_POST['quote_manager_nonce_products'], 'quote_manager_save_products')) {

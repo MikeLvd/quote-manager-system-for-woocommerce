@@ -22,7 +22,7 @@ class Quote_Manager_Email_Manager {
     public function create_protection_htaccess() {
         // Get the upload directory path
         $upload_dir = wp_upload_dir();
-        $pdf_dir = $upload_dir['basedir'] . '/quote-manager/';
+        $pdf_dir = $upload_dir['basedir'] . '/quote-manager/quotes/';
         
         // Create directory if it doesn't exist
         if (!file_exists($pdf_dir)) {
@@ -129,7 +129,7 @@ class Quote_Manager_Email_Manager {
             
             // Create upload directory
             $upload_dir = wp_upload_dir();
-            $pdf_dir = $upload_dir['basedir'] . '/quote-manager/';
+            $pdf_dir = $upload_dir['basedir'] . '/quote-manager/quotes/';
             if (!file_exists($pdf_dir)) {
                 $dir_created = wp_mkdir_p($pdf_dir);
                 error_log('Directory creation result: ' . ($dir_created ? 'Success' : 'Failed'));
@@ -149,7 +149,7 @@ class Quote_Manager_Email_Manager {
             }
             
             // Save PDF file
-            $pdf_path = $pdf_dir . 'QUOTE_' . $quote_id . '.pdf';
+            $pdf_path = $pdf_dir . 'PROSFORA_' . $quote_id . '.pdf';
             $file_result = file_put_contents($pdf_path, $pdf_output);
             
             if ($file_result === false) {

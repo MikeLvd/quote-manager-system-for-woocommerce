@@ -48,14 +48,14 @@ class Quote_Manager_System_For_Woocommerce_Admin {
             
             // Check if .htaccess exists
             $upload_dir = wp_upload_dir();
-            $pdf_dir = $upload_dir['basedir'] . '/quote-manager/';
+            $pdf_dir = $upload_dir['basedir'] . '/quote-manager/quotes/';
             $htaccess_file = $pdf_dir . '.htaccess';
             
             if (!file_exists($htaccess_file) && current_user_can('manage_options')) {
                 // Create protection
                 require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
                 $email_manager = new Quote_Manager_Email_Manager();
-                $email_manager->create_protection_htaccess();
+                $email_manager->create_protection_htaccess($pdf_dir);
                 
                 // Add an admin notice
                 add_action('admin_notices', function() {
@@ -140,17 +140,19 @@ class Quote_Manager_System_For_Woocommerce_Admin {
                 
                 // Prepare the localization data with translations
                 $localization_data = array(
-                    'placeholderImage'   => $placeholder_img,
-                    'ajaxUrl'            => admin_url('admin-ajax.php'),
-                    'taxRatePercent'     => $tax_rate_percent,
-                    'includeVAT'         => get_post_meta($post->ID, '_quote_include_vat', true) === '1' ? true : false,
-                    'currencySymbol'     => $currency_symbol,
-                    'thousandSeparator'  => $thousand_separator,
-                    'decimalSeparator'   => $decimal_separator,
-                    'decimals'           => $decimals,
-                    'quoteId'            => $post->ID,
-                    'attachmentNonce'    => wp_create_nonce('quote_attachment_upload'),
+                    'placeholderImage'      => $placeholder_img,
+                    'ajaxUrl'               => admin_url('admin-ajax.php'),
+                    'taxRatePercent'        => $tax_rate_percent,
+                    'includeVAT'            => get_post_meta($post->ID, '_quote_include_vat', true) === '1' ? true : false,
+                    'currencySymbol'        => $currency_symbol,
+                    'thousandSeparator'     => $thousand_separator,
+                    'decimalSeparator'      => $decimal_separator,
+                    'decimals'              => $decimals,
+                    'quoteId'               => $post->ID,
+                    'attachmentNonce'       => wp_create_nonce('quote_attachment_upload'),
 					'attachmentDeleteNonce' => wp_create_nonce('quote_attachment_delete'),
+					'statesNonce'           => wp_create_nonce('quote_manager_get_states'),
+					'createCustomerNonce'   => wp_create_nonce('create_customer_from_quote'),
                     
                     // Add translations
                     'i18n' => array(
@@ -189,7 +191,19 @@ class Quote_Manager_System_For_Woocommerce_Admin {
                         'uploadError' => __('Error uploading file:', 'quote-manager-system-for-woocommerce'),
                         'selectFile' => __('Select File', 'quote-manager-system-for-woocommerce'),
                         'removeAttachment' => __('Remove Attachment', 'quote-manager-system-for-woocommerce'),
-                        'viewFile' => __('View File', 'quote-manager-system-for-woocommerce')
+                        'viewFile' => __('View File', 'quote-manager-system-for-woocommerce'),
+						
+						// Customer Text
+						'creatingCustomer' => __('Creating customer...', 'quote-manager-system-for-woocommerce'),
+                        'customerCreated' => __('Customer created successfully. ', 'quote-manager-system-for-woocommerce'),
+                        'viewCustomer' => __('View customer', 'quote-manager-system-for-woocommerce'),
+                        'errorCreatingCustomer' => __('Error creating customer.', 'quote-manager-system-for-woocommerce'),
+						
+						// Attachments uploads translations
+                        'fileSizeExceeded' => __('File size exceeds the 2MB limit.', 'quote-manager-system-for-woocommerce'),
+                        'invalidFileType' => __('Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed.', 'quote-manager-system-for-woocommerce'),
+                        'maxAttachmentsReached' => __('Maximum number of attachments reached (10).', 'quote-manager-system-for-woocommerce')
+						
                     )
                 );
                 

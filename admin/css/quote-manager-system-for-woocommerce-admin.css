@@ -77,49 +77,179 @@
     margin-bottom: 0;
 }
 
-/* Each section (Customer, Shipping, etc.) */
-.quote-section {
+.quote-address-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+.quote-address-column {
     flex: 1;
-    min-width: 300px;
-    background: #f9f9f9;
-    border: 1px solid #e5e5e5;
-    padding: 20px;
-    border-radius: 6px;
+    min-width: 250px;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
-
-.quote-section-title {
-    font-size: 15px;
-    font-weight: 600;
-    border-bottom: 1px solid #e1e1e1;
+.quote-address-heading {
+    margin-bottom: 10px;
     padding-bottom: 5px;
-    margin-bottom: 15px;
-    color: #222;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
-/* Customer Form Area */
-.quote-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px 20px;
+.quote-address-heading h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #23282d;
 }
-
+.quote-address-heading a {
+    font-size: 12px;
+    text-decoration: none;
+}
+.quote-field {
+    margin-bottom: 10px;
+}
 .quote-field label {
     display: block;
-    font-weight: 600;
-    font-size: 12px;
-    margin-bottom: 3px;
-    color: #333;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #23282d;
 }
-
+.quote-field-row {
+    display: flex;
+    margin: 0 -5px 10px;
+}
+.quote-field-col {
+    flex: 1;
+    padding: 0 5px;
+}
 .quote-input {
     width: 100%;
-    padding: 4px 7px;
-    font-size: 12px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    padding: 6px 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
     background-color: #fff;
-    height: 30px;
-    line-height: 1.2;
+    color: #32373c;
+    box-sizing: border-box;
+}
+.quote-select {
+    width: 100%;
+    max-width: 100%;
+    padding: 6px 24px 6px 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+    background-color: #fff;
+    color: #32373c;
+    box-sizing: border-box;
+}
+.project-details {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* Billing and shipping label styles with higher specificity */
+.quote-field label.billing-label, 
+.quote-field label.shipping-label,
+.quote-field-col label.billing-label,
+.quote-field-col label.shipping-label {
+    font-weight: 600;
+    margin-bottom: 5px !important; /* Using !important to ensure it's applied */
+    display: block;
+}
+
+.quote-field label.billing-label,
+.quote-field-col label.billing-label {
+    color: #0073aa; /* WP blue color for billing labels */
+}
+
+.quote-field label.shipping-label,
+.quote-field-col label.shipping-label {
+    color: #46b450; /* WP green color for shipping labels */
+}
+
+/* Save as Customer button styling */
+.save-as-customer-container {
+    margin-top: 15px;
+    text-align: right;
+    clear: both;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.save-customer-button {
+    background: #2271b1 !important;
+    border-color: #2271b1 !important;
+    color: #fff !important;
+    text-decoration: none;
+    text-shadow: none;
+    display: inline-flex !important;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.save-customer-button:hover,
+.save-customer-button:focus {
+    background: #135e96 !important;
+    border-color: #135e96 !important;
+    color: #fff !important;
+}
+
+.save-customer-button .dashicons {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+}
+
+#save-customer-status {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: 500;
+    padding: 5px 0;
+    vertical-align: middle;
+}
+
+#save-customer-status.success {
+    color: #46b450;
+}
+
+#save-customer-status.error {
+    color: #dc3232;
+}
+
+#save-customer-status a {
+    margin-left: 5px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#save-customer-status a:hover {
+    text-decoration: underline;
+}
+
+/* Additional success message styling to match screenshot */
+#save-customer-status.success {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f0f8ff;
+    border: 1px solid #c3d9ea;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 13px;
+}
+
+#save-customer-status.success .dashicons {
+    color: #46b450;
+    margin-right: 5px;
+}
+
+#save-customer-status.success a {
+    color: #0073aa;
+    margin-left: 5px;
 }
 
 /* Product Search */
@@ -689,6 +819,45 @@ input.price-error {
     z-index: 9998;
 }
 
+/* Email tracking column in list view - final fix */
+.column-email_tracking {
+    width: 160px !important;
+}
+
+/* Target the specific div class that we can see in the HTML */
+div.email-tracking-status {
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.4;
+    padding: 4px 0;
+}
+
+div.email-tracking-status.opened {
+    color: #0073aa;
+}
+
+div.email-tracking-status.not-opened {
+    color: #72777c;
+}
+
+/* Add specific styling for the lines of text */
+div.email-tracking-status .tracking-count {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+div.email-tracking-status .tracking-date {
+    color: #555;
+}
+
+/* Add clear floats if needed */
+div.email-tracking-status:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Logo */
 .logo-preview img {
     max-width: 300px;
     height: auto;

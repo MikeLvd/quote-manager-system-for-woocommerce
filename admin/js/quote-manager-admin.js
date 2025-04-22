@@ -50,6 +50,9 @@
             
             // Initialize attachments handling
             this.handleAttachments();
+
+            // Handle shipping/billing address interactions
+            this.handleAddressInteractions();
             
             // Check if TinyMCE is available and initialize it for quote_email_message
             if (typeof tinyMCE !== 'undefined' && document.getElementById('quote_email_message')) {
@@ -358,6 +361,122 @@
             $(document).on('click', '.email-message-modal', this.handleBackgroundClick.bind(this));
         },
 
+        // Add the handleAddressInteractions method here, at the same level as other methods
+        handleAddressInteractions: function() {
+            // Copy billing address to shipping fields
+            $('#copy-billing-address').on('click', function(e) {
+                e.preventDefault();
+                
+                $('#shipping_first_name').val($('#customer_first_name').val());
+                $('#shipping_last_name').val($('#customer_last_name').val());
+                $('#shipping_company').val($('#customer_company').val());
+                $('#shipping_address').val($('#customer_address').val());
+                $('#shipping_city').val($('#customer_city').val());
+                $('#shipping_postcode').val($('#customer_postcode').val());
+                
+                // Handle country and state selects
+                $('#shipping_country').val($('#customer_country').val());
+                
+                // If state is a select, update it
+                if ($('#shipping_state').is('select') && $('#customer_state').is('select')) {
+                    $('#shipping_state').val($('#customer_state').val());
+                } else {
+                    $('#shipping_state').val($('#customer_state').val());
+                }
+                
+                $('#shipping_phone').val($('#customer_phone').val());
+            });
+            
+            // Country change event handler to update states
+            $('#customer_country, #shipping_country').on('change', function() {
+                var isShipping = this.id === 'shipping_country';
+                var countryField = $(this);
+                var stateField = isShipping ? $('#shipping_state') : $('#customer_state');
+                var selectedCountry = $(this).val();
+                
+                // Make AJAX call to get states for the selected country
+                $.ajax({
+                    url: ajaxurl,
+                    data: {
+                        action: 'quote_manager_get_states',
+                        country: selectedCountry,
+                        security: quoteManagerData.statesNonce
+                    },
+                    type: 'POST',
+                    success: function(response) {
+                        if (response.success && response.data) {
+                            var states = response.data;
+                            var stateSelect = $('<select class="quote-select" id="' + stateField.attr('id') + '" name="' + stateField.attr('name') + '"></select>');
+                            
+                            // Add state options
+                            $.each(states, function(code, name) {
+                                stateSelect.append($('<option></option>').attr('value', code).text(name));
+                            });
+                            
+                            // Replace the input with select
+                            stateField.replaceWith(stateSelect);
+                        } else {
+                            // If no states, replace with a text input
+                            var stateInput = $('<input type="text" class="quote-input" id="' + stateField.attr('id') + '" name="' + stateField.attr('name') + '" value="">');
+                            stateField.replaceWith(stateInput);
+                        }
+                    }
+                });
+            });
+        
+            // Save as customer button
+            $('#save-as-customer-btn').on('click', function() {
+                var $button = $(this);
+                var $status = $('#save-customer-status');
+                
+                // Disable button to prevent multiple clicks
+                $button.prop('disabled', true).addClass('button-busy');
+                
+                // Show loading status
+                $status.removeClass('success error').text(quoteManagerData.i18n.creatingCustomer || 'Creating customer...').show();
+                
+                // Send AJAX request
+                $.ajax({
+                    url: ajaxurl,
+                    method: 'POST',
+                    data: {
+                        action: 'quote_manager_create_customer',
+                        quote_id: quoteManagerData.quoteId,
+                        security: quoteManagerData.createCustomerNonce
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Show success message
+                            $status.html(
+                                '<span class="dashicons dashicons-yes"></span> ' +
+                                (quoteManagerData.i18n.customerCreated || 'Customer created successfully.') + 
+                                ' <a href="' + response.data.edit_url + '" target="_blank">' + 
+                                (quoteManagerData.i18n.viewCustomer || 'View customer') + 
+                                '</a>'
+                            ).removeClass('error').addClass('success');
+                        } else {
+                            // Show error message
+                            $status.html(
+                                '<span class="dashicons dashicons-warning"></span> ' +
+                                (response.data.message || quoteManagerData.i18n.errorCreatingCustomer)
+                            ).removeClass('success').addClass('error');
+                        }
+                    },
+                    error: function() {
+                        // Show error message
+                        $status.html(
+                            '<span class="dashicons dashicons-warning"></span> ' +
+                            (quoteManagerData.i18n.errorCreatingCustomer || 'Error creating customer.')
+                        ).removeClass('success').addClass('error');
+                    },
+                    complete: function() {
+                        // Re-enable button
+                        $button.prop('disabled', false).removeClass('button-busy');
+                    }
+                });
+            });
+        },
+	
         /**
          * Initialize the table numbers and calculations
          */

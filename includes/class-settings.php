@@ -22,14 +22,17 @@ class Quote_Manager_Settings {
         register_setting('quote_manager_company_settings', 'quote_manager_company_phone');
         register_setting('quote_manager_company_settings', 'quote_manager_company_email');
         register_setting('quote_manager_company_settings', 'quote_manager_company_logo');
+        register_setting('quote_manager_company_settings', 'quote_manager_delete_files_on_uninstall');
         register_setting('quote_manager_company_settings', 'quote_manager_default_terms', array(
             'sanitize_callback' => function($input) {
-                // Preserve more HTML including line breaks
-                return wp_kses($input, array(
+                // Preserve more HTML including line breaks but limit style attributes
+                $allowed_html = array(
                     'p'      => array('style' => array()),
                     'br'     => array(),
                     'em'     => array(),
                     'strong' => array(),
+                    'b'      => array(),
+                    'i'      => array(),
                     'ul'     => array('style' => array()),
                     'ol'     => array('style' => array()),
                     'li'     => array('style' => array()),
@@ -41,9 +44,64 @@ class Quote_Manager_Settings {
                     'h4'     => array('style' => array()),
                     'h5'     => array('style' => array()),
                     'h6'     => array('style' => array()),
-                    'a'      => array('href' => array(), 'target' => array()),
-                ));
-            }
+                    'a'      => array(
+                    'href'   => array(),
+                    'target' => array(),
+                    'rel'    => array(),
+                    'title'  => array(),
+                    'class'  => array(),
+                    ),
+                    'table'  => array('style' => array(), 'class' => array(), 'border' => array()),
+                    'thead'  => array(),
+                    'tbody'  => array(),
+                    'tr'     => array(),
+                    'th'     => array('style' => array()),
+                    'td'     => array('style' => array()),
+                    'hr'     => array(),
+                );
+                
+                // More restrictive style attribute filtering
+                $allowed_protocols = wp_allowed_protocols();
+                
+                // Pre-filter style attributes to prevent XSS via CSS
+                $input = preg_replace_callback(
+                    '/(style\s*=\s*["\'])(.*?)(["\'])/i',
+                    function($matches) {
+                        // Only allow safe CSS properties
+                        $allowed_css = array(
+                            'text-align', 'margin', 'padding', 'color', 'background-color',
+                            'font-size', 'font-weight', 'line-height', 'font-family',
+                            'border', 'border-width', 'border-style', 'border-color',
+                            'width', 'height', 'display', 'text-decoration'
+                        );
+                        
+                        $style = $matches[2];
+                        $filtered_style = '';
+                        
+                        // Extract property:value pairs
+                        $pairs = array_filter(array_map('trim', explode(';', $style)));
+                        foreach ($pairs as $pair) {
+                            $parts = array_map('trim', explode(':', $pair, 2));
+                            if (count($parts) === 2) {
+                                list($property, $value) = $parts;
+                                // Check if property is allowed
+                                if (in_array($property, $allowed_css, true)) {
+                                    // Basic filtering of values (prevent javascript: etc)
+                                    if (!preg_match('/(expression|javascript|behavior|eval|\burl\s*\()/i', $value)) {
+                                        $filtered_style .= $property . ':' . $value . ';';
+                                    }
+                                }
+                            }
+                        }
+                        
+                        return $matches[1] . $filtered_style . $matches[3];
+                    },
+                    $input
+                );
+                
+                return wp_kses($input, $allowed_html, $allowed_protocols);
+            },
+            'default' => ''
         ));
         
         // Add section
@@ -51,6 +109,14 @@ class Quote_Manager_Settings {
             'quote_manager_company_section',
             __('Company Details', 'quote-manager-system-for-woocommerce'),
             array($this, 'company_section_callback'),
+            'quote_manager_company_settings'
+        );
+        
+        // Add plugin settings section
+        add_settings_section(
+            'quote_manager_plugin_settings_section',
+            __('Plugin Settings', 'quote-manager-system-for-woocommerce'),
+            array($this, 'plugin_settings_section_callback'),
             'quote_manager_company_settings'
         );
         
@@ -108,7 +174,7 @@ class Quote_Manager_Settings {
             'quote_manager_company_section',
             ['label_for' => 'quote_manager_company_logo']
         );
-		
+        
         add_settings_field(
             'quote_manager_default_terms',
             __('Default Terms & Conditions', 'quote-manager-system-for-woocommerce'),
@@ -116,7 +182,17 @@ class Quote_Manager_Settings {
             'quote_manager_company_settings',
             'quote_manager_company_section',
             ['label_for' => 'quote_manager_default_terms']
-        );		
+        );
+
+        // Add the plugin settings field
+        add_settings_field(
+            'quote_manager_delete_files_on_uninstall',
+            __('Data Cleanup', 'quote-manager-system-for-woocommerce'),
+            array($this, 'delete_files_field_callback'),
+            'quote_manager_company_settings',
+            'quote_manager_plugin_settings_section',
+            ['label_for' => 'quote_manager_delete_files_on_uninstall']
+        );
     }
 
     /**
@@ -124,6 +200,13 @@ class Quote_Manager_Settings {
      */
     public function company_section_callback() {
         echo '<p>' . __('Enter your company details that will appear on the quote PDF.', 'quote-manager-system-for-woocommerce') . '</p>';
+    }
+
+    /**
+     * Plugin settings section callback
+     */
+    public function plugin_settings_section_callback() {
+        echo '<p>' . __('Configure plugin behavior and data management options.', 'quote-manager-system-for-woocommerce') . '</p>';
     }
 
     /**
@@ -192,6 +275,24 @@ class Quote_Manager_Settings {
                 </div>
             <?php endif; ?>
         </div>
+        <?php
+    }
+
+    /**
+     * Delete files on uninstall field callback
+     */
+    public function delete_files_field_callback($args) {
+        $option = get_option($args['label_for']);
+        ?>
+        <label for="<?php echo esc_attr($args['label_for']); ?>">
+            <input type="checkbox" id="<?php echo esc_attr($args['label_for']); ?>" 
+                   name="<?php echo esc_attr($args['label_for']); ?>" 
+                   value="yes" <?php checked($option, 'yes'); ?> />
+            <?php _e('Delete all quote files and attachments when plugin is uninstalled', 'quote-manager-system-for-woocommerce'); ?>
+        </label>
+        <p class="description" style="color: #d63638;">
+            <?php _e('Warning: If checked, all generated quote PDFs and uploaded attachments will be permanently deleted when the plugin is uninstalled.', 'quote-manager-system-for-woocommerce'); ?>
+        </p>
         <?php
     }
 

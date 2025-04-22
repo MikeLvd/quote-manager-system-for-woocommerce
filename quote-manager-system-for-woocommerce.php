@@ -6,7 +6,7 @@
  * Plugin Name:       Quote Manager System For WooCommerce
  * Plugin URI:        https://github.com/MikeLvd/quote-manager-system-for-woocommerce
  * Description:       A custom WordPress plugin that allows you to create detailed product offers inside the WooCommerce backend. Ideal for retail stores, B2B sales, and client advanced quotations.
- * Version:           1.5.0
+ * Version:           1.6.0
  * Author:            Mike Lvd
  * Author URI:        https://goldenbath.gr/
  * Requires at least: 5.9
@@ -29,10 +29,22 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('QUOTE_MANAGER_VERSION', '1.5.0');
+define('QUOTE_MANAGER_VERSION', '1.6.0');
 define('QUOTE_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('QUOTE_MANAGER_URL', plugin_dir_url(__FILE__));
 
+/**
+ * Load the Activator class for activation tasks
+ */
+require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce-activator.php';
+
+/**
+ * Register activation hook
+ */
+register_activation_hook(__FILE__, array('Quote_Manager_System_For_Woocommerce_Activator', 'activate'));
+
+// Register deactivation hook
+register_deactivation_hook(__FILE__, array('Quote_Manager_System_For_Woocommerce_Deactivator', 'deactivate'));
 /**
  * Check for WooCommerce dependency
  */
@@ -47,6 +59,20 @@ add_action('before_woocommerce_init', function() {
         );
     }
 });
+
+/**
+ * Add a fallback check to ensure directories exist
+ */
+add_action('admin_init', 'quote_manager_ensure_directories_exist');
+
+function quote_manager_ensure_directories_exist() {
+    // Only run once per session
+    if (!get_transient('quote_manager_directories_checked')) {
+        Quote_Manager_System_For_Woocommerce_Activator::ensure_directories();
+        // Set transient to avoid checking too often
+        set_transient('quote_manager_directories_checked', true, 12 * HOUR_IN_SECONDS);
+    }
+}
 
 function quote_manager_check_woocommerce_dependency() {
     // Check if WooCommerce is active
@@ -75,48 +101,6 @@ function quote_manager_check_woocommerce_dependency() {
     } else {
         // WooCommerce is active - load plugin functionality
         require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce.php';
-        
-        // Register activation hook
-        register_activation_hook(__FILE__, 'quote_manager_activate');
-        
-        /**
-         * Actions to perform on plugin activation
-         */
-        function quote_manager_activate() {
-            // Create the protected upload directory for PDFs
-            require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
-            $email_manager = new Quote_Manager_Email_Manager();
-            $email_manager->create_protection_htaccess();
-            
-            // Create directory for attachments
-            $upload_dir = wp_upload_dir();
-            $attachments_dir = $upload_dir['basedir'] . '/quote-manager/attachments/';
-            
-            if (!file_exists($attachments_dir)) {
-                wp_mkdir_p($attachments_dir);
-                
-                // Create .htaccess to protect direct access
-                $htaccess_content = <<<HTACCESS
-                # Disable directory browsing
-                Options -Indexes
-                
-                # Deny access to .htaccess
-                <Files .htaccess>
-                    Order allow,deny
-                    Deny from all
-                </Files>
-                
-                # Allow access only through WordPress
-                <IfModule mod_rewrite.c>
-                    RewriteEngine On
-                    RewriteCond %{HTTP_REFERER} !^.*wp-admin.* [NC]
-                    RewriteRule .* - [F]
-                </IfModule>
-                HTACCESS;
-                
-                file_put_contents($attachments_dir . '.htaccess', $htaccess_content);
-            }
-        }
         
         // Run the plugin
         function run_quote_manager_system_for_woocommerce() {

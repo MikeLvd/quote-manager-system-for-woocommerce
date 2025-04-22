@@ -56,7 +56,11 @@ class Quote_Manager_System_For_Woocommerce {
             $this->version = '1.0.0';
         }
         $this->plugin_name = 'quote-manager-system-for-woocommerce';
-
+        
+        // Ensure required directories exist before proceeding
+        require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce-activator.php';
+        Quote_Manager_System_For_Woocommerce_Activator::ensure_directories();
+        
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
@@ -96,6 +100,25 @@ class Quote_Manager_System_For_Woocommerce {
         require_once QUOTE_MANAGER_PATH . 'includes/class-settings.php';
         
         $this->loader = new Quote_Manager_System_For_Woocommerce_Loader();
+    }
+
+    /**
+     * Ensure required directories exist
+     */
+    private function ensure_required_directories() {
+        $upload_dir = wp_upload_dir();
+        
+        // Create quotes directory if it doesn't exist
+        $quotes_dir = $upload_dir['basedir'] . '/quote-manager/quotes/';
+        if (!file_exists($quotes_dir)) {
+            wp_mkdir_p($quotes_dir);
+        }
+        
+        // Create attachments directory if it doesn't exist
+        $attachments_dir = $upload_dir['basedir'] . '/quote-manager/attachments/';
+        if (!file_exists($attachments_dir)) {
+            wp_mkdir_p($attachments_dir);
+        }
     }
 
     /**
@@ -144,6 +167,8 @@ class Quote_Manager_System_For_Woocommerce {
         $this->loader->add_action('wp_ajax_quote_manager_send_email', $ajax, 'send_email');
         $this->loader->add_action('wp_ajax_quote_manager_upload_attachment', $ajax, 'upload_attachment');
 		$this->loader->add_action('wp_ajax_quote_delete_attachment', $ajax, 'delete_attachment');
+		$this->loader->add_action('wp_ajax_quote_manager_get_states', $ajax, 'get_states');
+		$this->loader->add_action('wp_ajax_quote_manager_create_customer', $ajax, 'create_customer_from_quote');
         
         // Settings
         $settings = new Quote_Manager_Settings();

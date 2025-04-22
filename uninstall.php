@@ -1,31 +1,73 @@
 <?php
-
 /**
  * Fired when the plugin is uninstalled.
- *
- * When populating this file, consider the following flow
- * of control:
- *
- * - This method should be static
- * - Check if the $_REQUEST content actually is the plugin name
- * - Run an admin referrer check to make sure it goes through authentication
- * - Verify the output of $_GET makes sense
- * - Repeat with other user roles. Best directly by using the links/query string parameters.
- * - Repeat things for multisite. Once for a single site in the network, once sitewide.
- *
- * This file may be updated more in future version of the Boilerplate; however, this is the
- * general skeleton and outline for how the file should work.
- *
- * For more information, see the following discussion:
- * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
- *
  * @link       https://goldenbath.gr
  * @since      1.0.0
  *
  * @package    Quote_Manager_System_For_Woocommerce
  */
 
-// If uninstall not called from WordPress, then exit.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
+// If uninstall is not called from WordPress, exit
+if (!defined('WP_UNINSTALL_PLUGIN')) {
+    exit;
+}
+
+// Delete all quotes
+$quotes = get_posts([
+    'post_type'    => 'customer_quote',
+    'numberposts'  => -1,
+    'post_status'  => 'any',
+    'fields'       => 'ids',
+]);
+
+foreach ($quotes as $quote_id) {
+    wp_delete_post($quote_id, true); // true = force delete (bypass trash)
+}
+
+// Remove plugin options
+$options = [
+    'quote_manager_company_name',
+    'quote_manager_company_address',
+    'quote_manager_company_city',
+    'quote_manager_company_phone',
+    'quote_manager_company_email',
+    'quote_manager_company_logo',
+    'quote_manager_default_terms'
+];
+
+// Check if we should delete files
+$delete_files = get_option('quote_manager_delete_files_on_uninstall') === 'yes';
+
+// Always remove all plugin settings at the end
+$options[] = 'quote_manager_delete_files_on_uninstall';
+
+foreach ($options as $option) {
+    delete_option($option);
+}
+
+// Only delete files if the setting is enabled
+if ($delete_files) {
+    // Remove upload directories
+    $upload_dir = wp_upload_dir();
+    $quote_manager_dir = $upload_dir['basedir'] . '/quote-manager/';
+
+    // Recursive directory removal function
+    function quote_manager_recursive_rmdir($dir) {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (is_dir($dir . DIRECTORY_SEPARATOR . $object)) {
+                        quote_manager_recursive_rmdir($dir . DIRECTORY_SEPARATOR . $object);
+                    } else {
+                        unlink($dir . DIRECTORY_SEPARATOR . $object);
+                    }
+                }
+            }
+            rmdir($dir);
+        }
+    }
+
+    // Delete all files
+    quote_manager_recursive_rmdir($quote_manager_dir);
 }
