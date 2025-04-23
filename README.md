@@ -123,7 +123,7 @@ A custom WooCommerce plugin designed to streamline the process of creating, mana
 -
 ![Settings Page of the Plugin](assets/images/plugin/Settings.png)
 
-![Quote Customer Page in the Plugin](assets/images/plugin/Quote Customer.png)
+![Quote Customer Page in the Plugin](assets/images/plugin/Quote%20Customer.png)
 
 ## 🧑‍💻 Author
 
