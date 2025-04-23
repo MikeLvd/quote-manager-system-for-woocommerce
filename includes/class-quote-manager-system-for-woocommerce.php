@@ -248,35 +248,35 @@ class Quote_Manager_System_For_Woocommerce
         );
     }
 
-    /**
-     * Get the default email template with placeholders
-     *
-     * @return string Default email template
-     */
-    public static function get_default_email_template()
-    {
-        return '
-            <p>Dear {{customer_first_name}},</p>
-            
-            <p>Thank you for your interest in our products and services. We are pleased to present you with a customized solution for your needs.</p>
-        
-        
-            
-            <p>Attached you will find our detailed quote (no. #{{quote_id}}) in PDF format, which has been prepared specifically for you.</p>
-            
-            <p><strong>You can also view and respond to this quote online at:</strong> <a href="{{quote_view_url}}">{{quote_view_url}}</a></p>
-            
-            <p><strong>Important information:</strong><br>
-            - Quote valid until: {{quote_expiry}}<br>
-            - For immediate assistance: (+30) 210 XXX XXXX</p>
-            
-            <p>Please review the quote and do not hesitate to contact us for any clarifications or adjustments you would like. We are always available to discuss how we can better meet your needs.</p>
-            
-            <p>Thank you for choosing our company and we look forward to working with you!</p>
-            
-            <p>Best regards,<br>
-            {{site_name}}</p>';
+/**
+ * Get the default email template with placeholders
+ *
+ * @return string Default email template
+ */
+public static function get_default_email_template()
+{
+    // Check if a custom template is saved in options
+    $saved_template = get_option('quote_manager_email_template');
+    
+    // If we have a saved template, use it
+    if (!empty($saved_template)) {
+        return $saved_template;
     }
+    
+    // Otherwise, return the hardcoded default
+    return '<p><strong>Dear {{customer_first_name}},</strong></p>
+    <p>Thank you for the trust you place in our company and for your interest in our products and services.</p>
+    <p>We are pleased to send you our personalized offer with reference number <strong>#{{quote_id}}</strong>, specifically tailored to your needs. The corresponding PDF file is attached to this email.</p>
+    <p>For your convenience, you can <strong>accept or decline the offer online</strong> via the link below: <br><strong>Offer link: <a href="{{quote_view_url}}">{{quote_view_url}}</a></strong></p>
+    <p><strong>Useful information:</strong></p>
+    <ul>
+        <li>Offer valid until: <strong>{{quote_expiry}}</strong></li>
+        <li>For any questions or assistance: <strong>(+30) XXX XXX XXXX</strong></li>
+    </ul>
+    <p>We would be happy to discuss any modifications or clarifications you may need. Our goal is to provide solutions that fully meet your expectations.</p>
+    <p>Thank you once again for your preference. We remain at your disposal and look forward to the opportunity of a successful collaboration.</p>
+    <p>Warm regards,<br>The {{site_name}} Team</p>';
+}
 
     /**
      * Delete quote PDF files when a quote is rejected

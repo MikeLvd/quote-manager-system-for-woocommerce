@@ -234,7 +234,7 @@ class Quote_Manager_System_For_Woocommerce_Admin
                 );
 
                 wp_localize_script('quote-manager-admin-js', 'quoteManagerData', $localization_data);
-
+                
                 // Load settings JS for the terms functionality
                 wp_enqueue_script(
                     'quote-manager-settings-js',
@@ -243,7 +243,18 @@ class Quote_Manager_System_For_Woocommerce_Admin
                     $this->version,
                     true
                 );
-
+                
+                // Add localization for settings reset functionality
+                wp_localize_script('quote-manager-settings-js', 'quote_manager_i18n', array(
+                    'reset_terms_confirm' => __('Reset to default terms? This will replace your current text.', 'quote-manager-system-for-woocommerce'),
+                    'reset_email_confirm' => __('Reset to default email template? This will replace your current template.', 'quote-manager-system-for-woocommerce')
+                ));
+                
+                wp_localize_script('quote-manager-settings-js', 'quote_manager_vars', array(
+                    'default_terms' => get_option('quote_manager_default_terms', ''),
+                    'default_email' => Quote_Manager_System_For_Woocommerce::get_default_email_template()
+                ));
+                
                 // Load status management JS and CSS for the quote edit page
                 wp_enqueue_style(
                     $this->plugin_name . '-status',
@@ -251,7 +262,7 @@ class Quote_Manager_System_For_Woocommerce_Admin
                     array(),
                     $this->version
                 );
-
+                
                 wp_enqueue_script(
                     $this->plugin_name . '-status-js',
                     QUOTE_MANAGER_URL . 'admin/js/quote-manager-status.js',
@@ -259,7 +270,7 @@ class Quote_Manager_System_For_Woocommerce_Admin
                     $this->version,
                     true
                 );
-
+                
                 // Localize script with data
                 wp_localize_script($this->plugin_name . '-status-js', 'quoteManagerStatusData', array(
                     'ajaxUrl' => admin_url('admin-ajax.php'),
@@ -273,7 +284,7 @@ class Quote_Manager_System_For_Woocommerce_Admin
                     )
                 ));
             }
-
+            
             // Load a specific script for the settings page if needed
             if ($is_settings_page) {
                 wp_enqueue_script(
@@ -283,6 +294,18 @@ class Quote_Manager_System_For_Woocommerce_Admin
                     $this->version,
                     true
                 );
+                
+                // Add the same localization data for the settings page
+                wp_localize_script('quote-manager-settings-js', 'quote_manager_i18n', array(
+                    'reset_terms_confirm' => __('Reset to default terms? This will replace your current text.', 'quote-manager-system-for-woocommerce'),
+                    'reset_email_confirm' => __('Reset to default email template? This will replace your current template.', 'quote-manager-system-for-woocommerce')
+                ));
+                
+                // Localize default values for terms
+                wp_localize_script('quote-manager-settings-js', 'quote_manager_vars', array(
+                    'default_terms' => get_option('quote_manager_default_terms', ''),
+                    'default_email' => Quote_Manager_System_For_Woocommerce::get_default_email_template()
+                ));
             }
         }
     }

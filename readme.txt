@@ -60,6 +60,17 @@ You can choose from Media Library or insert a remote image URL.
 3. Internal pricing analysis table
 
 == Changelog ==
+
+= 1.8.5 =
+Email Template Customization Feature
+• Added a new field in plugin settings to customize the default email template
+• Added ability to save custom email templates in WordPress database
+• Implemented secure HTML sanitization for email content
+• Added "Reset to Default" button for email templates
+• Updated Quote Manager core to use the saved template for emails
+• Added JavaScript functionality to reset the email template to default
+• Added proper localization for all new text strings
+
 = 1.8.2 =
 Bug Fixes & Improvements
 • Fixed some issues with the css styles on pdf export

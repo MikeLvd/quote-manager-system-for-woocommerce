@@ -110,6 +110,78 @@ class Quote_Manager_Settings
             },
             'default' => ''
         ));
+		
+        // Add this in the register_settings() method, in the register_setting() calls section
+        register_setting('quote_manager_company_settings', 'quote_manager_email_template', array(
+            'sanitize_callback' => function ($input) {
+                // Use similar sanitization as the terms field
+                $allowed_html = array(
+                    'p' => array('style' => array()),
+                    'br' => array(),
+                    'em' => array(),
+                    'strong' => array(),
+                    'b' => array(),
+                    'i' => array(),
+                    'ul' => array('style' => array()),
+                    'ol' => array('style' => array()),
+                    'li' => array('style' => array()),
+                    'span' => array('style' => array()),
+                    'div' => array('style' => array(), 'class' => array()),
+                    'h1' => array('style' => array()),
+                    'h2' => array('style' => array()),
+                    'h3' => array('style' => array()),
+                    'h4' => array('style' => array()),
+                    'h5' => array('style' => array()),
+                    'h6' => array('style' => array()),
+                    'a' => array(
+                        'href' => array(),
+                        'target' => array(),
+                        'rel' => array(),
+                        'title' => array(),
+                        'class' => array(),
+                    ),
+                );
+        
+                // Pre-filter style attributes to prevent XSS via CSS
+                $input = preg_replace_callback(
+                    '/(style\s*=\s*["\'])(.*?)(["\'])/i',
+                    function ($matches) {
+                        // Only allow safe CSS properties
+                        $allowed_css = array(
+                            'text-align', 'margin', 'padding', 'color', 'background-color',
+                            'font-size', 'font-weight', 'line-height', 'font-family',
+                            'border', 'border-width', 'border-style', 'border-color',
+                            'width', 'height', 'display', 'text-decoration'
+                        );
+        
+                        $style = $matches[2];
+                        $filtered_style = '';
+        
+                        // Extract property:value pairs
+                        $pairs = array_filter(array_map('trim', explode(';', $style)));
+                        foreach ($pairs as $pair) {
+                            $parts = array_map('trim', explode(':', $pair, 2));
+                            if (count($parts) === 2) {
+                                list($property, $value) = $parts;
+                                // Check if property is allowed
+                                if (in_array($property, $allowed_css, true)) {
+                                    // Basic filtering of values (prevent javascript: etc)
+                                    if (!preg_match('/(expression|javascript|behavior|eval|\burl\s*\()/i', $value)) {
+                                        $filtered_style .= $property . ':' . $value . ';';
+                                    }
+                                }
+                            }
+                        }
+        
+                        return $matches[1] . $filtered_style . $matches[3];
+                    },
+                    $input
+                );
+        
+                return wp_kses($input, $allowed_html);
+            },
+            'default' => Quote_Manager_System_For_Woocommerce::get_default_email_template()
+        ));		
 
         // Add section
         add_settings_section(
@@ -191,6 +263,15 @@ class Quote_Manager_Settings
             ['label_for' => 'quote_manager_default_terms']
         );
 
+        add_settings_field(
+            'quote_manager_email_template',
+            __('Default Email Template', 'quote-manager-system-for-woocommerce'),
+            array($this, 'email_template_field_callback'),
+            'quote_manager_company_settings',
+            'quote_manager_company_section',
+            ['label_for' => 'quote_manager_email_template']
+        );
+
         // Add the plugin settings field
         add_settings_field(
             'quote_manager_delete_files_on_uninstall',
@@ -269,6 +350,80 @@ class Quote_Manager_Settings
         echo '<p class="description"><small>' .
             __('Tip: Use Shift+Enter for line breaks, Enter for new paragraphs, and the toolbar buttons for formatting.', 'quote-manager-system-for-woocommerce') .
             '</small></p>';
+    }
+
+    /**
+     * Email template field callback
+     */
+    public function email_template_field_callback($args)
+    {
+        // Get the existing template or use default
+        $email_template = get_option($args['label_for']);
+        if (empty($email_template)) {
+            $email_template = Quote_Manager_System_For_Woocommerce::get_default_email_template();
+        }
+        
+        // Get the hardcoded default template for reset button
+        $default_template = str_replace(
+            array("\r\n", "\r", "\n"), 
+            '', 
+            '<p><strong>Dear {{customer_first_name}},</strong></p>
+            <p>Thank you for the trust you place in our company and for your interest in our products and services.</p>
+            <p>We are pleased to send you our personalized offer with reference number <strong>#{{quote_id}}</strong>, specifically tailored to your needs. The corresponding PDF file is attached to this email.</p>
+            <p>For your convenience, you can <strong>accept or decline the offer online</strong> via the link below: <br><strong>Offer link: <a href="{{quote_view_url}}">{{quote_view_url}}</a></strong></p>
+            <p><strong>Useful information:</strong></p>
+            <ul>
+                <li>Offer valid until: <strong>{{quote_expiry}}</strong></li>
+                <li>For any questions or assistance: <strong>(+30) XXX XXX XXXX</strong></li>
+            </ul>
+            <p>We would be happy to discuss any modifications or clarifications you may need. Our goal is to provide solutions that fully meet your expectations.</p>
+            <p>Thank you once again for your preference. We remain at your disposal and look forward to the opportunity of a successful collaboration.</p>
+            <p>Warm regards,<br>The {{site_name}} Team</p>'
+        );
+    
+        // Editor settings here...
+        $editor_settings = array(
+            'textarea_name' => $args['label_for'],
+            'textarea_rows' => 10,
+            'media_buttons' => false,
+            'teeny' => false,
+            'quicktags' => true,
+            'tinymce' => array(
+                'forced_root_block' => 'div',
+                'keep_styles' => true,
+                'entities' => '38,amp,60,lt,62,gt',
+                'fix_list_elements' => true,
+                'preserve_cdata' => true,
+                'remove_redundant_brs' => false,
+            ),
+        );
+    
+        // Output the editor
+        wp_editor($email_template, 'quote_email_template_editor', $editor_settings);
+    
+        // Display description with placeholders
+        echo '<p class="description">' . __('This template will be used as the default for all quote emails. You can customize it per email when sending.', 'quote-manager-system-for-woocommerce') . '</p>';
+        echo '<p class="description">' . __('Available placeholders:', 'quote-manager-system-for-woocommerce') . ' 
+            <code>{{customer_name}}</code>, 
+            <code>{{customer_first_name}}</code>, 
+            <code>{{customer_last_name}}</code>,
+            <code>{{quote_id}}</code>,
+            <code>{{quote_expiry}}</code>,
+            <code>{{quote_view_url}}</code>,
+            <code>{{site_name}}</code>,
+            <code>{{today}}</code>
+        </p>';
+    
+        echo '<p class="description"><small>' .
+            __('Tip: Use Shift+Enter for line breaks, Enter for new paragraphs, and the toolbar buttons for formatting.', 'quote-manager-system-for-woocommerce') .
+            '</small></p>';
+    
+        // Add a reset button with data attribute containing the default template
+        echo '<div style="margin-top:10px;">';
+        echo '<button type="button" id="reset-to-default-email" class="button" data-default-template="' . esc_attr($default_template) . '">' . 
+            __('Reset to Default Email Template', 'quote-manager-system-for-woocommerce') . 
+            '</button>';
+        echo '</div>';
     }
 
     /**

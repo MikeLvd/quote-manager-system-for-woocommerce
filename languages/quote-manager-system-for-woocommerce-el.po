@@ -2,1022 +2,297 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Quote Manager System For WooCommerce\n"
 "POT-Creation-Date: 2025-04-23 15:19+0300\n"
-"PO-Revision-Date: 2025-04-23 15:19+0300\n"
+"PO-Revision-Date: 2025-04-23 13:45+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: Ελληνικά\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: quote-manager-system-for-woocommerce.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: lib/dompdf/vendor\n"
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:70
-msgid "Quote Manager: PDF directory protection has been set up."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:186
-#, php-format
-msgid ""
-"Please enter a value with one monetary decimal point (%s) without thousand "
-"separators and currency symbols."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:189
-#: includes/class-settings.php:286
-msgid "Select Image"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:190
-msgid "Media Library"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:191
-msgid "From URL"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:192
-msgid "Enter Image URL"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:193
-msgid "Use this image"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:194
-msgid "Confirm"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:195
-#: public/templates/accept-quote.php:67 public/templates/reject-quote.php:59
-msgid "Cancel"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:198
-msgid "📨 Sending in progress..."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:199
-msgid "✅ Email sent successfully."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:200
-msgid "❌ Error:"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:201
-msgid "Failed to send."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:202
-msgid "❌ Error while sending email."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:205
-#: includes/class-metaboxes.php:436 includes/class-metaboxes.php:487
-msgid "Cost"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:206
-#: includes/class-metaboxes.php:498
-msgid "Remove"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:207
-msgid "Totals"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:208
-msgid "incl. VAT"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:209
-msgid "Total Net Profit"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:212
-msgid "Product search failed:"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:215
-msgid "Uploading file..."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:216
-msgid "File uploaded successfully."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:217
-msgid "Error uploading file:"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:218
-msgid "Select File"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:219
-msgid "Remove Attachment"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:220
-#: includes/class-metaboxes.php:930 includes/class-metaboxes.php:964
-msgid "View File"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:223
-msgid "Creating customer..."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:224
-msgid "Customer created successfully. "
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:225
-msgid "View customer"
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:226
-msgid "Error creating customer."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:229
-#: includes/class-ajax-handlers.php:472
-msgid "File size exceeds the 2MB limit."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:230
-#: includes/class-ajax-handlers.php:493
-msgid "Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:231
-msgid "Maximum number of attachments reached (10)."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:270
-msgid "Updating status..."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:271
-msgid "Error updating status."
-msgstr ""
-
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:272
-#, php-format
-msgid "%d quotes have been marked as expired."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:27 includes/class-ajax-handlers.php:152
-#: includes/class-ajax-handlers.php:179 includes/class-ajax-handlers.php:286
-#: includes/class-ajax-handlers.php:455 includes/class-ajax-handlers.php:580
-#: includes/class-ajax-handlers.php:661 includes/class-ajax-handlers.php:712
-msgid "Access denied"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:147 includes/class-ajax-handlers.php:450
-#: includes/class-ajax-handlers.php:574
-msgid "Security check failed."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:159
-msgid "Country is required"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:168
-msgid "No states found for this country"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:184 includes/class-ajax-handlers.php:666
-#: includes/class-ajax-handlers.php:717
-msgid "Security check failed"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:292
-msgid "Invalid quote ID"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:304
-msgid "Customer email is required"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:311
-msgid "A user with this email already exists"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:390
-msgid "Customer created successfully"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:460
-msgid "No file was uploaded."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:466 includes/class-pdf-generator.php:36
-msgid "Invalid quote ID."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:480
-#, php-format
-msgid "Maximum number of attachments (%d) reached."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:507
-msgid ""
-"Invalid file type detected. Only JPG, JPEG, PNG and PDF files are allowed."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:563
-msgid "Failed to upload file."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:590
-msgid "Missing required information."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:638
-msgid "Attachment removed successfully."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:643
-msgid "Attachment deleted successfully."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:648
-msgid "Attachment removed, but file could not be deleted from server."
-msgstr ""
-
-#: includes/class-ajax-handlers.php:674
-msgid "Invalid parameters"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:680
-msgid "Quote not found"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:686
-msgid "Invalid status"
-msgstr ""
-
-#: includes/class-ajax-handlers.php:699
-msgid "Status updated successfully"
-msgstr ""
-
-#: includes/class-email-manager.php:121
-#, php-format
-msgid "Your quote from %s"
-msgstr ""
-
-#: includes/class-email-manager.php:158 includes/class-metaboxes.php:1256
-msgid "Attachments:"
-msgstr ""
-
-#: includes/class-email-manager.php:159 includes/class-metaboxes.php:1259
-msgid "Quote PDF"
-msgstr ""
-
-#: includes/class-metaboxes.php:27
-msgid "🧾 Customer & Shipping Details"
-msgstr ""
-
-#: includes/class-metaboxes.php:36
-msgid "🛒 Quote Products"
-msgstr ""
-
-#: includes/class-metaboxes.php:45
-msgid "📤 Quote Actions"
-msgstr ""
-
-#: includes/class-metaboxes.php:54
-msgid "⚙️ Quote Tools"
-msgstr ""
-
-#: includes/class-metaboxes.php:63 includes/class-metaboxes.php:545
-msgid "🔐 Internal Quote Information"
-msgstr ""
-
-#: includes/class-metaboxes.php:72
-msgid "📧 Email History"
-msgstr ""
-
-#: includes/class-metaboxes.php:81
-msgid "📝 Terms & Conditions"
-msgstr ""
-
-#: includes/class-metaboxes.php:90
-msgid "📎 Attachments"
-msgstr ""
-
-#: includes/class-metaboxes.php:151
-msgid "Billing"
-msgstr ""
-
-#: includes/class-metaboxes.php:152
-msgid "Load billing address"
-msgstr ""
-
-#: includes/class-metaboxes.php:159 includes/class-metaboxes.php:261
-msgid "First name"
-msgstr ""
-
-#: includes/class-metaboxes.php:164 includes/class-metaboxes.php:266
-msgid "Last name"
-msgstr ""
-
-#: includes/class-metaboxes.php:172 includes/class-metaboxes.php:274
-msgid "Company"
-msgstr ""
-
-#: includes/class-metaboxes.php:178 includes/class-metaboxes.php:280
-#: includes/class-settings.php:142
-msgid "Address"
-msgstr ""
-
-#: includes/class-metaboxes.php:186 includes/class-metaboxes.php:288
-msgid "City"
-msgstr ""
-
-#: includes/class-metaboxes.php:191 includes/class-metaboxes.php:293
-msgid "Postcode"
-msgstr ""
-
-#: includes/class-metaboxes.php:201 includes/class-metaboxes.php:303
-msgid "Country"
-msgstr ""
-
-#: includes/class-metaboxes.php:213 includes/class-metaboxes.php:315
-msgid "State"
-msgstr ""
-
-#: includes/class-metaboxes.php:237
-msgid "Email address"
-msgstr ""
-
-#: includes/class-metaboxes.php:242 includes/class-metaboxes.php:337
-#: includes/class-settings.php:160
-msgid "Phone"
-msgstr ""
-
-#: includes/class-metaboxes.php:253
-msgid "Shipping"
-msgstr ""
-
-#: includes/class-metaboxes.php:254
-msgid "Copy billing address"
-msgstr ""
-
-#: includes/class-metaboxes.php:351
-msgid "Search customers by name, email or company..."
-msgstr ""
-
-#: includes/class-metaboxes.php:359
-msgid "Save as New Customer"
-msgstr ""
-
-#: includes/class-metaboxes.php:366
-msgid "Project Details"
-msgstr ""
-
-#: includes/class-metaboxes.php:368
-msgid "Project Name"
-msgstr ""
-
-#: includes/class-metaboxes.php:422
-msgid "🔍 Search products..."
-msgstr ""
-
-#: includes/class-metaboxes.php:425
-msgid "✚ Add Product"
-msgstr ""
-
-#: includes/class-metaboxes.php:433 includes/class-metaboxes.php:1023
-#: includes/class-pdf-generator-raw.php:645
-#: includes/class-pdf-generator-raw.php:691
-#: includes/class-pdf-generator.php:647 includes/class-pdf-generator.php:693
-msgid "Image"
-msgstr ""
-
-#: includes/class-metaboxes.php:434
-msgid "Title"
-msgstr ""
-
-#: includes/class-metaboxes.php:435
-msgid "SKU"
-msgstr ""
-
-#: includes/class-metaboxes.php:437 includes/class-pdf-generator-raw.php:647
-#: includes/class-pdf-generator-raw.php:693
-#: includes/class-pdf-generator.php:649 includes/class-pdf-generator.php:695
-msgid "Price"
-msgstr ""
-
-#: includes/class-metaboxes.php:438
-msgid "Discount (%)"
-msgstr ""
-
-#: includes/class-metaboxes.php:439 includes/class-pdf-generator-raw.php:649
-#: includes/class-pdf-generator-raw.php:695
-#: includes/class-pdf-generator.php:651 includes/class-pdf-generator.php:697
-msgid "Value"
-msgstr ""
-
-#: includes/class-metaboxes.php:441 includes/class-pdf-generator-raw.php:651
-#: includes/class-pdf-generator-raw.php:697
-#: includes/class-pdf-generator.php:653 includes/class-pdf-generator.php:699
-msgid "Value (incl. VAT)"
-msgstr ""
-
-#: includes/class-metaboxes.php:442 includes/class-metaboxes.php:551
-msgid "Quantity"
-msgstr ""
-
-#: includes/class-metaboxes.php:443
-msgid "Total (€)"
-msgstr ""
-
-#: includes/class-metaboxes.php:508 includes/class-pdf-generator-raw.php:735
-#: includes/class-pdf-generator.php:737
-msgid "Subtotal:"
-msgstr ""
-
-#: includes/class-metaboxes.php:514 includes/class-pdf-generator-raw.php:740
-#: includes/class-pdf-generator.php:742
-msgid "VAT:"
-msgstr ""
-
-#: includes/class-metaboxes.php:519 public/templates/view-quote.php:92
-msgid "Total:"
-msgstr ""
+"Plural-Forms: nplurals=2; plural=n != 1;"
 
 #: includes/class-metaboxes.php:548
 msgid "#"
-msgstr ""
-
-#: includes/class-metaboxes.php:549 includes/class-pdf-generator-raw.php:646
-#: includes/class-pdf-generator-raw.php:692
-#: includes/class-pdf-generator.php:648 includes/class-pdf-generator.php:694
-msgid "Product"
-msgstr ""
-
-#: includes/class-metaboxes.php:550
-msgid "Purchase Price (excl. VAT)"
-msgstr ""
-
-#: includes/class-metaboxes.php:552
-msgid "Total Cost"
-msgstr ""
-
-#: includes/class-metaboxes.php:553
-msgid "Total Price"
-msgstr ""
-
-#: includes/class-metaboxes.php:554
-msgid "% Markup"
-msgstr ""
+msgstr "#"
 
 #: includes/class-metaboxes.php:555
 msgid "% Margin"
-msgstr ""
+msgstr "% Περιθώριο"
 
-#: includes/class-metaboxes.php:632
-msgid "Totals:"
-msgstr ""
+#: includes/class-metaboxes.php:554
+msgid "% Markup"
+msgstr "% Προσαύξηση"
 
-#: includes/class-metaboxes.php:643
-msgid "Total Net Profit:"
-msgstr ""
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:283
+msgid "%d quotes have been marked as expired."
+msgstr "%d προσφορές έχουν επισημανθεί ως ληγμένες."
 
 #: includes/class-metaboxes.php:649
 msgid ""
 "*The above information is only visible to administrators and is not included "
 "in the quote PDF."
 msgstr ""
-
-#: includes/class-metaboxes.php:665
-msgid "Quote Status:"
-msgstr ""
-
-#: includes/class-metaboxes.php:682
-msgid "Include VAT in quote"
-msgstr ""
-
-#: includes/class-metaboxes.php:686
-msgid "Quote Validity:"
-msgstr ""
-
-#: includes/class-metaboxes.php:699
-msgid "5 Days"
-msgstr ""
+"*Οι παραπάνω πληροφορίες είναι ορατές μόνο στους διαχειριστές και δεν "
+"περιλαμβάνονται στο PDF της προσφοράς."
 
 #: includes/class-metaboxes.php:700
 msgid "15 Days"
-msgstr ""
+msgstr "15 Ημέρες"
 
 #: includes/class-metaboxes.php:701
 msgid "30 Days"
-msgstr ""
+msgstr "30 Ημέρες"
 
 #: includes/class-metaboxes.php:702
 msgid "45 Days"
-msgstr ""
+msgstr "45 Ημέρες"
+
+#: includes/class-metaboxes.php:699
+msgid "5 Days"
+msgstr "5 Ημέρες"
 
 #: includes/class-metaboxes.php:703
 msgid "60 Days"
-msgstr ""
+msgstr "60 Ημέρες"
 
-#: includes/class-metaboxes.php:704
-msgid "Custom Date"
-msgstr ""
-
-#: includes/class-metaboxes.php:715
-msgid "dd/mm/yyyy"
-msgstr ""
-
-#: includes/class-metaboxes.php:716
-msgid "Select specific expiration date"
-msgstr ""
-
-#: includes/class-metaboxes.php:744
-msgid "Preview PDF"
-msgstr ""
-
-#: includes/class-metaboxes.php:745 public/templates/view-quote.php:111
-msgid "Download PDF"
-msgstr ""
-
-#: includes/class-metaboxes.php:755
-msgid "📧 Send Quote Email"
-msgstr ""
-
-#: includes/class-metaboxes.php:766
-msgid "No email history recorded."
-msgstr ""
-
-#: includes/class-metaboxes.php:771
-msgid "📅 Date"
-msgstr ""
-
-#: includes/class-metaboxes.php:772
-msgid "📧 Recipient"
-msgstr ""
-
-#: includes/class-metaboxes.php:773
-msgid "✉️ Subject"
-msgstr ""
-
-#: includes/class-metaboxes.php:774
-msgid "📨 Message"
-msgstr ""
-
-#: includes/class-metaboxes.php:775
-msgid "✅ Result"
-msgstr ""
-
-#: includes/class-metaboxes.php:776
-msgid "👁️ Viewed"
-msgstr ""
-
-#: includes/class-metaboxes.php:787
-#: includes/class-quote-manager-system-for-woocommerce.php:244
-msgid "Sent"
-msgstr ""
-
-#: includes/class-metaboxes.php:788
-msgid "Failed"
-msgstr ""
-
-#: includes/class-metaboxes.php:791
-#, php-format
-msgid "Email opened at %s"
-msgstr ""
-
-#: includes/class-metaboxes.php:794
-msgid "Not yet opened"
-msgstr ""
-
-#: includes/class-metaboxes.php:801
-msgid "View full message"
-msgstr ""
-
-#: includes/class-metaboxes.php:820
-msgid "📩 Full Message"
-msgstr ""
-
-#: includes/class-metaboxes.php:859
-msgid "Reset to Default Terms"
-msgstr ""
-
-#: includes/class-metaboxes.php:866 includes/class-settings.php:259
-msgid "Available placeholders:"
-msgstr ""
-
-#: includes/class-metaboxes.php:877 includes/class-settings.php:270
+#. Description of the plugin
 msgid ""
-"Tip: Use Shift+Enter for line breaks, Enter for new paragraphs, and the "
-"toolbar buttons for formatting."
+"A custom WordPress plugin that allows you to create detailed product offers "
+"inside the WooCommerce backend. Ideal for retail stores, B2B sales, and "
+"client advanced quotations."
 msgstr ""
+"Ένα προσαρμοσμένο πρόσθετο WordPress που σας επιτρέπει να δημιουργείτε "
+"λεπτομερείς προσφορές προϊόντων μέσα στο backend του WooCommerce. Ιδανικό "
+"για καταστήματα λιανικής, πωλήσεις B2B και προηγμένες προσφορές πελατών."
 
-#: includes/class-metaboxes.php:885
-msgid "Reset to default terms? This will replace your current text."
-msgstr ""
+#: includes/class-ajax-handlers.php:311
+msgid "A user with this email already exists"
+msgstr "Ένας χρήστης με αυτό το email υπάρχει ήδη"
+
+#: public/templates/view-quote.php:117
+msgid "Accept Quote"
+msgstr "Αποδοχή Προσφοράς"
+
+#: public/templates/accept-quote.php:29
+#, php-format
+msgid "Accept Quote %s"
+msgstr "Αποδοχή Προσφοράς %s"
+
+#: includes/class-quote-manager-system-for-woocommerce.php:245
+msgid "Accepted"
+msgstr "Αποδεκτό"
+
+#: includes/class-ajax-handlers.php:27 includes/class-ajax-handlers.php:152
+#: includes/class-ajax-handlers.php:179 includes/class-ajax-handlers.php:286
+#: includes/class-ajax-handlers.php:455 includes/class-ajax-handlers.php:580
+#: includes/class-ajax-handlers.php:661 includes/class-ajax-handlers.php:712
+msgid "Access denied"
+msgstr "Η πρόσβαση απορρίφθηκε"
+
+#: includes/class-metaboxes.php:943
+msgid "Add Attachment"
+msgstr "Προσθήκη Συνημμένου"
+
+#: includes/class-post-type.php:29
+msgid "Add New Quote"
+msgstr "Προσθήκη Νέας Προσφοράς"
 
 #: includes/class-metaboxes.php:905
 msgid ""
 "Add technical documents, specifications, or any other files that should be "
 "attached to this quote."
 msgstr ""
+"Προσθέστε τεχνικά έγγραφα, προδιαγραφές ή οποιαδήποτε άλλα αρχεία που πρέπει "
+"να επισυναφθούν σε αυτήν την προσφορά."
 
-#: includes/class-metaboxes.php:932 includes/class-metaboxes.php:966
-msgid "Remove File"
-msgstr ""
+#: includes/class-settings.php:214 includes/class-metaboxes.php:178
+#: includes/class-metaboxes.php:280
+msgid "Address"
+msgstr "Διεύθυνση"
 
-#: includes/class-metaboxes.php:943
-msgid "Add Attachment"
-msgstr ""
+#: public/class-quote-response-handler.php:335
+#: public/class-quote-response-handler.php:490
+msgid "ADMIN NOTIFICATION"
+msgstr "ΕΙΔΟΠΟΙΗΣΗ ΔΙΑΧΕΙΡΙΣΤΗ"
 
-#: includes/class-metaboxes.php:1010
-msgid "PDF Document"
-msgstr ""
-
-#: includes/class-metaboxes.php:1013
-msgid "Word Document"
-msgstr ""
-
-#: includes/class-metaboxes.php:1016
-msgid "Excel Spreadsheet"
-msgstr ""
-
-#: includes/class-metaboxes.php:1019
-msgid "PowerPoint Presentation"
-msgstr ""
-
-#: includes/class-metaboxes.php:1025
-msgid "ZIP Archive"
-msgstr ""
-
-#: includes/class-metaboxes.php:1027
-msgid "RAR Archive"
-msgstr ""
-
-#: includes/class-metaboxes.php:1029
-msgid "File"
-msgstr ""
-
-#: includes/class-metaboxes.php:1270
-msgid "Attachment"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:108
-#: includes/class-pdf-generator.php:110
-msgid "Quote"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:571
-#: includes/class-pdf-generator-raw.php:600
-#: includes/class-pdf-generator.php:573 includes/class-pdf-generator.php:602
-msgid "Tel:"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:583
-#: includes/class-pdf-generator.php:585
-msgid "QUOTE"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:592
-#: includes/class-pdf-generator.php:594
-msgid "TO"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:612
-#: includes/class-pdf-generator.php:614
-msgid "Number:"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:616
-#: includes/class-pdf-generator.php:618 public/templates/view-quote.php:82
-msgid "Date:"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:620
-#: includes/class-pdf-generator.php:622 public/templates/view-quote.php:87
-msgid "Valid until:"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:629
-#: includes/class-pdf-generator.php:631
-msgid "Project:"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:648
-#: includes/class-pdf-generator-raw.php:694
-#: includes/class-pdf-generator.php:650 includes/class-pdf-generator.php:696
-msgid "Disc(%)"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:653
-#: includes/class-pdf-generator-raw.php:699
-#: includes/class-pdf-generator.php:655 includes/class-pdf-generator.php:701
-msgid "Qty"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:654
-#: includes/class-pdf-generator-raw.php:700
-#: includes/class-pdf-generator.php:656 includes/class-pdf-generator.php:702
-msgid "Total"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:745
-#: includes/class-pdf-generator.php:747
-msgid "TOTAL:"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:766
-#: includes/class-pdf-generator-raw.php:768
-#: includes/class-pdf-generator.php:768 includes/class-pdf-generator.php:770
-msgid "Customer Signature"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:770
-#: includes/class-pdf-generator.php:772
-msgid "Signature"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:805
-#: includes/class-pdf-generator.php:807
-msgid "Terms & Conditions"
-msgstr ""
-
-#: includes/class-pdf-generator-raw.php:817
 #: includes/class-pdf-generator.php:819
+#: includes/class-pdf-generator-raw.php:817
 msgid "Attached Files"
-msgstr ""
+msgstr "Συνημμένα Αρχεία"
 
-#: includes/class-pdf-generator.php:45
-msgid "This quote has been rejected and is no longer available."
-msgstr ""
+#: includes/class-metaboxes.php:1273
+msgid "Attachment"
+msgstr "Συνημμένο"
 
-#: includes/class-post-type.php:26
-msgid "Customer Quotes"
-msgstr ""
+#: includes/class-ajax-handlers.php:643
+msgid "Attachment deleted successfully."
+msgstr "Το συνημμένο διαγράφηκε με επιτυχία."
 
-#: includes/class-post-type.php:27
-msgid "Customer Quote"
-msgstr ""
+#: includes/class-ajax-handlers.php:638
+msgid "Attachment removed successfully."
+msgstr "Το συνημμένο αφαιρέθηκε με επιτυχία."
 
-#: includes/class-post-type.php:28 includes/class-post-type.php:31
-msgid "New Quote"
+#: includes/class-ajax-handlers.php:648
+msgid "Attachment removed, but file could not be deleted from server."
 msgstr ""
+"Το συνημμένο αφαιρέθηκε, αλλά το αρχείο δεν μπόρεσε να διαγραφεί από τον "
+"διακομιστή."
 
-#: includes/class-post-type.php:29
-msgid "Add New Quote"
-msgstr ""
+#: includes/class-metaboxes.php:1259 includes/class-email-manager.php:158
+msgid "Attachments:"
+msgstr "Συνημμένα:"
 
-#: includes/class-post-type.php:30
-msgid "Edit Quote"
-msgstr ""
+#: includes/class-settings.php:340 includes/class-settings.php:388
+#: includes/class-metaboxes.php:866
+msgid "Available placeholders:"
+msgstr "Διαθέσιμα placeholders:"
 
-#: includes/class-post-type.php:32
-msgid "View Quote"
-msgstr ""
+#: includes/class-metaboxes.php:151
+msgid "Billing"
+msgstr "Χρέωση"
 
-#: includes/class-post-type.php:33
-msgid "Search Quotes"
-msgstr ""
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:195
+#: public/templates/reject-quote.php:59 public/templates/accept-quote.php:67
+msgid "Cancel"
+msgstr "Ακύρωση"
 
-#: includes/class-post-type.php:34
-msgid "No Quotes found"
-msgstr ""
+#: includes/class-metaboxes.php:186 includes/class-metaboxes.php:288
+msgid "City"
+msgstr "Πόλη"
 
-#: includes/class-post-type.php:35
-msgid "No Quotes found in Trash"
-msgstr ""
+#: includes/class-settings.php:223
+msgid "City & Postal Code"
+msgstr "Πόλη & Ταχυδρομικός Κώδικας"
 
-#: includes/class-post-type.php:57
-msgid "Number"
-msgstr ""
+#: public/templates/accept-quote.php:59
+msgid "Clear Signature"
+msgstr "Καθαρισμός Υπογραφής"
 
-#: includes/class-post-type.php:58
-msgid "Quote Name"
+#: includes/class-metaboxes.php:172 includes/class-metaboxes.php:274
+msgid "Company"
+msgstr "Εταιρεία"
+
+#: includes/class-settings.php:189 includes/class-settings.php:490
+msgid "Company Details"
+msgstr "Στοιχεία Εταιρείας"
+
+#: includes/class-settings.php:425
+msgid "Company Logo"
+msgstr "Λογότυπο Εταιρείας"
+
+#: includes/class-settings.php:205
+msgid "Company Name"
+msgstr "Όνομα Εταιρείας"
+
+#: includes/class-settings.php:299
+msgid "Configure plugin behavior and data management options."
 msgstr ""
+"Ρυθμίστε τη συμπεριφορά του πρόσθετου και τις επιλογές διαχείρισης δεδομένων."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:194
+msgid "Confirm"
+msgstr "Επιβεβαίωση"
+
+#: includes/class-metaboxes.php:254
+msgid "Copy billing address"
+msgstr "Αντιγραφή διεύθυνσης χρέωσης"
+
+#: includes/class-metaboxes.php:436 includes/class-metaboxes.php:487
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:205
+msgid "Cost"
+msgstr "Κόστος"
+
+#: includes/class-metaboxes.php:201 includes/class-metaboxes.php:303
+msgid "Country"
+msgstr "Χώρα"
+
+#: includes/class-ajax-handlers.php:159
+msgid "Country is required"
+msgstr "Η χώρα είναι υποχρεωτική"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:223
+msgid "Creating customer..."
+msgstr "Δημιουργία πελάτη..."
+
+#: includes/class-metaboxes.php:704
+msgid "Custom Date"
+msgstr "Προσαρμοσμένη Ημερομηνία"
 
 #: includes/class-post-type.php:59
 msgid "Customer"
-msgstr ""
+msgstr "Πελάτης"
 
-#: includes/class-post-type.php:60
-msgid "Project"
-msgstr ""
+#: includes/class-ajax-handlers.php:390
+msgid "Customer created successfully"
+msgstr "Ο πελάτης δημιουργήθηκε με επιτυχία"
 
-#: includes/class-post-type.php:61
-msgid "Expiration Date"
-msgstr ""
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:224
+msgid "Customer created successfully. "
+msgstr "Ο πελάτης δημιουργήθηκε με επιτυχία."
 
-#: includes/class-post-type.php:63
-msgid "Email Tracking"
-msgstr ""
+#: includes/class-ajax-handlers.php:304
+msgid "Customer email is required"
+msgstr "Το email του πελάτη είναι υποχρεωτικό"
 
-#: includes/class-post-type.php:64
-msgid "Status"
-msgstr ""
+#: includes/class-post-type.php:27
+msgid "Customer Quote"
+msgstr "Προσφορά Πελάτη"
 
-#: includes/class-post-type.php:121
-msgid "Not sent yet"
-msgstr ""
+#: includes/class-post-type.php:26
+msgid "Customer Quotes"
+msgstr "Προσφορές Πελατών"
 
-#: includes/class-post-type.php:139
-#, php-format
-msgid "Sent %1$d time(s), opened %2$d time(s). Last opened: %3$s at %4$s"
-msgstr ""
+#: includes/class-pdf-generator.php:768 includes/class-pdf-generator.php:770
+#: includes/class-pdf-generator-raw.php:766
+#: includes/class-pdf-generator-raw.php:768
+msgid "Customer Signature"
+msgstr "Υπογραφή Πελάτη"
 
-#: includes/class-post-type.php:148
-#, php-format
-msgid "Sent %d time(s) but not yet opened"
-msgstr ""
+#: public/templates/view-quote.php:77
+msgid "Customer:"
+msgstr "Πελάτης:"
 
-#: includes/class-quote-manager-system-for-woocommerce-activator.php:137
-#: public/class-quote-manager-system-for-woocommerce-public.php:177
-#: public/templates/page-quote-response.php:49
-#: public/templates/quote-response.php:47
-msgid "Quote Response"
-msgstr ""
-
-#: includes/class-quote-manager-system-for-woocommerce.php:232
-msgid "Unknown"
-msgstr ""
-
-#: includes/class-quote-manager-system-for-woocommerce.php:243
-msgid "Draft"
-msgstr ""
-
-#: includes/class-quote-manager-system-for-woocommerce.php:245
-msgid "Accepted"
-msgstr ""
-
-#: includes/class-quote-manager-system-for-woocommerce.php:246
-msgid "Rejected"
-msgstr ""
-
-#: includes/class-quote-manager-system-for-woocommerce.php:247
-msgid "Expired"
-msgstr ""
-
-#: includes/class-revision-manager.php:95
-#, php-format
-msgid "Revision for quote #%s"
-msgstr ""
-
-#: includes/class-settings.php:117 includes/class-settings.php:355
-msgid "Company Details"
-msgstr ""
-
-#: includes/class-settings.php:125
-msgid "Plugin Settings"
-msgstr ""
-
-#: includes/class-settings.php:133
-msgid "Company Name"
-msgstr ""
-
-#: includes/class-settings.php:151
-msgid "City & Postal Code"
-msgstr ""
-
-#: includes/class-settings.php:169
-msgid "Email"
-msgstr ""
-
-#: includes/class-settings.php:178
-msgid "Logo"
-msgstr ""
-
-#: includes/class-settings.php:187
-msgid "Default Terms & Conditions"
-msgstr ""
-
-#: includes/class-settings.php:197
+#: includes/class-settings.php:278
 msgid "Data Cleanup"
-msgstr ""
+msgstr "Καθαρισμός Δεδομένων"
 
-#: includes/class-settings.php:210
-msgid "Enter your company details that will appear on the quote PDF."
-msgstr ""
+#: includes/class-pdf-generator.php:618
+#: includes/class-pdf-generator-raw.php:616 public/templates/view-quote.php:82
+msgid "Date:"
+msgstr "Ημερομηνία:"
 
-#: includes/class-settings.php:218
-msgid "Configure plugin behavior and data management options."
-msgstr ""
+#: includes/class-metaboxes.php:715
+msgid "dd/mm/yyyy"
+msgstr "ηη/μμ/εεεε"
 
-#: includes/class-settings.php:258
-msgid ""
-"These terms will be used as the default for all quotes. You can customize "
-"them per quote."
-msgstr ""
-
-#: includes/class-settings.php:290
-msgid "Company Logo"
-msgstr ""
-
-#: includes/class-settings.php:308
-msgid "Delete all quote files and attachments when plugin is uninstalled"
-msgstr ""
-
-#: includes/class-settings.php:311
-msgid ""
-"Warning: If checked, all generated quote PDFs and uploaded attachments will "
-"be permanently deleted when the plugin is uninstalled."
-msgstr ""
-
-#: includes/class-settings.php:323 includes/class-settings.php:351
-msgid "Quote Manager Settings"
-msgstr ""
-
-#: includes/class-settings.php:324
-msgid "Settings"
-msgstr ""
-
-#: public/class-quote-manager-system-for-woocommerce-public.php:151
-#: public/templates/accept-quote.php:17
-#: public/templates/page-quote-response.php:23
-#: public/templates/quote-response.php:21 public/templates/reject-quote.php:17
-#: public/templates/view-quote.php:17
-msgid "Quote not found."
-msgstr ""
-
-#: public/class-quote-manager-system-for-woocommerce-public.php:159
-#: public/templates/page-quote-response.php:31
-#: public/templates/quote-response.php:29
-msgid "Quote Accepted"
-msgstr ""
-
-#: public/class-quote-manager-system-for-woocommerce-public.php:161
-#: public/templates/page-quote-response.php:33
-#: public/templates/quote-response.php:31
+#: public/templates/accept-quote.php:35
 #, php-format
 msgid ""
-"Thank you, %s! Your acceptance of quote %s has been recorded. We have sent "
-"you a confirmation email with the signed quote for your records. We will be "
-"in touch shortly to discuss the next steps."
+"Dear %s, you are about to accept quote %s. Please sign below to confirm your "
+"acceptance."
 msgstr ""
+"Αγαπητέ %s, πρόκειται να αποδεχτείτε την προσφορά %s. Παρακαλώ υπογράψτε "
+"παρακάτω για να επιβεβαιώσετε την αποδοχή σας."
 
-#: public/class-quote-manager-system-for-woocommerce-public.php:168
-#: public/templates/page-quote-response.php:40
-#: public/templates/quote-response.php:38
-msgid "Quote Declined"
-msgstr ""
-
-#: public/class-quote-manager-system-for-woocommerce-public.php:170
-#: public/templates/page-quote-response.php:42
-#: public/templates/quote-response.php:40
+#: public/templates/reject-quote.php:35
 #, php-format
 msgid ""
-"Thank you, %s. We have recorded your decision to decline quote %s. If you "
-"would like to discuss this further or have any questions, please don't "
-"hesitate to contact us."
+"Dear %s, you are about to decline quote %s. If you wish, you can provide a "
+"reason for declining this quote."
 msgstr ""
-
-#: public/class-quote-manager-system-for-woocommerce-public.php:178
-#: public/templates/page-quote-response.php:50
-#: public/templates/quote-response.php:48
-msgid "Your response has been recorded."
-msgstr ""
-
-#: public/class-quote-manager-system-for-woocommerce-public.php:199
-#: public/templates/page-quote-response.php:70
-#: public/templates/quote-response.php:68
-msgid "Return to Homepage"
-msgstr ""
-
-#: public/class-quote-response-handler.php:82
-#: public/class-quote-response-handler.php:198
-#: public/class-quote-response-handler.php:403
-msgid "Invalid quote access token. Please contact us for assistance."
-msgstr ""
-
-#: public/class-quote-response-handler.php:172
-#, php-format
-msgid "Template file %s not found."
-msgstr ""
-
-#: public/class-quote-response-handler.php:205
-#: public/class-quote-response-handler.php:410
-msgid "Security check failed. Please try again."
-msgstr ""
-
-#: public/class-quote-response-handler.php:216
-#: public/templates/accept-quote.php:108
-msgid "Please provide your signature to accept the quote."
-msgstr ""
-
-#: public/class-quote-response-handler.php:304
-#, php-format
-msgid "Quote #%s has been accepted"
-msgstr ""
+"Αγαπητέ %s, πρόκειται να απορρίψετε την προσφορά %s. Αν επιθυμείτε, μπορείτε "
+"να παρέχετε έναν λόγο για την απόρριψη αυτής της προσφοράς."
 
 #: public/class-quote-response-handler.php:310
 #, php-format
@@ -1026,34 +301,10 @@ msgid ""
 "of the signed quote for your records.<br><br>We will be in touch shortly to "
 "discuss the next steps.<br><br>Best regards,<br>%s"
 msgstr ""
-
-#: public/class-quote-response-handler.php:318
-#, php-format
-msgid ""
-"Quote #%s has been accepted by %s.<br><br>A copy of the signed quote is "
-"attached. Please follow up with the customer to discuss the next steps."
-"<br><br>View the quote: %s"
-msgstr ""
-
-#: public/class-quote-response-handler.php:335
-#: public/class-quote-response-handler.php:490
-msgid "ADMIN NOTIFICATION"
-msgstr ""
-
-#: public/class-quote-response-handler.php:378
-#, php-format
-msgid "Quote %s notification"
-msgstr ""
-
-#: public/class-quote-response-handler.php:382
-#, php-format
-msgid "Quote has been %s by the customer."
-msgstr ""
-
-#: public/class-quote-response-handler.php:459
-#, php-format
-msgid "Quote #%s has been declined"
-msgstr ""
+"Αγαπητέ %s,<br><br>Ευχαριστούμε που αποδεχτήκατε την προσφορά μας. Έχουμε "
+"επισυνάψει ένα αντίγραφο της υπογεγραμμένης προσφοράς για τα αρχεία σας.<br>"
+"<br>Θα επικοινωνήσουμε σύντομα για να συζητήσουμε τα επόμενα βήματα.<br><br>"
+"Με εκτίμηση,<br>%s"
 
 #: public/class-quote-response-handler.php:465
 #, php-format
@@ -1062,6 +313,396 @@ msgid ""
 "would like to discuss this further or have any questions, please don't "
 "hesitate to contact us.<br><br>Best regards,<br>%s"
 msgstr ""
+"Αγαπητέ %s,<br><br>Λάβαμε την απόφασή σας να απορρίψετε την προσφορά μας. Αν "
+"θέλετε να συζητήσουμε περαιτέρω ή έχετε οποιεσδήποτε ερωτήσεις, μην "
+"διστάσετε να επικοινωνήσετε μαζί μας.<br><br>Με εκτίμηση,<br>%s"
+
+#: public/templates/reject-quote.php:63 public/templates/view-quote.php:121
+msgid "Decline Quote"
+msgstr "Απόρριψη Προσφοράς"
+
+#: public/templates/reject-quote.php:29
+#, php-format
+msgid "Decline Quote %s"
+msgstr "Απόρριψη Προσφοράς %s"
+
+#: includes/class-settings.php:268
+msgid "Default Email Template"
+msgstr "Προεπιλεγμένο Πρότυπο Email"
+
+#: includes/class-settings.php:259
+msgid "Default Terms & Conditions"
+msgstr "Προεπιλεγμένοι Όροι & Προϋποθέσεις"
+
+#: includes/class-settings.php:443
+msgid "Delete all quote files and attachments when plugin is uninstalled"
+msgstr ""
+"Διαγραφή όλων των αρχείων προσφοράς και συνημμένων όταν απεγκαθίσταται το "
+"πρόσθετο"
+
+#: includes/class-pdf-generator.php:650 includes/class-pdf-generator.php:696
+#: includes/class-pdf-generator-raw.php:648
+#: includes/class-pdf-generator-raw.php:694
+msgid "Disc(%)"
+msgstr "Έκπ(%)"
+
+#: includes/class-metaboxes.php:438
+msgid "Discount (%)"
+msgstr "Έκπ (%)"
+
+#: includes/class-metaboxes.php:745 public/templates/view-quote.php:111
+msgid "Download PDF"
+msgstr "Λήψη PDF"
+
+#: includes/class-quote-manager-system-for-woocommerce.php:243
+msgid "Draft"
+msgstr "Πρόχειρο"
+
+#: includes/class-post-type.php:30
+msgid "Edit Quote"
+msgstr "Επεξεργασία Προσφοράς"
+
+#: includes/class-settings.php:241
+msgid "Email"
+msgstr "Email"
+
+#: includes/class-metaboxes.php:237
+msgid "Email address"
+msgstr "Διεύθυνση Email"
+
+#: includes/class-metaboxes.php:791
+#, php-format
+msgid "Email opened at %s"
+msgstr "Το email ανοίχτηκε στις %s"
+
+#: includes/class-post-type.php:63
+msgid "Email Tracking"
+msgstr "Παρακολούθηση Email"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:192
+msgid "Enter Image URL"
+msgstr "Εισάγετε URL Εικόνας"
+
+#: includes/class-settings.php:291
+msgid "Enter your company details that will appear on the quote PDF."
+msgstr ""
+"Εισάγετε τα στοιχεία της εταιρείας σας που θα εμφανίζονται στο PDF της "
+"προσφοράς."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:226
+msgid "Error creating customer."
+msgstr "Σφάλμα κατά τη δημιουργία πελάτη."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:282
+msgid "Error updating status."
+msgstr "Σφάλμα κατά την ενημέρωση της κατάστασης."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:217
+msgid "Error uploading file:"
+msgstr "Σφάλμα κατά τη μεταφόρτωση αρχείου:"
+
+#: includes/class-metaboxes.php:1016
+msgid "Excel Spreadsheet"
+msgstr "Υπολογιστικό Φύλλο Excel"
+
+#: includes/class-post-type.php:61
+msgid "Expiration Date"
+msgstr "Ημερομηνία Λήξης"
+
+#: includes/class-quote-manager-system-for-woocommerce.php:247
+msgid "Expired"
+msgstr "Έληξε"
+
+#: includes/class-metaboxes.php:788
+msgid "Failed"
+msgstr "Απέτυχε"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:201
+msgid "Failed to send."
+msgstr "Αποτυχία αποστολής."
+
+#: includes/class-ajax-handlers.php:563
+msgid "Failed to upload file."
+msgstr "Αποτυχία μεταφόρτωσης αρχείου."
+
+#: includes/class-metaboxes.php:1029
+msgid "File"
+msgstr "Αρχείο"
+
+#: includes/class-ajax-handlers.php:472
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:229
+msgid "File size exceeds the 2MB limit."
+msgstr "Το μέγεθος του αρχείου υπερβαίνει το όριο των 2MB."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:216
+msgid "File uploaded successfully."
+msgstr "Το αρχείο μεταφορτώθηκε με επιτυχία."
+
+#: includes/class-metaboxes.php:159 includes/class-metaboxes.php:261
+msgid "First name"
+msgstr "Όνομα"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:191
+msgid "From URL"
+msgstr "Από URL"
+
+#. URI of the plugin
+msgid "https://github.com/MikeLvd/quote-manager-system-for-woocommerce"
+msgstr "https://github.com/MikeLvd/quote-manager-system-for-woocommerce"
+
+#. Author URI of the plugin
+msgid "https://goldenbath.gr/"
+msgstr "https://goldenbath.gr/"
+
+#: includes/class-pdf-generator.php:647 includes/class-pdf-generator.php:693
+#: includes/class-pdf-generator-raw.php:645
+#: includes/class-pdf-generator-raw.php:691 includes/class-metaboxes.php:433
+#: includes/class-metaboxes.php:1023
+msgid "Image"
+msgstr "Εικόνα"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:208
+msgid "incl. VAT"
+msgstr "συμπ. ΦΠΑ"
+
+#: includes/class-metaboxes.php:682
+msgid "Include VAT in quote"
+msgstr "Συμπερίληψη ΦΠΑ στην προσφορά"
+
+#: includes/class-ajax-handlers.php:507
+msgid ""
+"Invalid file type detected. Only JPG, JPEG, PNG and PDF files are allowed."
+msgstr ""
+"Εντοπίστηκε μη έγκυρος τύπος αρχείου. Επιτρέπονται μόνο αρχεία JPG, JPEG, "
+"PNG και PDF."
+
+#: includes/class-ajax-handlers.php:493
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:230
+msgid "Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed."
+msgstr ""
+"Μη έγκυρος τύπος αρχείου. Επιτρέπονται μόνο αρχεία JPG, JPEG, PNG και PDF."
+
+#: includes/class-ajax-handlers.php:674
+msgid "Invalid parameters"
+msgstr "Μη έγκυρες παράμετροι"
+
+#: public/class-quote-response-handler.php:82
+#: public/class-quote-response-handler.php:198
+#: public/class-quote-response-handler.php:403
+msgid "Invalid quote access token. Please contact us for assistance."
+msgstr ""
+"Μη έγκυρο διακριτικό πρόσβασης προσφοράς. Παρακαλώ επικοινωνήστε μαζί μας "
+"για βοήθεια."
+
+#: includes/class-ajax-handlers.php:292
+msgid "Invalid quote ID"
+msgstr "Μη έγκυρο αναγνωριστικό προσφοράς"
+
+#: includes/class-pdf-generator.php:36 includes/class-ajax-handlers.php:466
+msgid "Invalid quote ID."
+msgstr "Μη έγκυρο αναγνωριστικό προσφοράς."
+
+#: includes/class-ajax-handlers.php:686
+msgid "Invalid status"
+msgstr "Μη έγκυρη κατάσταση"
+
+#: includes/class-metaboxes.php:164 includes/class-metaboxes.php:266
+msgid "Last name"
+msgstr "Επώνυμο"
+
+#: includes/class-metaboxes.php:152
+msgid "Load billing address"
+msgstr "Φόρτωση διεύθυνσης χρέωσης"
+
+#: includes/class-settings.php:250
+msgid "Logo"
+msgstr "Λογότυπο"
+
+#: includes/class-ajax-handlers.php:480
+msgid "Maximum number of attachments (%d) reached."
+msgstr "Έχει επιτευχθεί ο μέγιστος αριθμός συνημμένων (%d)."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:231
+msgid "Maximum number of attachments reached (10)."
+msgstr "Έχει επιτευχθεί ο μέγιστος αριθμός συνημμένων (10)."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:190
+msgid "Media Library"
+msgstr "Βιβλιοθήκη πολυμέσων"
+
+#. Author of the plugin
+msgid "Mike Lvd"
+msgstr "Μάικ Λβδ"
+
+#: includes/class-ajax-handlers.php:590
+msgid "Missing required information."
+msgstr "Λείπουν απαιτούμενες πληροφορίες."
+
+#: includes/class-post-type.php:28 includes/class-post-type.php:31
+msgid "New Quote"
+msgstr "Νέα Προσφορά"
+
+#: includes/class-metaboxes.php:766
+msgid "No email history recorded."
+msgstr "Δεν καταγράφηκε ιστορικό email."
+
+#: includes/class-ajax-handlers.php:460
+msgid "No file was uploaded."
+msgstr "Δεν ανέβηκε κανένα αρχείο."
+
+#: includes/class-post-type.php:34
+msgid "No Quotes found"
+msgstr "Δεν βρέθηκαν Προσφορές"
+
+#: includes/class-post-type.php:35
+msgid "No Quotes found in Trash"
+msgstr "Δεν βρέθηκαν Προσφορές στον Κάδο Ανακύκλωσης"
+
+#: public/class-quote-response-handler.php:476
+msgid "No reason provided"
+msgstr "Δεν δόθηκε λόγος"
+
+#: includes/class-ajax-handlers.php:168
+msgid "No states found for this country"
+msgstr "Δεν βρέθηκαν πολιτείες για αυτή τη χώρα"
+
+#: includes/class-post-type.php:121
+msgid "Not sent yet"
+msgstr "Δεν έχει σταλεί ακόμα"
+
+#: includes/class-metaboxes.php:794
+msgid "Not yet opened"
+msgstr "Δεν έχει ανοιχτεί ακόμα"
+
+#: includes/class-post-type.php:57
+msgid "Number"
+msgstr "Αριθμός"
+
+#: includes/class-pdf-generator.php:614
+#: includes/class-pdf-generator-raw.php:612
+msgid "Number:"
+msgstr "Αριθμός:"
+
+#: includes/class-metaboxes.php:1010
+msgid "PDF Document"
+msgstr "Έγγραφο PDF"
+
+#: includes/class-settings.php:232 includes/class-metaboxes.php:242
+#: includes/class-metaboxes.php:337
+msgid "Phone"
+msgstr "Τηλέφωνο"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:186
+#, php-format
+msgid ""
+"Please enter a value with one monetary decimal point (%s) without thousand "
+"separators and currency symbols."
+msgstr ""
+"Παρακαλώ εισάγετε μια τιμή με ένα δεκαδικό σημείο (%s) χωρίς διαχωριστές "
+"χιλιάδων και σύμβολα νομίσματος."
+
+#: public/templates/reject-quote.php:53
+msgid "Please let us know why you are declining this quote..."
+msgstr "Παρακαλώ ενημερώστε μας γιατί απορρίπτετε αυτή την προσφορά..."
+
+#: public/class-quote-response-handler.php:216
+#: public/templates/accept-quote.php:108
+msgid "Please provide your signature to accept the quote."
+msgstr "Παρακαλώ παρέχετε την υπογραφή σας για να αποδεχτείτε την προσφορά."
+
+#: includes/class-settings.php:197
+msgid "Plugin Settings"
+msgstr "Ρυθμίσεις Πρόσθετου"
+
+#: includes/class-metaboxes.php:191 includes/class-metaboxes.php:293
+msgid "Postcode"
+msgstr "Ταχυδρομικός Κώδικας"
+
+#: includes/class-metaboxes.php:1019
+msgid "PowerPoint Presentation"
+msgstr "Παρουσίαση PowerPoint"
+
+#: includes/class-metaboxes.php:744
+msgid "Preview PDF"
+msgstr "Προεπισκόπηση PDF"
+
+#: includes/class-pdf-generator.php:649 includes/class-pdf-generator.php:695
+#: includes/class-pdf-generator-raw.php:647
+#: includes/class-pdf-generator-raw.php:693 includes/class-metaboxes.php:437
+msgid "Price"
+msgstr "Τιμή"
+
+#: includes/class-pdf-generator.php:648 includes/class-pdf-generator.php:694
+#: includes/class-pdf-generator-raw.php:646
+#: includes/class-pdf-generator-raw.php:692 includes/class-metaboxes.php:549
+msgid "Product"
+msgstr "Προϊόν"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:212
+msgid "Product search failed:"
+msgstr "Η αναζήτηση προϊόντος απέτυχε:"
+
+#: includes/class-post-type.php:60
+msgid "Project"
+msgstr "Έργο"
+
+#: includes/class-metaboxes.php:366
+msgid "Project Details"
+msgstr "Λεπτομέρειες Έργου"
+
+#: includes/class-metaboxes.php:368
+msgid "Project Name"
+msgstr "Όνομα Έργου"
+
+#: includes/class-pdf-generator.php:631
+#: includes/class-pdf-generator-raw.php:629
+msgid "Project:"
+msgstr "Έργο:"
+
+#: includes/class-metaboxes.php:550
+msgid "Purchase Price (excl. VAT)"
+msgstr "Τιμή Αγοράς (χωρίς ΦΠΑ)"
+
+#: includes/class-pdf-generator.php:655 includes/class-pdf-generator.php:701
+#: includes/class-pdf-generator-raw.php:653
+#: includes/class-pdf-generator-raw.php:699
+msgid "Qty"
+msgstr "Ποσότητα"
+
+#: includes/class-metaboxes.php:442 includes/class-metaboxes.php:551
+msgid "Quantity"
+msgstr "Ποσότητα"
+
+#: includes/class-pdf-generator.php:585
+#: includes/class-pdf-generator-raw.php:583
+msgid "QUOTE"
+msgstr "ΠΡΟΣΦΟΡΑ"
+
+#: includes/class-pdf-generator.php:110
+#: includes/class-pdf-generator-raw.php:108
+msgid "Quote"
+msgstr "Προσφορά"
+
+#: public/class-quote-response-handler.php:304
+#, php-format
+msgid "Quote #%s has been accepted"
+msgstr "Η προσφορά #%s έχει γίνει αποδεκτή"
+
+#: public/class-quote-response-handler.php:318
+#, php-format
+msgid ""
+"Quote #%s has been accepted by %s.<br><br>A copy of the signed quote is "
+"attached. Please follow up with the customer to discuss the next steps.<br>"
+"<br>View the quote: %s"
+msgstr ""
+"Η προσφορά #%s έχει γίνει αποδεκτή από τον/την %s.<br><br>Ένα αντίγραφο της "
+"υπογεγραμμένης προσφοράς επισυνάπτεται. Παρακαλώ επικοινωνήστε με τον πελάτη "
+"για να συζητήσετε τα επόμενα βήματα.<br><br>Δείτε την προσφορά: %s"
+
+#: public/class-quote-response-handler.php:459
+#, php-format
+msgid "Quote #%s has been declined"
+msgstr "Η προσφορά #%s έχει απορριφθεί"
 
 #: public/class-quote-response-handler.php:473
 #, php-format
@@ -1069,93 +710,44 @@ msgid ""
 "Quote #%s has been declined by %s.<br><br>Reason given: %s<br><br>View the "
 "quote: %s"
 msgstr ""
-
-#: public/class-quote-response-handler.php:476
-msgid "No reason provided"
-msgstr ""
-
-#: public/templates/accept-quote.php:29
-#, php-format
-msgid "Accept Quote %s"
-msgstr ""
-
-#: public/templates/accept-quote.php:35
-#, php-format
-msgid ""
-"Dear %s, you are about to accept quote %s. Please sign below to confirm your "
-"acceptance."
-msgstr ""
-
-#: public/templates/accept-quote.php:51
-msgid "Your Signature:"
-msgstr ""
-
-#: public/templates/accept-quote.php:59
-msgid "Clear Signature"
-msgstr ""
-
-#: public/templates/accept-quote.php:71
-msgid "Sign & Accept Quote"
-msgstr ""
-
-#: public/templates/reject-quote.php:29
-#, php-format
-msgid "Decline Quote %s"
-msgstr ""
-
-#: public/templates/reject-quote.php:35
-#, php-format
-msgid ""
-"Dear %s, you are about to decline quote %s. If you wish, you can provide a "
-"reason for declining this quote."
-msgstr ""
-
-#: public/templates/reject-quote.php:51
-msgid "Reason for declining (optional):"
-msgstr ""
-
-#: public/templates/reject-quote.php:53
-msgid "Please let us know why you are declining this quote..."
-msgstr ""
-
-#: public/templates/reject-quote.php:63 public/templates/view-quote.php:121
-msgid "Decline Quote"
-msgstr ""
+"Η προσφορά #%s έχει απορριφθεί από τον/την %s.<br><br>Ο λόγος που δόθηκε: "
+"%s<br><br>Δείτε την προσφορά: %s"
 
 #: public/templates/view-quote.php:65
 #, php-format
 msgid "Quote %s"
-msgstr ""
+msgstr "Προσφορά %s"
 
-#: public/templates/view-quote.php:77
-msgid "Customer:"
-msgstr ""
+#: public/class-quote-response-handler.php:378
+#, php-format
+msgid "Quote %s notification"
+msgstr "Ειδοποίηση Προσφοράς %s"
 
-#: public/templates/view-quote.php:97
-msgid "Status:"
-msgstr ""
+#: public/class-quote-manager-system-for-woocommerce-public.php:159
+#: public/templates/quote-response.php:29
+#: public/templates/page-quote-response.php:31
+msgid "Quote Accepted"
+msgstr "Προσφορά Αποδεκτή"
 
-#: public/templates/view-quote.php:105
-msgid ""
-"You can download the quote as a PDF, or respond to it using the buttons "
-"below."
-msgstr ""
+#: public/class-quote-manager-system-for-woocommerce-public.php:168
+#: public/templates/quote-response.php:38
+#: public/templates/page-quote-response.php:40
+msgid "Quote Declined"
+msgstr "Προσφορά Απορρίφθηκε"
 
-#: public/templates/view-quote.php:117
-msgid "Accept Quote"
-msgstr ""
+#: public/class-quote-response-handler.php:382
+#, php-format
+msgid "Quote has been %s by the customer."
+msgstr "Η προσφορά έχει %s από τον πελάτη."
 
-#: public/templates/view-quote.php:125
-msgid "You have accepted this quote."
-msgstr ""
+#. Parent menu
+#: includes/class-settings.php:458 includes/class-settings.php:486
+msgid "Quote Manager Settings"
+msgstr "Ρυθμίσεις"
 
-#: public/templates/view-quote.php:129
-msgid "You have declined this quote."
-msgstr ""
-
-#: public/templates/view-quote.php:133
-msgid "This quote has expired."
-msgstr ""
+#. Name of the plugin
+msgid "Quote Manager System For WooCommerce"
+msgstr "Σύστημα Διαχείρισης Προσφορών για το WooCommerce"
 
 #: quote-manager-system-for-woocommerce.php:91
 #, php-format
@@ -1163,26 +755,517 @@ msgid ""
 "Quote Manager System For WooCommerce requires %s to be installed and "
 "activated."
 msgstr ""
+"Το Σύστημα Διαχείρισης Προσφορών για το WooCommerce απαιτεί την εγκατάσταση "
+"και ενεργοποίηση του %s."
 
-#. Plugin Name of the plugin/theme
-msgid "Quote Manager System For WooCommerce"
-msgstr ""
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:70
+msgid "Quote Manager: PDF directory protection has been set up."
+msgstr "Διαχειριστής Προσφορών: Η προστασία του καταλόγου PDF έχει ρυθμιστεί."
 
-#. Plugin URI of the plugin/theme
-msgid "https://github.com/MikeLvd/quote-manager-system-for-woocommerce"
-msgstr ""
+#: includes/class-post-type.php:58
+msgid "Quote Name"
+msgstr "Όνομα Προσφοράς"
 
-#. Description of the plugin/theme
+#: includes/class-ajax-handlers.php:680
+msgid "Quote not found"
+msgstr "Η προσφορά δεν βρέθηκε"
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:151
+#: public/templates/quote-response.php:21 public/templates/reject-quote.php:17
+#: public/templates/page-quote-response.php:23
+#: public/templates/accept-quote.php:17 public/templates/view-quote.php:17
+msgid "Quote not found."
+msgstr "Η προσφορά δεν βρέθηκε."
+
+#: includes/class-metaboxes.php:1262 includes/class-email-manager.php:159
+msgid "Quote PDF"
+msgstr "PDF Προσφοράς"
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:177
+#: includes/class-quote-manager-system-for-woocommerce-activator.php:137
+#: public/templates/quote-response.php:47
+#: public/templates/page-quote-response.php:49
+msgid "Quote Response"
+msgstr "Απάντηση Προσφοράς"
+
+#: includes/class-metaboxes.php:665
+msgid "Quote Status:"
+msgstr "Κατάσταση Προσφοράς:"
+
+#: includes/class-metaboxes.php:686
+msgid "Quote Validity:"
+msgstr "Ισχύς Προσφοράς:"
+
+#: includes/class-metaboxes.php:1027
+msgid "RAR Archive"
+msgstr "Αρχείο RAR"
+
+#: public/templates/reject-quote.php:51
+msgid "Reason for declining (optional):"
+msgstr "Λόγος απόρριψης (προαιρετικό):"
+
+#: includes/class-quote-manager-system-for-woocommerce.php:246
+msgid "Rejected"
+msgstr "Απορρίφθηκε"
+
+#: includes/class-metaboxes.php:498
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:206
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:219
+msgid "Remove Attachment"
+msgstr "Αφαίρεση Συνημμένου"
+
+#: includes/class-metaboxes.php:932 includes/class-metaboxes.php:966
+msgid "Remove File"
+msgstr "Αφαίρεση Αρχείου"
+
+#: includes/class-settings.php:405
+msgid "Reset to Default Email Template"
+msgstr "Επαναφορά στο Προεπιλεγμένο Πρότυπο Email"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:250
 msgid ""
-"A custom WordPress plugin that allows you to create detailed product offers "
-"inside the WooCommerce backend. Ideal for retail stores, B2B sales, and "
-"client advanced quotations."
+"Reset to default email template? This will replace your current template."
 msgstr ""
+"Επαναφορά στο προεπιλεγμένο πρότυπο email; Αυτό θα αντικαταστήσει το τρέχον "
+"πρότυπό σας."
 
-#. Author of the plugin/theme
-msgid "Mike Lvd"
-msgstr ""
+#: includes/class-metaboxes.php:859
+msgid "Reset to Default Terms"
+msgstr "Επαναφορά στις Προεπιλεγμένες Όρους"
 
-#. Author URI of the plugin/theme
-msgid "https://goldenbath.gr/"
+#: includes/class-metaboxes.php:885
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:249
+msgid "Reset to default terms? This will replace your current text."
 msgstr ""
+"Επαναφορά στους προεπιλεγμένους όρους; Αυτό θα αντικαταστήσει το τρέχον "
+"κείμενό σας."
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:199
+#: public/templates/quote-response.php:68
+#: public/templates/page-quote-response.php:70
+msgid "Return to Homepage"
+msgstr "Επιστροφή στην Αρχική Σελίδα"
+
+#: includes/class-revision-manager.php:95
+#, php-format
+msgid "Revision for quote #%s"
+msgstr "Αναθεώρηση για την προσφορά #%s"
+
+#: includes/class-metaboxes.php:359
+msgid "Save as New Customer"
+msgstr "Αποθήκευση ως Νέος Πελάτης"
+
+#: includes/class-metaboxes.php:351
+msgid "Search customers by name, email or company..."
+msgstr "Αναζήτηση πελατών με όνομα, email ή εταιρεία..."
+
+#: includes/class-post-type.php:33
+msgid "Search Quotes"
+msgstr "Αναζήτηση Προσφορών"
+
+#: includes/class-ajax-handlers.php:184 includes/class-ajax-handlers.php:666
+#: includes/class-ajax-handlers.php:717
+msgid "Security check failed"
+msgstr "Η επαλήθευση ασφαλείας απέτυχε"
+
+#: includes/class-ajax-handlers.php:147 includes/class-ajax-handlers.php:450
+#: includes/class-ajax-handlers.php:574
+msgid "Security check failed."
+msgstr "Η επαλήθευση ασφαλείας απέτυχε."
+
+#: public/class-quote-response-handler.php:205
+#: public/class-quote-response-handler.php:410
+msgid "Security check failed. Please try again."
+msgstr "Η επαλήθευση ασφαλείας απέτυχε. Παρακαλώ δοκιμάστε ξανά."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:218
+msgid "Select File"
+msgstr "Επιλογή Αρχείου"
+
+#: includes/class-settings.php:421
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:189
+msgid "Select Image"
+msgstr "Επιλογή Εικόνας"
+
+#: includes/class-metaboxes.php:716
+msgid "Select specific expiration date"
+msgstr "Επιλογή συγκεκριμένης ημερομηνίας λήξης"
+
+#: includes/class-quote-manager-system-for-woocommerce.php:244
+#: includes/class-metaboxes.php:787
+msgid "Sent"
+msgstr "Απεστάλη"
+
+#: includes/class-post-type.php:139
+#, php-format
+msgid "Sent %1$d time(s), opened %2$d time(s). Last opened: %3$s at %4$s"
+msgstr ""
+"Απεστάλη %1$d φορά(ες), ανοίχθηκε %2$d φορά(ες). Τελευταία άνοιγμα: %3$s "
+"στις %4$s"
+
+#: includes/class-post-type.php:148
+msgid "Sent %d time(s) but not yet opened"
+msgstr "Απεστάλη %d φορά(ες) αλλά δεν έχει ανοίξει ακόμα"
+
+#. Page title
+#: includes/class-settings.php:459
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: includes/class-metaboxes.php:253
+msgid "Shipping"
+msgstr "Αποστολή"
+
+#: public/templates/accept-quote.php:71
+msgid "Sign & Accept Quote"
+msgstr "Υπογραφή & Αποδοχή Προσφοράς"
+
+#: includes/class-pdf-generator.php:772
+#: includes/class-pdf-generator-raw.php:770
+msgid "Signature"
+msgstr "Υπογραφή"
+
+#: includes/class-metaboxes.php:435
+msgid "SKU"
+msgstr "SKU"
+
+#: includes/class-metaboxes.php:213 includes/class-metaboxes.php:315
+msgid "State"
+msgstr "Πολιτεία"
+
+#: includes/class-post-type.php:64
+msgid "Status"
+msgstr "Κατάσταση"
+
+#: includes/class-ajax-handlers.php:699
+msgid "Status updated successfully"
+msgstr "Η κατάσταση ενημερώθηκε με επιτυχία"
+
+#: public/templates/view-quote.php:97
+msgid "Status:"
+msgstr "Κατάσταση:"
+
+#: includes/class-pdf-generator.php:737
+#: includes/class-pdf-generator-raw.php:735 includes/class-metaboxes.php:508
+msgid "Subtotal:"
+msgstr "Υποσύνολο:"
+
+#: includes/class-pdf-generator.php:573 includes/class-pdf-generator.php:602
+#: includes/class-pdf-generator-raw.php:571
+#: includes/class-pdf-generator-raw.php:600
+msgid "Tel:"
+msgstr "Τηλ:"
+
+#: public/class-quote-response-handler.php:172
+#, php-format
+msgid "Template file %s not found."
+msgstr "Το αρχείο προτύπου %s δεν βρέθηκε."
+
+#: includes/class-pdf-generator.php:807
+#: includes/class-pdf-generator-raw.php:805
+msgid "Terms & Conditions"
+msgstr "Όροι & Προϋποθέσεις"
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:161
+#: public/templates/quote-response.php:31
+#: public/templates/page-quote-response.php:33
+#, php-format
+msgid ""
+"Thank you, %s! Your acceptance of quote %s has been recorded. We have sent "
+"you a confirmation email with the signed quote for your records. We will be "
+"in touch shortly to discuss the next steps."
+msgstr ""
+"Ευχαριστούμε, %s! Η αποδοχή της προσφοράς %s έχει καταγραφεί. Σας έχουμε "
+"στείλει ένα email επιβεβαίωσης με την υπογεγραμμένη προσφορά για τα αρχεία "
+"σας. Θα επικοινωνήσουμε σύντομα για να συζητήσουμε τα επόμενα βήματα."
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:170
+#: public/templates/quote-response.php:40
+#: public/templates/page-quote-response.php:42
+#, php-format
+msgid ""
+"Thank you, %s. We have recorded your decision to decline quote %s. If you "
+"would like to discuss this further or have any questions, please don't "
+"hesitate to contact us."
+msgstr ""
+"Ευχαριστούμε, %s. Έχουμε καταγράψει την απόφασή σας να απορρίψετε την "
+"προσφορά %s. Αν θέλετε να το συζητήσετε περαιτέρω ή έχετε οποιεσδήποτε "
+"ερωτήσεις, μην διστάσετε να επικοινωνήσετε μαζί μας."
+
+#: includes/class-settings.php:339
+msgid ""
+"These terms will be used as the default for all quotes. You can customize "
+"them per quote."
+msgstr ""
+"Αυτοί οι όροι θα χρησιμοποιηθούν ως προεπιλογή για όλες τις προσφορές. "
+"Μπορείτε να τους προσαρμόσετε ανά προσφορά."
+
+#: includes/class-pdf-generator.php:45
+msgid "This quote has been rejected and is no longer available."
+msgstr "Αυτή η προσφορά έχει απορριφθεί και δεν είναι πλέον διαθέσιμη."
+
+#: public/templates/view-quote.php:133
+msgid "This quote has expired."
+msgstr "Αυτή η προσφορά έχει λήξει."
+
+#: includes/class-settings.php:387
+msgid ""
+"This template will be used as the default for all quote emails. You can "
+"customize it per email when sending."
+msgstr ""
+"Αυτό το πρότυπο θα χρησιμοποιηθεί ως το προεπιλεγμένο για όλα τα email "
+"προσφορών. Μπορείτε να το προσαρμόσετε ανά email κατά την αποστολή."
+
+#: includes/class-settings.php:351 includes/class-settings.php:400
+#: includes/class-metaboxes.php:877
+msgid ""
+"Tip: Use Shift+Enter for line breaks, Enter for new paragraphs, and the "
+"toolbar buttons for formatting."
+msgstr ""
+"Συμβουλή: Χρησιμοποιήστε Shift+Enter για αλλαγές γραμμής, Enter για νέες "
+"παραγράφους και τα κουμπιά της γραμμής εργαλείων για μορφοποίηση."
+
+#: includes/class-metaboxes.php:434
+msgid "Title"
+msgstr "Τίτλος"
+
+#: includes/class-pdf-generator.php:594
+#: includes/class-pdf-generator-raw.php:592
+msgid "TO"
+msgstr "ΠΡΟΣ"
+
+#: includes/class-pdf-generator.php:656 includes/class-pdf-generator.php:702
+#: includes/class-pdf-generator-raw.php:654
+#: includes/class-pdf-generator-raw.php:700
+msgid "Total"
+msgstr "Σύνολο"
+
+#: includes/class-metaboxes.php:443
+msgid "Total (€)"
+msgstr "Σύνολο (€)"
+
+#: includes/class-metaboxes.php:552
+msgid "Total Cost"
+msgstr "Συνολικό Κόστος"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:209
+msgid "Total Net Profit"
+msgstr "Συνολικό Καθαρό Κέρδος"
+
+#: includes/class-metaboxes.php:643
+msgid "Total Net Profit:"
+msgstr "Συνολικό Καθαρό Κέρδος:"
+
+#: includes/class-metaboxes.php:553
+msgid "Total Price"
+msgstr "Συνολική Τιμή"
+
+#: includes/class-pdf-generator.php:747
+#: includes/class-pdf-generator-raw.php:745
+msgid "TOTAL:"
+msgstr "ΣΥΝΟΛΟ:"
+
+#: includes/class-metaboxes.php:519 public/templates/view-quote.php:92
+msgid "Total:"
+msgstr "Σύνολο:"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:207
+msgid "Totals"
+msgstr "Σύνολα"
+
+#: includes/class-metaboxes.php:632
+msgid "Totals:"
+msgstr "Σύνολα:"
+
+#: includes/class-quote-manager-system-for-woocommerce.php:232
+msgid "Unknown"
+msgstr "Άγνωστο"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:281
+msgid "Updating status..."
+msgstr "Ενημέρωση κατάστασης..."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:215
+msgid "Uploading file..."
+msgstr "Μεταφόρτωση αρχείου..."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:193
+msgid "Use this image"
+msgstr "Χρησιμοποιήστε αυτήν την εικόνα"
+
+#: includes/class-pdf-generator.php:622
+#: includes/class-pdf-generator-raw.php:620 public/templates/view-quote.php:87
+msgid "Valid until:"
+msgstr "Ισχύει μέχρι:"
+
+#: includes/class-pdf-generator.php:651 includes/class-pdf-generator.php:697
+#: includes/class-pdf-generator-raw.php:649
+#: includes/class-pdf-generator-raw.php:695 includes/class-metaboxes.php:439
+msgid "Value"
+msgstr "Αξία"
+
+#: includes/class-pdf-generator.php:653 includes/class-pdf-generator.php:699
+#: includes/class-pdf-generator-raw.php:651
+#: includes/class-pdf-generator-raw.php:697 includes/class-metaboxes.php:441
+msgid "Value (incl. VAT)"
+msgstr "Αξία (με ΦΠΑ)"
+
+#: includes/class-pdf-generator.php:742
+#: includes/class-pdf-generator-raw.php:740 includes/class-metaboxes.php:514
+msgid "VAT:"
+msgstr "ΦΠΑ:"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:225
+msgid "View customer"
+msgstr "Προβολή πελάτη"
+
+#: includes/class-metaboxes.php:930 includes/class-metaboxes.php:964
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:220
+msgid "View File"
+msgstr "Προβολή αρχείου"
+
+#: includes/class-metaboxes.php:801
+msgid "View full message"
+msgstr "Προβολή πλήρους μηνύματος"
+
+#: includes/class-post-type.php:32
+msgid "View Quote"
+msgstr "Προβολή προσφοράς"
+
+#: includes/class-settings.php:446
+msgid ""
+"Warning: If checked, all generated quote PDFs and uploaded attachments will "
+"be permanently deleted when the plugin is uninstalled."
+msgstr ""
+"Προειδοποίηση: Αν επιλεγεί, όλα τα παραγόμενα PDF προσφορών και τα "
+"ανεβασμένα συνημμένα θα διαγραφούν μόνιμα όταν απεγκατασταθεί το πρόσθετο."
+
+#: includes/class-metaboxes.php:1013
+msgid "Word Document"
+msgstr "Έγγραφο Word"
+
+#: public/templates/view-quote.php:105
+msgid ""
+"You can download the quote as a PDF, or respond to it using the buttons "
+"below."
+msgstr ""
+"Μπορείτε να κατεβάσετε την προσφορά ως PDF ή να απαντήσετε χρησιμοποιώντας "
+"τα κουμπιά παρακάτω."
+
+#: public/templates/view-quote.php:125
+msgid "You have accepted this quote."
+msgstr "Έχετε αποδεχτεί αυτήν την προσφορά."
+
+#: public/templates/view-quote.php:129
+msgid "You have declined this quote."
+msgstr "Έχετε απορρίψει αυτήν την προσφορά."
+
+#: includes/class-email-manager.php:121
+#, php-format
+msgid "Your quote from %s"
+msgstr "Η προσφορά σας από %s"
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:178
+#: public/templates/quote-response.php:48
+#: public/templates/page-quote-response.php:50
+msgid "Your response has been recorded."
+msgstr "Η απάντησή σας έχει καταγραφεί."
+
+#: public/templates/accept-quote.php:51
+msgid "Your Signature:"
+msgstr "Η Υπογραφή σας:"
+
+#: includes/class-metaboxes.php:1025
+msgid "ZIP Archive"
+msgstr "Αρχείο ZIP"
+
+#: includes/class-metaboxes.php:54
+msgid "⚙️ Quote Tools"
+msgstr "⚙️ Εργαλεία Προσφοράς"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:199
+msgid "✅ Email sent successfully."
+msgstr "✅ Το email στάλθηκε επιτυχώς."
+
+#: includes/class-metaboxes.php:775
+msgid "✅ Result"
+msgstr "✅ Αποτέλεσμα"
+
+#: includes/class-metaboxes.php:773
+msgid "✉️ Subject"
+msgstr "✉️ Θέμα"
+
+#: includes/class-metaboxes.php:425
+msgid "✚ Add Product"
+msgstr "✚ Προσθήκη Προϊόντος"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:202
+msgid "❌ Error while sending email."
+msgstr "❌ Σφάλμα κατά την αποστολή του email."
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:200
+msgid "❌ Error:"
+msgstr "❌ Σφάλμα:"
+
+#: includes/class-metaboxes.php:776
+msgid "👁️ Viewed"
+msgstr "👁️ Προβλήθηκε"
+
+#: includes/class-metaboxes.php:771
+msgid "📅 Date"
+msgstr "📅 Ημερομηνία"
+
+#: includes/class-metaboxes.php:90
+msgid "📎 Attachments"
+msgstr "📎 Συνημμένα"
+
+#: includes/class-metaboxes.php:81
+msgid "📝 Terms & Conditions"
+msgstr "📝 Όροι & Προϋποθέσεις"
+
+#: includes/class-metaboxes.php:45
+msgid "📤 Quote Actions"
+msgstr "📤 Ενέργειες Προσφοράς"
+
+#: includes/class-metaboxes.php:72
+msgid "📧 Email History"
+msgstr "📧 Ιστορικό Email"
+
+#: includes/class-metaboxes.php:772
+msgid "📧 Recipient"
+msgstr "📧 Παραλήπτης"
+
+#: includes/class-metaboxes.php:755
+msgid "📧 Send Quote Email"
+msgstr "📧 Αποστολή Email Προσφοράς"
+
+#: includes/class-metaboxes.php:774
+msgid "📨 Message"
+msgstr "📨 Μήνυμα"
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:198
+msgid "📨 Sending in progress..."
+msgstr "📨 Αποστολή σε εξέλιξη..."
+
+#: includes/class-metaboxes.php:820
+msgid "📩 Full Message"
+msgstr "📩 Ολόκληρο Μήνυμα"
+
+#: includes/class-metaboxes.php:422
+msgid "🔍 Search products..."
+msgstr "🔍 Αναζήτηση προϊόντων..."
+
+#: includes/class-metaboxes.php:63 includes/class-metaboxes.php:545
+msgid "🔐 Internal Quote Information"
+msgstr "🔐 Εσωτερικές Πληροφορίες Προσφοράς"
+
+#: includes/class-metaboxes.php:36
+msgid "🛒 Quote Products"
+msgstr "🛒 Προϊόντα Προσφοράς"
+
+#: includes/class-metaboxes.php:27
+msgid "🧾 Customer & Shipping Details"
+msgstr "🧾 Στοιχεία Πελάτη & Αποστολής"

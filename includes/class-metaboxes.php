@@ -1204,12 +1204,15 @@ class Quote_Manager_Metaboxes
         $last_name = get_post_meta($post->ID, '_customer_last_name', true);
         $quote_id = $post->ID;
         $quote_expiry = get_post_meta($post->ID, '_quote_expiration_date', true) ?: '–';
-
-        // Default template
-        $default_template = Quote_Manager_System_For_Woocommerce::get_default_email_template();
-
+    
+        // Get the email template (from settings or default)
+        $email_template = get_option('quote_manager_email_template');
+        if (empty($email_template)) {
+            $email_template = Quote_Manager_System_For_Woocommerce::get_default_email_template();
+        }
+    
         // Parse placeholders
-        $default_message = $this->parse_email_placeholders($default_template, [
+        $default_message = $this->parse_email_placeholders($email_template, [
             'customer_first_name' => $first_name,
             'customer_last_name' => $last_name,
             'customer_name' => trim($first_name . ' ' . $last_name),
@@ -1220,7 +1223,7 @@ class Quote_Manager_Metaboxes
         <div id="quote-email-modal" class="quote-email-modal-overlay" style="display: none;">
             <div class="quote-email-modal-content">
                 <h2>✉️ Send Quote Email</h2>
-
+    
                 <!-- Email Subject -->
                 <div class="form-group">
                     <label for="quote_email_message"><strong>Message:</strong></label>
@@ -1247,10 +1250,10 @@ class Quote_Manager_Metaboxes
                         <code>{{quote_view_url}}</code>
                     </p>
                 </div>
-
+    
                 <!-- Hidden field for quote ID -->
                 <input type="hidden" id="modal-quote-id" value="<?php echo esc_attr($post->ID); ?>"/>
-
+    
                 <!-- PDF Attachment and additional attachments -->
                 <div class="form-group">
                     <strong>📎 <?php _e('Attachments:', 'quote-manager-system-for-woocommerce'); ?></strong>
@@ -1258,7 +1261,7 @@ class Quote_Manager_Metaboxes
                         <li><code>PROSFORA_#<?php echo esc_attr($post->ID); ?>.pdf</code>
                             (<?php _e('Quote PDF', 'quote-manager-system-for-woocommerce'); ?>)
                         </li>
-
+    
                         <?php
                         // Get all attachments for this quote
                         $attachments = get_post_meta($post->ID, '_quote_attachments', true);
@@ -1276,13 +1279,13 @@ class Quote_Manager_Metaboxes
                         ?>
                     </ul>
                 </div>
-
+    
                 <!-- Send Buttons -->
                 <div class="form-group" style="margin-top: 20px;">
                     <button id="confirm-send-email" class="button button-primary">📤 Send</button>
                     <button id="cancel-send-email" class="button">❌ Cancel</button>
                 </div>
-
+    
                 <!-- Confirmation / Error Message -->
                 <div id="send-quote-status" style="margin-top: 15px;"></div>
             </div>
