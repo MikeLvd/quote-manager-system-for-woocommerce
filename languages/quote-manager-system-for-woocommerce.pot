@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Quote Manager System For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 08:02+0000\n"
+"POT-Creation-Date: 2025-04-23 11:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,41 +16,45 @@ msgstr ""
 "X-Loco-Version: 2.7.2; wp-6.8\n"
 "X-Domain: quote-manager-system-for-woocommerce"
 
-#: includes/class-metaboxes.php:557
+#: includes/class-metaboxes.php:548
 msgid "#"
 msgstr ""
 
-#: includes/class-metaboxes.php:564
+#: includes/class-metaboxes.php:555
 msgid "% Margin"
 msgstr ""
 
-#: includes/class-metaboxes.php:563
+#: includes/class-metaboxes.php:554
 msgid "% Markup"
 msgstr ""
 
-#: includes/class-metaboxes.php:658
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:272
+msgid "%d quotes have been marked as expired."
+msgstr ""
+
+#: includes/class-metaboxes.php:649
 msgid ""
 "*The above information is only visible to administrators and is not included "
 "in the quote PDF."
 msgstr ""
 
-#: includes/class-metaboxes.php:685
+#: includes/class-metaboxes.php:700
 msgid "15 Days"
 msgstr ""
 
-#: includes/class-metaboxes.php:686
+#: includes/class-metaboxes.php:701
 msgid "30 Days"
 msgstr ""
 
-#: includes/class-metaboxes.php:687
+#: includes/class-metaboxes.php:702
 msgid "45 Days"
 msgstr ""
 
-#: includes/class-metaboxes.php:684
+#: includes/class-metaboxes.php:699
 msgid "5 Days"
 msgstr ""
 
-#: includes/class-metaboxes.php:688
+#: includes/class-metaboxes.php:703
 msgid "60 Days"
 msgstr ""
 
@@ -61,254 +65,348 @@ msgid ""
 "client advanced quotations."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:193
+#: includes/class-ajax-handlers.php:311
 msgid "A user with this email already exists"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:20 includes/class-ajax-handlers.php:139
-#: includes/class-ajax-handlers.php:168 includes/class-ajax-handlers.php:333
-#: includes/class-ajax-handlers.php:457
+#: public/templates/view-quote.php:117
+msgid "Accept Quote"
+msgstr ""
+
+#: public/templates/accept-quote.php:29
+#, php-format
+msgid "Accept Quote %s"
+msgstr ""
+
+#: includes/class-quote-manager-system-for-woocommerce.php:245
+msgid "Accepted"
+msgstr ""
+
+#: includes/class-ajax-handlers.php:27 includes/class-ajax-handlers.php:152
+#: includes/class-ajax-handlers.php:179 includes/class-ajax-handlers.php:286
+#: includes/class-ajax-handlers.php:455 includes/class-ajax-handlers.php:580
+#: includes/class-ajax-handlers.php:661 includes/class-ajax-handlers.php:712
 msgid "Access denied"
 msgstr ""
 
-#: includes/class-metaboxes.php:915
+#: includes/class-metaboxes.php:943
 msgid "Add Attachment"
 msgstr ""
 
-#: includes/class-post-type.php:22
+#: includes/class-post-type.php:29
 msgid "Add New Quote"
 msgstr ""
 
-#: includes/class-metaboxes.php:886
+#: includes/class-metaboxes.php:905
 msgid ""
 "Add technical documents, specifications, or any other files that should be "
 "attached to this quote."
 msgstr ""
 
-#: includes/class-settings.php:126
+#: includes/class-settings.php:142 includes/class-metaboxes.php:178
+#: includes/class-metaboxes.php:280
 msgid "Address"
 msgstr ""
 
-#: includes/class-metaboxes.php:223 includes/class-metaboxes.php:325
-msgid "Address line 1"
+#: public/class-quote-response-handler.php:335
+#: public/class-quote-response-handler.php:490
+msgid "ADMIN NOTIFICATION"
 msgstr ""
 
-#: includes/class-pdf-generator.php:669
-#: includes/class-pdf-generator-raw.php:662
+#: includes/class-pdf-generator.php:782
+#: includes/class-pdf-generator-raw.php:780
 msgid "Attached Files"
 msgstr ""
 
-#: includes/class-metaboxes.php:1246
+#: includes/class-metaboxes.php:1270
 msgid "Attachment"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:520
+#: includes/class-ajax-handlers.php:643
 msgid "Attachment deleted successfully."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:515
+#: includes/class-ajax-handlers.php:638
 msgid "Attachment removed successfully."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:525
+#: includes/class-ajax-handlers.php:648
 msgid "Attachment removed, but file could not be deleted from server."
 msgstr ""
 
-#: includes/class-metaboxes.php:1235 includes/class-email-manager.php:203
+#: includes/class-metaboxes.php:1256 includes/class-email-manager.php:158
 msgid "Attachments:"
 msgstr ""
 
-#: includes/class-settings.php:222 includes/class-metaboxes.php:848
+#: includes/class-settings.php:259 includes/class-metaboxes.php:866
 msgid "Available placeholders:"
 msgstr ""
 
-#: includes/class-metaboxes.php:196
+#: includes/class-metaboxes.php:151
 msgid "Billing"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:169
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:195
+#: public/templates/reject-quote.php:59 public/templates/accept-quote.php:67
 msgid "Cancel"
 msgstr ""
 
-#: includes/class-metaboxes.php:231 includes/class-metaboxes.php:333
+#: includes/class-metaboxes.php:186 includes/class-metaboxes.php:288
 msgid "City"
 msgstr ""
 
-#: includes/class-settings.php:135
+#: includes/class-settings.php:151
 msgid "City & Postal Code"
 msgstr ""
 
-#: includes/class-metaboxes.php:217 includes/class-metaboxes.php:319
+#: public/templates/accept-quote.php:59
+msgid "Clear Signature"
+msgstr ""
+
+#: includes/class-metaboxes.php:172 includes/class-metaboxes.php:274
 msgid "Company"
 msgstr ""
 
-#: includes/class-settings.php:109 includes/class-settings.php:291
+#: includes/class-settings.php:117 includes/class-settings.php:355
 msgid "Company Details"
 msgstr ""
 
-#: includes/class-settings.php:248
+#: includes/class-settings.php:290
 msgid "Company Logo"
 msgstr ""
 
-#: includes/class-settings.php:117
+#: includes/class-settings.php:133
 msgid "Company Name"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:168
+#: includes/class-settings.php:218
+msgid "Configure plugin behavior and data management options."
+msgstr ""
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:194
 msgid "Confirm"
 msgstr ""
 
-#: includes/class-metaboxes.php:299
+#: includes/class-metaboxes.php:254
 msgid "Copy billing address"
 msgstr ""
 
-#: includes/class-metaboxes.php:446 includes/class-metaboxes.php:497
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:179
+#: includes/class-metaboxes.php:436 includes/class-metaboxes.php:487
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:205
 msgid "Cost"
 msgstr ""
 
-#: includes/class-metaboxes.php:246 includes/class-metaboxes.php:348
-msgid "Country / Region"
+#: includes/class-metaboxes.php:201 includes/class-metaboxes.php:303
+msgid "Country"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:146
+#: includes/class-ajax-handlers.php:159
 msgid "Country is required"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:197
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:223
 msgid "Creating customer..."
 msgstr ""
 
-#: includes/class-metaboxes.php:689
+#: includes/class-metaboxes.php:704
 msgid "Custom Date"
 msgstr ""
 
-#: includes/class-post-type.php:51
+#: includes/class-post-type.php:59
 msgid "Customer"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:272
+#: includes/class-ajax-handlers.php:390
 msgid "Customer created successfully"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:198
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:224
 msgid "Customer created successfully. "
 msgstr ""
 
-#: includes/class-ajax-handlers.php:186
+#: includes/class-ajax-handlers.php:304
 msgid "Customer email is required"
 msgstr ""
 
-#: includes/class-post-type.php:20
+#: includes/class-post-type.php:27
 msgid "Customer Quote"
 msgstr ""
 
-#: includes/class-post-type.php:19
+#: includes/class-post-type.php:26
 msgid "Customer Quotes"
 msgstr ""
 
-#: includes/class-pdf-generator.php:487
-#: includes/class-pdf-generator-raw.php:480
+#: includes/class-pdf-generator.php:731 includes/class-pdf-generator.php:733
+#: includes/class-pdf-generator-raw.php:729
+#: includes/class-pdf-generator-raw.php:731
+msgid "Customer Signature"
+msgstr ""
+
+#: public/templates/view-quote.php:77
+msgid "Customer:"
+msgstr ""
+
+#: includes/class-settings.php:197
+msgid "Data Cleanup"
+msgstr ""
+
+#: includes/class-pdf-generator.php:581
+#: includes/class-pdf-generator-raw.php:579 public/templates/view-quote.php:82
 msgid "Date:"
 msgstr ""
 
-#: includes/class-metaboxes.php:700
+#: includes/class-metaboxes.php:715
 msgid "dd/mm/yyyy"
 msgstr ""
 
-#: includes/class-settings.php:171
+#: public/templates/accept-quote.php:35
+#, php-format
+msgid ""
+"Dear %s, you are about to accept quote %s. Please sign below to confirm your "
+"acceptance."
+msgstr ""
+
+#: public/templates/reject-quote.php:35
+#, php-format
+msgid ""
+"Dear %s, you are about to decline quote %s. If you wish, you can provide a "
+"reason for declining this quote."
+msgstr ""
+
+#: public/class-quote-response-handler.php:310
+#, php-format
+msgid ""
+"Dear %s,<br><br>Thank you for accepting our quote. We have attached a copy "
+"of the signed quote for your records.<br><br>We will be in touch shortly to "
+"discuss the next steps.<br><br>Best regards,<br>%s"
+msgstr ""
+
+#: public/class-quote-response-handler.php:465
+#, php-format
+msgid ""
+"Dear %s,<br><br>We have received your decision to decline our quote. If you "
+"would like to discuss this further or have any questions, please don't "
+"hesitate to contact us.<br><br>Best regards,<br>%s"
+msgstr ""
+
+#: public/templates/reject-quote.php:63 public/templates/view-quote.php:121
+msgid "Decline Quote"
+msgstr ""
+
+#: public/templates/reject-quote.php:29
+#, php-format
+msgid "Decline Quote %s"
+msgstr ""
+
+#: includes/class-settings.php:187
 msgid "Default Terms & Conditions"
 msgstr ""
 
-#: includes/class-pdf-generator.php:519 includes/class-pdf-generator.php:565
-#: includes/class-pdf-generator-raw.php:512
-#: includes/class-pdf-generator-raw.php:558
+#: includes/class-settings.php:308
+msgid "Delete all quote files and attachments when plugin is uninstalled"
+msgstr ""
+
+#: includes/class-pdf-generator.php:613 includes/class-pdf-generator.php:659
+#: includes/class-pdf-generator-raw.php:611
+#: includes/class-pdf-generator-raw.php:657
 msgid "Disc(%)"
 msgstr ""
 
-#: includes/class-metaboxes.php:448
+#: includes/class-metaboxes.php:438
 msgid "Discount (%)"
 msgstr ""
 
-#: includes/class-metaboxes.php:730
+#: includes/class-metaboxes.php:745 public/templates/view-quote.php:111
 msgid "Download PDF"
 msgstr ""
 
-#: includes/class-post-type.php:23
+#: includes/class-quote-manager-system-for-woocommerce.php:243
+msgid "Draft"
+msgstr ""
+
+#: includes/class-post-type.php:30
 msgid "Edit Quote"
 msgstr ""
 
-#: includes/class-settings.php:153
+#: includes/class-settings.php:169
 msgid "Email"
 msgstr ""
 
-#: includes/class-metaboxes.php:282
+#: includes/class-metaboxes.php:237
 msgid "Email address"
 msgstr ""
 
-#: includes/class-metaboxes.php:774
+#: includes/class-metaboxes.php:791
 #, php-format
 msgid "Email opened at %s"
 msgstr ""
 
-#: includes/class-post-type.php:55
+#: includes/class-post-type.php:63
 msgid "Email Tracking"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:166
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:192
 msgid "Enter Image URL"
 msgstr ""
 
-#: includes/class-settings.php:183
+#: includes/class-settings.php:210
 msgid "Enter your company details that will appear on the quote PDF."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:200
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:226
 msgid "Error creating customer."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:191
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:271
+msgid "Error updating status."
+msgstr ""
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:217
 msgid "Error uploading file:"
 msgstr ""
 
-#: includes/class-metaboxes.php:983
+#: includes/class-metaboxes.php:1016
 msgid "Excel Spreadsheet"
 msgstr ""
 
-#: includes/class-post-type.php:53
+#: includes/class-post-type.php:61
 msgid "Expiration Date"
 msgstr ""
 
-#: includes/class-metaboxes.php:771
+#: includes/class-quote-manager-system-for-woocommerce.php:247
+msgid "Expired"
+msgstr ""
+
+#: includes/class-metaboxes.php:788
 msgid "Failed"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:175
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:201
 msgid "Failed to send."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:441
+#: includes/class-ajax-handlers.php:563
 msgid "Failed to upload file."
 msgstr ""
 
-#: includes/class-metaboxes.php:996
+#: includes/class-metaboxes.php:1029
 msgid "File"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:350
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:203
+#: includes/class-ajax-handlers.php:472
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:229
 msgid "File size exceeds the 2MB limit."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:190
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:216
 msgid "File uploaded successfully."
 msgstr ""
 
-#: includes/class-metaboxes.php:204 includes/class-metaboxes.php:306
+#: includes/class-metaboxes.php:159 includes/class-metaboxes.php:261
 msgid "First name"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:165
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:191
 msgid "From URL"
 msgstr ""
 
@@ -320,60 +418,74 @@ msgstr ""
 msgid "https://goldenbath.gr/"
 msgstr ""
 
-#: includes/class-pdf-generator.php:516 includes/class-pdf-generator.php:562
-#: includes/class-pdf-generator-raw.php:509
-#: includes/class-pdf-generator-raw.php:555 includes/class-metaboxes.php:443
-#: includes/class-metaboxes.php:990
+#: includes/class-pdf-generator.php:610 includes/class-pdf-generator.php:656
+#: includes/class-pdf-generator-raw.php:608
+#: includes/class-pdf-generator-raw.php:654 includes/class-metaboxes.php:433
+#: includes/class-metaboxes.php:1023
 msgid "Image"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:182
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:208
 msgid "incl. VAT"
 msgstr ""
 
-#: includes/class-metaboxes.php:667
+#: includes/class-metaboxes.php:682
 msgid "Include VAT in quote"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:385
+#: includes/class-ajax-handlers.php:507
 msgid ""
 "Invalid file type detected. Only JPG, JPEG, PNG and PDF files are allowed."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:371
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:204
+#: includes/class-ajax-handlers.php:493
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:230
 msgid "Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:174
+#: includes/class-ajax-handlers.php:674
+msgid "Invalid parameters"
+msgstr ""
+
+#: public/class-quote-response-handler.php:82
+#: public/class-quote-response-handler.php:198
+#: public/class-quote-response-handler.php:403
+msgid "Invalid quote access token. Please contact us for assistance."
+msgstr ""
+
+#: includes/class-ajax-handlers.php:292
 msgid "Invalid quote ID"
 msgstr ""
 
-#: includes/class-pdf-generator.php:29 includes/class-ajax-handlers.php:344
+#: includes/class-pdf-generator.php:36 includes/class-ajax-handlers.php:466
 msgid "Invalid quote ID."
 msgstr ""
 
-#: includes/class-metaboxes.php:209 includes/class-metaboxes.php:311
+#: includes/class-ajax-handlers.php:686
+msgid "Invalid status"
+msgstr ""
+
+#: includes/class-metaboxes.php:164 includes/class-metaboxes.php:266
 msgid "Last name"
 msgstr ""
 
-#: includes/class-metaboxes.php:197
+#: includes/class-metaboxes.php:152
 msgid "Load billing address"
 msgstr ""
 
-#: includes/class-settings.php:162
+#: includes/class-settings.php:178
 msgid "Logo"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:358
+#: includes/class-ajax-handlers.php:480
 msgid "Maximum number of attachments (%d) reached."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:205
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:231
 msgid "Maximum number of attachments reached (10)."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:164
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:190
 msgid "Media Library"
 msgstr ""
 
@@ -381,133 +493,207 @@ msgstr ""
 msgid "Mike Lvd"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:467
+#: includes/class-ajax-handlers.php:590
 msgid "Missing required information."
 msgstr ""
 
-#: includes/class-post-type.php:21 includes/class-post-type.php:24
+#: includes/class-post-type.php:28 includes/class-post-type.php:31
 msgid "New Quote"
 msgstr ""
 
-#: includes/class-metaboxes.php:749
+#: includes/class-metaboxes.php:766
 msgid "No email history recorded."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:338
+#: includes/class-ajax-handlers.php:460
 msgid "No file was uploaded."
 msgstr ""
 
-#: includes/class-post-type.php:27
+#: includes/class-post-type.php:34
 msgid "No Quotes found"
 msgstr ""
 
-#: includes/class-post-type.php:28
+#: includes/class-post-type.php:35
 msgid "No Quotes found in Trash"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:155
+#: public/class-quote-response-handler.php:476
+msgid "No reason provided"
+msgstr ""
+
+#: includes/class-ajax-handlers.php:168
 msgid "No states found for this country"
 msgstr ""
 
-#: includes/class-metaboxes.php:777
+#: includes/class-post-type.php:121
+msgid "Not sent yet"
+msgstr ""
+
+#: includes/class-metaboxes.php:794
 msgid "Not yet opened"
 msgstr ""
 
-#: includes/class-post-type.php:49
+#: includes/class-post-type.php:57
 msgid "Number"
 msgstr ""
 
-#: includes/class-pdf-generator.php:483
-#: includes/class-pdf-generator-raw.php:476
+#: includes/class-pdf-generator.php:577
+#: includes/class-pdf-generator-raw.php:575
 msgid "Number:"
 msgstr ""
 
-#: includes/class-metaboxes.php:977
+#: includes/class-metaboxes.php:1010
 msgid "PDF Document"
 msgstr ""
 
-#: includes/class-settings.php:144 includes/class-metaboxes.php:287
-#: includes/class-metaboxes.php:382
+#: includes/class-settings.php:160 includes/class-metaboxes.php:242
+#: includes/class-metaboxes.php:337
 msgid "Phone"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:160
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:186
 #, php-format
 msgid ""
 "Please enter a value with one monetary decimal point (%s) without thousand "
 "separators and currency symbols."
 msgstr ""
 
-#: includes/class-metaboxes.php:236 includes/class-metaboxes.php:338
-msgid "Postcode / ZIP"
+#: public/templates/reject-quote.php:53
+msgid "Please let us know why you are declining this quote..."
 msgstr ""
 
-#: includes/class-metaboxes.php:986
+#: public/class-quote-response-handler.php:216
+#: public/templates/accept-quote.php:108
+msgid "Please provide your signature to accept the quote."
+msgstr ""
+
+#: includes/class-settings.php:125
+msgid "Plugin Settings"
+msgstr ""
+
+#: includes/class-metaboxes.php:191 includes/class-metaboxes.php:293
+msgid "Postcode"
+msgstr ""
+
+#: includes/class-metaboxes.php:1019
 msgid "PowerPoint Presentation"
 msgstr ""
 
-#: includes/class-metaboxes.php:729
+#: includes/class-metaboxes.php:744
 msgid "Preview PDF"
 msgstr ""
 
-#: includes/class-pdf-generator.php:518 includes/class-pdf-generator.php:564
-#: includes/class-pdf-generator-raw.php:511
-#: includes/class-pdf-generator-raw.php:557 includes/class-metaboxes.php:447
+#: includes/class-pdf-generator.php:612 includes/class-pdf-generator.php:658
+#: includes/class-pdf-generator-raw.php:610
+#: includes/class-pdf-generator-raw.php:656 includes/class-metaboxes.php:437
 msgid "Price"
 msgstr ""
 
-#: includes/class-pdf-generator.php:517 includes/class-pdf-generator.php:563
-#: includes/class-pdf-generator-raw.php:510
-#: includes/class-pdf-generator-raw.php:556 includes/class-metaboxes.php:558
+#: includes/class-pdf-generator.php:611 includes/class-pdf-generator.php:657
+#: includes/class-pdf-generator-raw.php:609
+#: includes/class-pdf-generator-raw.php:655 includes/class-metaboxes.php:549
 msgid "Product"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:186
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:212
 msgid "Product search failed:"
 msgstr ""
 
-#: includes/class-post-type.php:52
+#: includes/class-post-type.php:60
 msgid "Project"
 msgstr ""
 
-#: includes/class-metaboxes.php:401
+#: includes/class-metaboxes.php:366
 msgid "Project Details"
 msgstr ""
 
-#: includes/class-metaboxes.php:403
+#: includes/class-metaboxes.php:368
 msgid "Project Name"
 msgstr ""
 
-#: includes/class-pdf-generator.php:500
-#: includes/class-pdf-generator-raw.php:493
+#: includes/class-pdf-generator.php:594
+#: includes/class-pdf-generator-raw.php:592
 msgid "Project:"
 msgstr ""
 
-#: includes/class-metaboxes.php:559
+#: includes/class-metaboxes.php:550
 msgid "Purchase Price (excl. VAT)"
 msgstr ""
 
-#: includes/class-pdf-generator.php:524 includes/class-pdf-generator.php:570
-#: includes/class-pdf-generator-raw.php:517
-#: includes/class-pdf-generator-raw.php:563
+#: includes/class-pdf-generator.php:618 includes/class-pdf-generator.php:664
+#: includes/class-pdf-generator-raw.php:616
+#: includes/class-pdf-generator-raw.php:662
 msgid "Qty"
 msgstr ""
 
-#: includes/class-metaboxes.php:452 includes/class-metaboxes.php:560
+#: includes/class-metaboxes.php:442 includes/class-metaboxes.php:551
 msgid "Quantity"
 msgstr ""
 
-#: includes/class-pdf-generator.php:454
-#: includes/class-pdf-generator-raw.php:447
+#: includes/class-pdf-generator.php:548
+#: includes/class-pdf-generator-raw.php:546
 msgid "QUOTE"
 msgstr ""
 
-#: includes/class-pdf-generator.php:89 includes/class-pdf-generator-raw.php:94
+#: includes/class-pdf-generator.php:110
+#: includes/class-pdf-generator-raw.php:108
 msgid "Quote"
 msgstr ""
 
+#: public/class-quote-response-handler.php:304
+#, php-format
+msgid "Quote #%s has been accepted"
+msgstr ""
+
+#: public/class-quote-response-handler.php:318
+#, php-format
+msgid ""
+"Quote #%s has been accepted by %s.<br><br>A copy of the signed quote is "
+"attached. Please follow up with the customer to discuss the next steps.<br>"
+"<br>View the quote: %s"
+msgstr ""
+
+#: public/class-quote-response-handler.php:459
+#, php-format
+msgid "Quote #%s has been declined"
+msgstr ""
+
+#: public/class-quote-response-handler.php:473
+#, php-format
+msgid ""
+"Quote #%s has been declined by %s.<br><br>Reason given: %s<br><br>View the "
+"quote: %s"
+msgstr ""
+
+#: public/templates/view-quote.php:65
+#, php-format
+msgid "Quote %s"
+msgstr ""
+
+#: public/class-quote-response-handler.php:378
+#, php-format
+msgid "Quote %s notification"
+msgstr ""
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:159
+#: public/templates/quote-response.php:29
+#: public/templates/page-quote-response.php:31
+msgid "Quote Accepted"
+msgstr ""
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:168
+#: public/templates/quote-response.php:38
+#: public/templates/page-quote-response.php:40
+msgid "Quote Declined"
+msgstr ""
+
+#: public/class-quote-response-handler.php:382
+#, php-format
+msgid "Quote has been %s by the customer."
+msgstr ""
+
 #. Parent menu
-#: includes/class-settings.php:261 includes/class-settings.php:288
+#: includes/class-settings.php:323 includes/class-settings.php:351
 msgid "Quote Manager Settings"
 msgstr ""
 
@@ -515,344 +701,482 @@ msgstr ""
 msgid "Quote Manager System For WooCommerce"
 msgstr ""
 
-#: quote-manager-system-for-woocommerce.php:83
+#: quote-manager-system-for-woocommerce.php:91
 #, php-format
 msgid ""
 "Quote Manager System For WooCommerce requires %s to be installed and "
 "activated."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:63
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:70
 msgid "Quote Manager: PDF directory protection has been set up."
 msgstr ""
 
-#: includes/class-post-type.php:50
+#: includes/class-post-type.php:58
 msgid "Quote Name"
 msgstr ""
 
-#: includes/class-metaboxes.php:1237 includes/class-email-manager.php:204
+#: includes/class-ajax-handlers.php:680
+msgid "Quote not found"
+msgstr ""
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:151
+#: public/templates/quote-response.php:21 public/templates/reject-quote.php:17
+#: public/templates/page-quote-response.php:23
+#: public/templates/accept-quote.php:17 public/templates/view-quote.php:17
+msgid "Quote not found."
+msgstr ""
+
+#: includes/class-metaboxes.php:1259 includes/class-email-manager.php:159
 msgid "Quote PDF"
 msgstr ""
 
-#: includes/class-metaboxes.php:671
+#: public/class-quote-manager-system-for-woocommerce-public.php:177
+#: includes/class-quote-manager-system-for-woocommerce-activator.php:137
+#: public/templates/quote-response.php:47
+#: public/templates/page-quote-response.php:49
+msgid "Quote Response"
+msgstr ""
+
+#: includes/class-metaboxes.php:665
+msgid "Quote Status:"
+msgstr ""
+
+#: includes/class-metaboxes.php:686
 msgid "Quote Validity:"
 msgstr ""
 
-#: includes/class-metaboxes.php:994
+#: includes/class-metaboxes.php:1027
 msgid "RAR Archive"
 msgstr ""
 
-#: includes/class-metaboxes.php:508
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:180
+#: public/templates/reject-quote.php:51
+msgid "Reason for declining (optional):"
+msgstr ""
+
+#: includes/class-quote-manager-system-for-woocommerce.php:246
+msgid "Rejected"
+msgstr ""
+
+#: includes/class-metaboxes.php:498
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:206
 msgid "Remove"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:193
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:219
 msgid "Remove Attachment"
 msgstr ""
 
-#: includes/class-metaboxes.php:906 includes/class-metaboxes.php:936
+#: includes/class-metaboxes.php:932 includes/class-metaboxes.php:966
 msgid "Remove File"
 msgstr ""
 
-#: includes/class-metaboxes.php:841
+#: includes/class-metaboxes.php:859
 msgid "Reset to Default Terms"
 msgstr ""
 
-#: includes/class-metaboxes.php:867
+#: includes/class-metaboxes.php:885
 msgid "Reset to default terms? This will replace your current text."
 msgstr ""
 
-#: includes/class-revision-manager.php:37
+#: public/class-quote-manager-system-for-woocommerce-public.php:199
+#: public/templates/quote-response.php:68
+#: public/templates/page-quote-response.php:70
+msgid "Return to Homepage"
+msgstr ""
+
+#: includes/class-revision-manager.php:95
 #, php-format
 msgid "Revision for quote #%s"
 msgstr ""
 
-#: includes/class-metaboxes.php:394
+#: includes/class-metaboxes.php:359
 msgid "Save as New Customer"
 msgstr ""
 
-#: includes/class-post-type.php:26
+#: includes/class-metaboxes.php:351
+msgid "Search customers by name, email or company..."
+msgstr ""
+
+#: includes/class-post-type.php:33
 msgid "Search Quotes"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:134 includes/class-ajax-handlers.php:328
-#: includes/class-ajax-handlers.php:451
+#: includes/class-ajax-handlers.php:184 includes/class-ajax-handlers.php:666
+#: includes/class-ajax-handlers.php:717
+msgid "Security check failed"
+msgstr ""
+
+#: includes/class-ajax-handlers.php:147 includes/class-ajax-handlers.php:450
+#: includes/class-ajax-handlers.php:574
 msgid "Security check failed."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:192
+#: public/class-quote-response-handler.php:205
+#: public/class-quote-response-handler.php:410
+msgid "Security check failed. Please try again."
+msgstr ""
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:218
 msgid "Select File"
 msgstr ""
 
-#: includes/class-settings.php:245
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:163
+#: includes/class-settings.php:286
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:189
 msgid "Select Image"
 msgstr ""
 
-#: includes/class-metaboxes.php:701
+#: includes/class-metaboxes.php:716
 msgid "Select specific expiration date"
 msgstr ""
 
-#: includes/class-metaboxes.php:770
+#: includes/class-quote-manager-system-for-woocommerce.php:244
+#: includes/class-metaboxes.php:787
 msgid "Sent"
 msgstr ""
 
-#: includes/class-post-type.php:123
+#: includes/class-post-type.php:139
 #, php-format
-msgid "Sent: %1$d, Opened: %2$d<br>Last: %3$s at %4$s"
+msgid "Sent %1$d time(s), opened %2$d time(s). Last opened: %3$s at %4$s"
 msgstr ""
 
-#: includes/class-post-type.php:133
-msgid "Sent: %d (not opened)"
+#: includes/class-post-type.php:148
+msgid "Sent %d time(s) but not yet opened"
 msgstr ""
 
 #. Page title
-#: includes/class-settings.php:262
+#: includes/class-settings.php:324
 msgid "Settings"
 msgstr ""
 
-#: includes/class-metaboxes.php:298
+#: includes/class-metaboxes.php:253
 msgid "Shipping"
 msgstr ""
 
-#: includes/class-pdf-generator.php:623
-#: includes/class-pdf-generator-raw.php:616
+#: public/templates/accept-quote.php:71
+msgid "Sign & Accept Quote"
+msgstr ""
+
+#: includes/class-pdf-generator.php:735
+#: includes/class-pdf-generator-raw.php:733
 msgid "Signature"
 msgstr ""
 
-#: includes/class-metaboxes.php:445
+#: includes/class-metaboxes.php:435
 msgid "SKU"
 msgstr ""
 
-#: includes/class-metaboxes.php:258 includes/class-metaboxes.php:360
-msgid "State / County"
+#: includes/class-metaboxes.php:213 includes/class-metaboxes.php:315
+msgid "State"
 msgstr ""
 
-#: includes/class-pdf-generator.php:604
-#: includes/class-pdf-generator-raw.php:597 includes/class-metaboxes.php:518
+#: includes/class-post-type.php:64
+msgid "Status"
+msgstr ""
+
+#: includes/class-ajax-handlers.php:699
+msgid "Status updated successfully"
+msgstr ""
+
+#: public/templates/view-quote.php:97
+msgid "Status:"
+msgstr ""
+
+#: includes/class-pdf-generator.php:700
+#: includes/class-pdf-generator-raw.php:698 includes/class-metaboxes.php:508
 msgid "Subtotal:"
 msgstr ""
 
-#: includes/class-pdf-generator.php:443 includes/class-pdf-generator.php:471
-#: includes/class-pdf-generator-raw.php:436
-#: includes/class-pdf-generator-raw.php:464
+#: includes/class-pdf-generator.php:536 includes/class-pdf-generator.php:565
+#: includes/class-pdf-generator-raw.php:534
+#: includes/class-pdf-generator-raw.php:563
 msgid "Tel:"
 msgstr ""
 
-#: includes/class-pdf-generator.php:657
-#: includes/class-pdf-generator-raw.php:650
+#: public/class-quote-response-handler.php:172
+#, php-format
+msgid "Template file %s not found."
+msgstr ""
+
+#: includes/class-pdf-generator.php:770
+#: includes/class-pdf-generator-raw.php:768
 msgid "Terms & Conditions"
 msgstr ""
 
-#: includes/class-settings.php:221
+#: public/class-quote-manager-system-for-woocommerce-public.php:161
+#: public/templates/quote-response.php:31
+#: public/templates/page-quote-response.php:33
+#, php-format
+msgid ""
+"Thank you, %s! Your acceptance of quote %s has been recorded. We have sent "
+"you a confirmation email with the signed quote for your records. We will be "
+"in touch shortly to discuss the next steps."
+msgstr ""
+
+#: public/class-quote-manager-system-for-woocommerce-public.php:170
+#: public/templates/quote-response.php:40
+#: public/templates/page-quote-response.php:42
+#, php-format
+msgid ""
+"Thank you, %s. We have recorded your decision to decline quote %s. If you "
+"would like to discuss this further or have any questions, please don't "
+"hesitate to contact us."
+msgstr ""
+
+#: includes/class-settings.php:258
 msgid ""
 "These terms will be used as the default for all quotes. You can customize "
 "them per quote."
 msgstr ""
 
-#: includes/class-settings.php:233 includes/class-metaboxes.php:859
+#: includes/class-pdf-generator.php:45
+msgid "This quote has been rejected and is no longer available."
+msgstr ""
+
+#: public/templates/view-quote.php:133
+msgid "This quote has expired."
+msgstr ""
+
+#: includes/class-settings.php:270 includes/class-metaboxes.php:877
 msgid ""
 "Tip: Use Shift+Enter for line breaks, Enter for new paragraphs, and the "
 "toolbar buttons for formatting."
 msgstr ""
 
-#: includes/class-metaboxes.php:444
+#: includes/class-metaboxes.php:434
 msgid "Title"
 msgstr ""
 
-#: includes/class-pdf-generator.php:463
-#: includes/class-pdf-generator-raw.php:456
+#: includes/class-pdf-generator.php:557
+#: includes/class-pdf-generator-raw.php:555
 msgid "TO"
 msgstr ""
 
-#: includes/class-pdf-generator.php:525 includes/class-pdf-generator.php:571
-#: includes/class-pdf-generator-raw.php:518
-#: includes/class-pdf-generator-raw.php:564
+#: includes/class-pdf-generator.php:619 includes/class-pdf-generator.php:665
+#: includes/class-pdf-generator-raw.php:617
+#: includes/class-pdf-generator-raw.php:663
 msgid "Total"
 msgstr ""
 
-#: includes/class-metaboxes.php:453
+#: includes/class-metaboxes.php:443
 msgid "Total (€)"
 msgstr ""
 
-#: includes/class-metaboxes.php:561
+#: includes/class-metaboxes.php:552
 msgid "Total Cost"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:183
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:209
 msgid "Total Net Profit"
 msgstr ""
 
-#: includes/class-metaboxes.php:652
+#: includes/class-metaboxes.php:643
 msgid "Total Net Profit:"
 msgstr ""
 
-#: includes/class-metaboxes.php:562
+#: includes/class-metaboxes.php:553
 msgid "Total Price"
 msgstr ""
 
-#: includes/class-pdf-generator.php:614
-#: includes/class-pdf-generator-raw.php:607
+#: includes/class-pdf-generator.php:710
+#: includes/class-pdf-generator-raw.php:708
 msgid "TOTAL:"
 msgstr ""
 
-#: includes/class-metaboxes.php:529
+#: includes/class-metaboxes.php:519 public/templates/view-quote.php:92
 msgid "Total:"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:181
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:207
 msgid "Totals"
 msgstr ""
 
-#: includes/class-metaboxes.php:641
+#: includes/class-metaboxes.php:632
 msgid "Totals:"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:189
+#: includes/class-quote-manager-system-for-woocommerce.php:232
+msgid "Unknown"
+msgstr ""
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:270
+msgid "Updating status..."
+msgstr ""
+
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:215
 msgid "Uploading file..."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:167
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:193
 msgid "Use this image"
 msgstr ""
 
-#: includes/class-pdf-generator.php:491
-#: includes/class-pdf-generator-raw.php:484
+#: includes/class-pdf-generator.php:585
+#: includes/class-pdf-generator-raw.php:583 public/templates/view-quote.php:87
 msgid "Valid until:"
 msgstr ""
 
-#: includes/class-pdf-generator.php:520 includes/class-pdf-generator.php:566
-#: includes/class-pdf-generator-raw.php:513
-#: includes/class-pdf-generator-raw.php:559 includes/class-metaboxes.php:449
+#: includes/class-pdf-generator.php:614 includes/class-pdf-generator.php:660
+#: includes/class-pdf-generator-raw.php:612
+#: includes/class-pdf-generator-raw.php:658 includes/class-metaboxes.php:439
 msgid "Value"
 msgstr ""
 
-#: includes/class-pdf-generator.php:522 includes/class-pdf-generator.php:568
-#: includes/class-pdf-generator-raw.php:515
-#: includes/class-pdf-generator-raw.php:561 includes/class-metaboxes.php:451
+#: includes/class-pdf-generator.php:616 includes/class-pdf-generator.php:662
+#: includes/class-pdf-generator-raw.php:614
+#: includes/class-pdf-generator-raw.php:660 includes/class-metaboxes.php:441
 msgid "Value (incl. VAT)"
 msgstr ""
 
-#: includes/class-pdf-generator.php:609
-#: includes/class-pdf-generator-raw.php:602 includes/class-metaboxes.php:524
+#: includes/class-pdf-generator.php:705
+#: includes/class-pdf-generator-raw.php:703 includes/class-metaboxes.php:514
 msgid "VAT:"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:199
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:225
 msgid "View customer"
 msgstr ""
 
-#: includes/class-metaboxes.php:905 includes/class-metaboxes.php:935
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:194
+#: includes/class-metaboxes.php:930 includes/class-metaboxes.php:964
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:220
 msgid "View File"
 msgstr ""
 
-#: includes/class-metaboxes.php:784
+#: includes/class-metaboxes.php:801
 msgid "View full message"
 msgstr ""
 
-#: includes/class-post-type.php:25
+#: includes/class-post-type.php:32
 msgid "View Quote"
 msgstr ""
 
-#: includes/class-metaboxes.php:980
+#: includes/class-settings.php:311
+msgid ""
+"Warning: If checked, all generated quote PDFs and uploaded attachments will "
+"be permanently deleted when the plugin is uninstalled."
+msgstr ""
+
+#: includes/class-metaboxes.php:1013
 msgid "Word Document"
 msgstr ""
 
-#: includes/class-email-manager.php:170
+#: public/templates/view-quote.php:105
+msgid ""
+"You can download the quote as a PDF, or respond to it using the buttons "
+"below."
+msgstr ""
+
+#: public/templates/view-quote.php:125
+msgid "You have accepted this quote."
+msgstr ""
+
+#: public/templates/view-quote.php:129
+msgid "You have declined this quote."
+msgstr ""
+
+#: includes/class-email-manager.php:121
 #, php-format
 msgid "Your quote from %s"
 msgstr ""
 
-#: includes/class-metaboxes.php:992
+#: public/class-quote-manager-system-for-woocommerce-public.php:178
+#: public/templates/quote-response.php:48
+#: public/templates/page-quote-response.php:50
+msgid "Your response has been recorded."
+msgstr ""
+
+#: public/templates/accept-quote.php:51
+msgid "Your Signature:"
+msgstr ""
+
+#: includes/class-metaboxes.php:1025
 msgid "ZIP Archive"
 msgstr ""
 
-#: includes/class-metaboxes.php:47
+#: includes/class-metaboxes.php:54
 msgid "⚙️ Quote Tools"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:173
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:199
 msgid "✅ Email sent successfully."
 msgstr ""
 
-#: includes/class-metaboxes.php:758
+#: includes/class-metaboxes.php:775
 msgid "✅ Result"
 msgstr ""
 
-#: includes/class-metaboxes.php:756
+#: includes/class-metaboxes.php:773
 msgid "✉️ Subject"
 msgstr ""
 
-#: includes/class-metaboxes.php:435
+#: includes/class-metaboxes.php:425
 msgid "✚ Add Product"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:176
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:202
 msgid "❌ Error while sending email."
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:174
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:200
 msgid "❌ Error:"
 msgstr ""
 
-#: includes/class-metaboxes.php:759
+#: includes/class-metaboxes.php:776
 msgid "👁️ Viewed"
 msgstr ""
 
-#: includes/class-metaboxes.php:754
+#: includes/class-metaboxes.php:771
 msgid "📅 Date"
 msgstr ""
 
-#: includes/class-metaboxes.php:83
+#: includes/class-metaboxes.php:90
 msgid "📎 Attachments"
 msgstr ""
 
-#: includes/class-metaboxes.php:74
+#: includes/class-metaboxes.php:81
 msgid "📝 Terms & Conditions"
 msgstr ""
 
-#: includes/class-metaboxes.php:38
+#: includes/class-metaboxes.php:45
 msgid "📤 Quote Actions"
 msgstr ""
 
-#: includes/class-metaboxes.php:65
+#: includes/class-metaboxes.php:72
 msgid "📧 Email History"
 msgstr ""
 
-#: includes/class-metaboxes.php:755
+#: includes/class-metaboxes.php:772
 msgid "📧 Recipient"
 msgstr ""
 
-#: includes/class-metaboxes.php:739
+#: includes/class-metaboxes.php:755
 msgid "📧 Send Quote Email"
 msgstr ""
 
-#: includes/class-metaboxes.php:757
+#: includes/class-metaboxes.php:774
 msgid "📨 Message"
 msgstr ""
 
-#: admin/class-quote-manager-system-for-woocommerce-admin.php:172
+#: admin/class-quote-manager-system-for-woocommerce-admin.php:198
 msgid "📨 Sending in progress..."
 msgstr ""
 
-#: includes/class-metaboxes.php:803
+#: includes/class-metaboxes.php:820
 msgid "📩 Full Message"
 msgstr ""
 
-#: includes/class-metaboxes.php:432
+#: includes/class-metaboxes.php:422
 msgid "🔍 Search products..."
 msgstr ""
 
-#: includes/class-metaboxes.php:56 includes/class-metaboxes.php:554
+#: includes/class-metaboxes.php:63 includes/class-metaboxes.php:545
 msgid "🔐 Internal Quote Information"
 msgstr ""
 
-#: includes/class-metaboxes.php:29
+#: includes/class-metaboxes.php:36
 msgid "🛒 Quote Products"
 msgstr ""
 
-#: includes/class-metaboxes.php:20
+#: includes/class-metaboxes.php:27
 msgid "🧾 Customer & Shipping Details"
 msgstr ""

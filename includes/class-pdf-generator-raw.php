@@ -107,406 +107,443 @@ class Quote_Manager_PDF_Generator_Raw
             <meta charset="UTF-8">
             <title><?php echo __('Quote', 'quote-manager-system-for-woocommerce') . ' ' . $quote_number; ?></title>
             <style>
-                /* Basic settings */
-                @page {
-                    margin: 0;
-                    padding: 0;
-                }
-
-                body {
-                    font-family: DejaVu Sans, sans-serif;
-                    font-size: 10pt;
-                    margin: 0;
-                    padding: 0;
-                    color: <?php echo $text_color; ?>;
-                    line-height: 1.6;
-                }
-
-                p {
-                    margin: 0 0 5px 0;
-                }
-
-                /* Use tables for compatibility with DomPDF */
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-
-                /* Containers */
-                .page-wrapper {
-                    position: relative;
-                    padding: 0;
-                }
-
-                .content-container {
-                    padding-left: 20px;
-                    padding-right: 20px;
-                }
-
-                /* Header Styling */
-                .header-area {
-                    position: relative;
-                    background-color: #fff;
-                    padding: 0;
-                }
-
-                .header-top-band {
-                    height: 15px;
-                    width: 100%;
-                    background-color: <?php echo $primary_color; ?>;
-                }
-
-                .header-curve {
-                    height: 60px;
-                    width: 100%;
-                    background-color: <?php echo $primary_color; ?>;
-                    position: relative;
-                    z-index: 1;
-                }
-
-                .header-curve::after {
-                    content: '';
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 60px;
-                    background-color: #fff;
-                    border-top-right-radius: 60px;
-                    z-index: 2;
-                }
-
-                .logo-company-container {
-                    padding-left: 40px;
-                    padding-right: 40px;
-                    position: relative;
-                    z-index: 5;
-                }
-
-                .company-logo {
-                    max-height: 160px;
-                    max-width: 280px;
-                }
-
-                .company-name {
-                    font-size: 24pt;
-                    font-weight: bold;
-                    color: <?php echo $primary_color; ?>;
-                    margin: 0;
-                    padding: 0;
-                }
-
-                .company-info {
-                    font-size: 9pt;
-                    color: <?php echo $light_text_color; ?>;
-                }
-
-                /* Quote Title & Info */
-                .quote-title-band {
-                    background-color: <?php echo $primary_color; ?>;
-                    text-align: center;
-                    margin: 10px 0;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                }
-
-                .quote-title {
-                    color: white;
-                    font-size: 20pt;
-                    font-weight: bold;
-                    letter-spacing: 1px;
-                    text-transform: uppercase;
-                    margin: 0;
-                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-                }
-
-                .quote-info {
-                    background-color: #fff;
-                    margin: 20px 0;
-                    text-align: right;
-                    padding: 5px 0;
-                }
-
-                .quote-info-table {
-                    width: auto;
-                    margin-left: auto;
-                }
-
-                .quote-info-label {
-                    font-weight: bold;
-                    text-align: right;
-                    padding-right: 15px;
-                }
-
-                .quote-info-value {
-                    text-align: right;
-                    color: <?php echo $primary_color; ?>;
-                    font-weight: bold;
-                }
-
-                /* Client Box */
-                .client-box {
-                    margin: 15px 0;
-                    border-left: 5px solid<?php echo $primary_color; ?>;
-                    background-color: <?php echo $highlight_color; ?>;
-                    padding: 15px;
-                    position: relative;
-                }
-
-                .client-label {
-                    position: absolute;
-                    top: -12px;
-                    left: 15px;
-                    background-color: <?php echo $primary_color; ?>;
-                    color: white;
-                    padding: 3px 15px;
-                    font-weight: bold;
-                    text-transform: uppercase;
-                    font-size: 9pt;
-                    border-radius: 3px;
-                }
-
-                .client-name {
-                    font-weight: bold;
-                    font-size: 12pt;
-                    margin-top: 10px;
-                }
-
-                .client-details {
-                    font-size: 9pt;
-                }
-
-                .project-name {
-                    font-size: 16px;
-                    margin-bottom: 15px;
-                    color: #333;
-                }
-
-                .project-name strong {
-                    color: #0073aa;
-                }
-
-                /* Products Table */
-                .products-container {
-                    margin: 20px 0;
-                }
-
-                .products-table {
-                    width: 100%;
-                    border-collapse: separate;
-                    border-spacing: 0;
-                    border-radius: 5px;
-                    overflow: hidden;
-                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-                }
-
-                .products-table th {
-                    background-color: <?php echo $primary_color; ?>;
-                    color: white;
-                    text-align: center;
-                    padding: 5px 5px;
-                    font-weight: bold;
-                    font-size: 7pt;
-                    border-bottom: 2px solid<?php echo $secondary_color; ?>;
-                }
-
-                .products-table td {
-                    font-size: 8pt;
-                    padding: 8px;
-                    text-align: center;
-                    border-bottom: 1px solid<?php echo $border_color; ?>;
-                    vertical-align: middle;
-                }
-
-                .products-table tr:nth-child(even) td {
-                    background-color: <?php echo $gray_shade; ?>;
-                }
-
-                .products-table tr:last-child td {
-                    font-size: 9pt;
-                    border-bottom: none;
-                }
-
-                .products-table .product-image {
-                    max-width: 60px;
-                    max-height: 60px;
-                }
-
-                .product-name-cell {
-                    text-align: left;
-                    font-weight: 500;
-                }
-
-                .discount-cell {
-                    color: #b6c3c7; /* Red for discounts */
-                    font-weight: bold;
-                }
-
-                .price-original {
-                    text-decoration: line-through;
-                    color: <?php echo $light_text_color; ?>;
-                    font-size: 8pt;
-                }
-
-                .price-final {
-                    font-weight: bold;
-                    color: <?php echo $text_color; ?>;
-                }
-
-                .quantity-cell {
-                    font-weight: bold;
-                }
-
-                .total-cell {
-                    font-weight: bold;
-                    color: <?php echo $secondary_color; ?>;
-                }
-
-                /* Totals Area */
-                .totals-area {
-                    width: 40%;
-                    float: right;
-                }
-
-                .totals-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-
-                .totals-table td {
-                    padding: 8px 10px;
-                    text-align: right;
-                    border-bottom: 1px solid<?php echo $border_color; ?>;
-                }
-
-                .totals-table tr:last-child td {
-                    border-bottom: none;
-                    padding-top: 5px;
-                }
-
-                .totals-table .total-label {
-                    width: 60%;
-                    font-weight: normal;
-                    color: <?php echo $light_text_color; ?>;
-                }
-
-                .totals-table .total-value {
-                    width: 40%;
-                    font-weight: bold;
-                }
-
-                .grand-total-row td {
-                    background-color: <?php echo $highlight_color; ?>;
-                    font-size: 11pt;
-                    padding: 15px;
-                    border-bottom: none;
-                }
-
-                .grand-total-label {
-                    color: <?php echo $text_color; ?>;
-                    font-weight: bold;
-                }
-
-                .grand-total-value {
-                    color: <?php echo $primary_color; ?>;
-                    font-weight: bold;
-                }
-
-                /* Signature Area */
-                .footer-content {
-                    clear: both;
-                    padding-top: 50px;
-                    position: relative;
-                    margin-bottom: 50px;
-                    padding-bottom: 30px;
-                }
-
-                .signature-area {
-                    width: 50%;
-                    float: right;
-                    margin-bottom: 30px;
-                    margin-top: -30px;
-                }
-
-                .signature-line {
-                    border-top: 1px solid<?php echo $text_color; ?>;
-                    padding-top: 8px;
-                    text-align: center;
-                    color: <?php echo $light_text_color; ?>;
-                    font-style: italic;
-                }
-
-                .customer-signature {
-                    margin-bottom: 5px;
-                    text-align: center;
-                }
-
-                .customer-signature img {
-                    max-width: 250px;
-                    max-height: 80px;
-                }
-
-                /* Notes and Terms - Adjust spacing */
-                .notes-area {
-                    clear: both;
-                    padding-top: 20px;
-                    margin-top: 10px;
-                    font-size: 9pt;
-                    color: <?php echo $light_text_color; ?>;
-                    text-align: left;
-                    font-style: italic;
-                    padding-bottom: 50px;
-                }
-
-                .quote-terms-section {
-                    font-size: 9pt;
-                    color: <?php echo $text_color; ?>;
-                    margin-top: 10px;
-                    border-top: 1px solid<?php echo $border_color; ?>;
-                    padding-top: 10px;
-                }
-
-                .quote-terms-section h3 {
-                    font-size: 10pt;
-                    font-weight: bold;
-                    margin-bottom: 8px;
-                    color: <?php echo $primary_color; ?>;
-                }
-
-                /* Bottom Area */
-                .page-bottom {
-                    background-color: <?php echo $primary_color; ?>;
-                    padding: 15px 40px;
-                    color: white;
-                    font-size: 9pt;
-                    text-align: center;
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    width: 100%;
-                    box-sizing: border-box;
-                }
-
-                /* Helper Classes */
-                .text-right {
-                    text-align: right;
-                }
-
-                .text-center {
-                    text-align: center;
-                }
-
-                .page-break {
-                    page-break-after: always;
-                }
-
-                .no-margin {
-                    margin: 0;
-                }
-
-                .no-padding {
-                    padding: 0;
-                }
+                    /* Basic settings */
+                    @page {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    
+                    body {
+                        font-family: DejaVu Sans, sans-serif;
+                        font-size: 10pt;
+                        margin: 0;
+                        padding: 0;
+                        color: <?php echo $text_color; ?>;
+                        line-height: 1.6;
+                        position: relative;
+                    }
+                    
+                    p {
+                        margin: 0 0 5px 0;
+                    }
+                    
+                    /* Use tables for compatibility with DomPDF */
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    
+                    /* Containers */
+                    .page-wrapper {
+                        position: relative;
+                        padding: 0;
+                        padding-bottom: 60px; /* Space for footer */
+                        min-height: 100%;
+                    }
+                    
+                    .content-container {
+                        padding-left: 20px;
+                        padding-right: 20px;
+                        padding-bottom: 60px; /* Ensure space for footer */
+                    }
+                    
+                    /* Header Styling */
+                    .header-area {
+                        position: relative;
+                        background-color: #fff;
+                        padding: 0;
+                    }
+                    
+                    .header-top-band {
+                        height: 15px;
+                        width: 100%;
+                        background-color: <?php echo $primary_color; ?>;
+                    }
+                    
+                    .header-curve {
+                        height: 60px;
+                        width: 100%;
+                        background-color: <?php echo $primary_color; ?>;
+                        position: relative;
+                        z-index: 1;
+                    }
+                    
+                    .header-curve::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 60px;
+                        background-color: #fff;
+                        border-top-right-radius: 60px;
+                        z-index: 2;
+                    }
+                    
+                    .logo-company-container {
+                        padding-left: 40px;
+                        padding-right: 40px;
+                        position: relative;
+                        z-index: 5;
+                    }
+                    
+                    .company-logo {
+                        max-height: 160px;
+                        max-width: 280px;
+                    }
+                    
+                    .company-name {
+                        font-size: 24pt;
+                        font-weight: bold;
+                        color: <?php echo $primary_color; ?>;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    
+                    .company-info {
+                        font-size: 9pt;
+                        color: <?php echo $light_text_color; ?>;
+                    }
+                    
+                    /* Quote Title & Info */
+                    .quote-title-band {
+                        background-color: <?php echo $primary_color; ?>;
+                        text-align: center;
+                        margin: 10px 0;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        border-top-left-radius: 25px;
+                        border-top-right-radius: 25px;
+                    }
+                    
+                    .quote-title {
+                        color: white;
+                        font-size: 20pt;
+                        font-weight: bold;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                        margin: 0;
+                        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                    }
+                    
+                    .quote-info {
+                        background-color: #fff;
+                        margin: 20px 0;
+                        text-align: right;
+                        padding: 5px 0;
+                    }
+                    
+                    .quote-info-table {
+                        width: auto;
+                        margin-left: auto;
+                    }
+                    
+                    .quote-info-label {
+                        font-weight: bold;
+                        text-align: right;
+                        padding-right: 15px;
+                    }
+                    
+                    .quote-info-value {
+                        text-align: right;
+                        color: <?php echo $primary_color; ?>;
+                        font-weight: bold;
+                    }
+                    
+                    /* Client Box */
+                    .client-box {
+                        margin: 15px 0;
+                        border-left: 5px solid<?php echo $primary_color; ?>;
+                        background-color: <?php echo $highlight_color; ?>;
+                        padding: 15px;
+                        position: relative;
+                    }
+                    
+                    .client-label {
+                        position: absolute;
+                        top: -12px;
+                        left: 15px;
+                        background-color: <?php echo $primary_color; ?>;
+                        color: white;
+                        padding: 3px 15px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        font-size: 9pt;
+                        border-radius: 2px;
+                    }
+                    
+                    .client-name {
+                        font-weight: bold;
+                        font-size: 12pt;
+                        margin-top: 10px;
+                    }
+                    
+                    .client-details {
+                        font-size: 9pt;
+                    }
+                    
+                    .project-name {
+                        font-size: 16px;
+                        margin-bottom: 15px;
+                        color: #333;
+                    }
+                    
+                    .project-name strong {
+                        color: #0073aa;
+                    }
+                    
+                    /* Products Table */
+                    .products-container {
+                        margin: 20px 0;
+                    }
+                    
+                    .products-table {
+                        width: 100%;
+                        border-collapse: separate;
+                        border-spacing: 0;
+                        border-radius: 5px;
+                        overflow: hidden;
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                    }
+                    
+                    .products-table th {
+                        background-color: <?php echo $primary_color; ?>;
+                        color: white;
+                        text-align: center;
+                        padding: 5px 5px;
+                        font-weight: bold;
+                        font-size: 7pt;
+                        border-bottom: 2px solid<?php echo $secondary_color; ?>;
+                    }
+                    
+                    .products-table td {
+                        font-size: 8pt;
+                        padding: 8px;
+                        text-align: center;
+                        border-bottom: 1px solid<?php echo $border_color; ?>;
+                        vertical-align: middle;
+                    }
+                    
+                    .products-table tr:nth-child(even) td {
+                        background-color: <?php echo $gray_shade; ?>;
+                    }
+                    
+                    .products-table tr:last-child td {
+                        font-size: 9pt;
+                        border-bottom: none;
+                    }
+                    
+                    .products-table .product-image {
+                        max-width: 60px;
+                        max-height: 60px;
+                    }
+                    
+                    .product-name-cell {
+                        text-align: left;
+                        font-weight: 500;
+                    }
+                    
+                    .discount-cell {
+                        color: #b6c3c7;
+                        font-weight: bold;
+                    }
+                    
+                    .price-original {
+                        text-decoration: line-through;
+                        color: <?php echo $light_text_color; ?>;
+                        font-size: 8pt;
+                    }
+                    
+                    .price-final {
+                        font-weight: bold;
+                        color: <?php echo $text_color; ?>;
+                    }
+                    
+                    .quantity-cell {
+                        font-weight: bold;
+                    }
+                    
+                    .total-cell {
+                        font-weight: bold;
+                        color: <?php echo $secondary_color; ?>;
+                    }
+                    
+                    /* Totals Area */
+                    .totals-area {
+                        width: 40%;
+                        float: right;
+                    }
+                    
+                    .totals-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    
+                    .totals-table td {
+                        padding: 8px 10px;
+                        text-align: right;
+                        border-bottom: 1px solid<?php echo $border_color; ?>;
+                    }
+                    
+                    .totals-table tr:last-child td {
+                        border-bottom: none;
+                        padding-top: 5px;
+                    }
+                    
+                    .totals-table .total-label {
+                        width: 60%;
+                        font-weight: normal;
+                        color: <?php echo $light_text_color; ?>;
+                    }
+                    
+                    .totals-table .total-value {
+                        width: 40%;
+                        font-weight: bold;
+                    }
+                    
+                    .grand-total-row td {
+                        background-color: <?php echo $highlight_color; ?>;
+                        font-size: 11pt;
+                        padding: 15px;
+                        border-bottom: none;
+                    }
+                    
+                    .grand-total-label {
+                        color: <?php echo $text_color; ?>;
+                        font-weight: bold;
+                    }
+                    
+                    .grand-total-value {
+                        color: <?php echo $primary_color; ?>;
+                        font-weight: bold;
+                    }
+                    
+                    /* Signature Area */
+                    .footer-content {
+                        clear: both;
+                        padding-top: 30px;
+                        position: relative;
+                        margin-bottom: 30px;
+                    }
+                    
+                    .signature-area {
+                        width: 50%;
+                        float: right;
+                        margin-bottom: 20px;
+                    }
+                    
+                    .signature-line {
+                        border-top: 1px solid<?php echo $text_color; ?>;
+                        padding-top: 8px;
+                        text-align: center;
+                        color: <?php echo $light_text_color; ?>;
+                        font-style: italic;
+                    }
+                    
+                    .customer-signature {
+                        margin-bottom: 5px;
+                        text-align: center;
+                    }
+                    
+                    .customer-signature img {
+                        max-width: 250px;
+                        max-height: 80px;
+                    }
+                    
+                    /* Notes and Terms */
+                    .notes-area {
+                        clear: both;
+                        padding-top: 20px;
+                        margin-top: 10px;
+                        font-size: 9pt;
+                        color: <?php echo $light_text_color; ?>;
+                        text-align: left;
+                        font-style: italic;
+                        padding-bottom: 20px;
+                    }
+                    
+                    .quote-terms-section {
+                        font-size: 9pt;
+                        color: <?php echo $text_color; ?>;
+                        margin-top: 10px;
+                        border-top: 1px solid<?php echo $border_color; ?>;
+                        padding-top: 10px;
+                        margin-bottom: 20px;
+                    }
+                    
+                    .quote-terms-section h3 {
+                        font-size: 10pt;
+                        font-weight: bold;
+                        margin-bottom: 8px;
+                        color: <?php echo $primary_color; ?>;
+                    }
+                    
+                    /* Attachments area */
+                    .attachments-area {
+                        margin-top: 20px;
+                        margin-bottom: 40px;
+                        font-size: 9pt;
+                        position: relative;
+                        clear: both;
+                        width: 100%;
+                    }
+                    
+                    .attachments-heading {
+                        color: <?php echo $primary_color; ?>;
+                        font-size: 12pt;
+                        margin-bottom: 10px;
+                        font-weight: bold;
+                    }
+                    
+                    .attachments-area ul {
+                        margin: 0;
+                        padding-left: 15px;
+                        columns: 2;
+                        column-gap: 20px;
+                        column-fill: balance;
+                    }
+                    
+                    .attachments-area li {
+                        margin-bottom: 5px;
+                        line-height: 1.3;
+                        break-inside: avoid;
+                        page-break-inside: avoid;
+                    }
+                    
+                    /* Bottom Area (Footer) */
+                    .page-bottom {
+                        background-color: <?php echo $primary_color; ?>;
+                        padding: 15px 10px;
+                        color: white;
+                        font-size: 9pt;
+                        text-align: center;
+                        position: fixed;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        width: 100%;
+                        box-sizing: border-box;
+                    }
+                    
+                    /* Helper Classes */
+                    .text-right {
+                        text-align: right;
+                    }
+                    
+                    .text-center {
+                        text-align: center;
+                    }
+                    
+                    .page-break {
+                        page-break-after: always;
+                    }
+                    
+                    .no-margin {
+                        margin: 0;
+                    }
+                    
+                    .no-padding {
+                        padding: 0;
+                    }
             </style>
         </head>
         <body>
@@ -776,8 +813,8 @@ class Quote_Manager_PDF_Generator_Raw
                 $attachments = get_post_meta($quote_id, '_quote_attachments', true);
                 if (is_array($attachments) && !empty($attachments)) :
                     ?>
-                    <div class="attachments-area" style="margin-top: 30px; font-size: 9pt;">
-                        <h3 style="color: <?php echo $primary_color; ?>; font-size: 10pt;"><?php _e('Attached Files', 'quote-manager-system-for-woocommerce'); ?></h3>
+                    <div class="attachments-area" >
+                        <h3 class="attachments-heading"><?php _e('Attached Files', 'quote-manager-system-for-woocommerce'); ?></h3>
                         <ul>
                             <?php foreach ($attachments as $file) : ?>
                                 <li><?php echo esc_html($file['filename']); ?></li>

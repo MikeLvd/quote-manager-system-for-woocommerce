@@ -452,7 +452,8 @@
                     type: 'POST',
                     data: {
                         action: 'quote_manager_search_customers',
-                        term: term
+                        term: term,
+                        security: $('#search_customers_nonce').val() // Add nonce
                     },
                     success: function(customers) {
                         handleCustomerResults(customers);

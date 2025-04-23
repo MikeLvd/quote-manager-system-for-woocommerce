@@ -60,6 +60,12 @@ You can choose from Media Library or insert a remote image URL.
 3. Internal pricing analysis table
 
 == Changelog ==
+= 1.8.2 =
+Bug Fixes & Improvements
+• Fixed some issues with the css styles on pdf export
+• Better security checks and nonces for customer search
+• Fixed some translation issues
+
 = 1.8.0 =
 New Feature
 • Added customer search ability and autofill the customer fields

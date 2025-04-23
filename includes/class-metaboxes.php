@@ -175,7 +175,7 @@ class Quote_Manager_Metaboxes
 
         // Address lines
         echo '<div class="quote-field">';
-        echo '<label for="customer_address" class="billing-label">' . $get_icon('address') . esc_html__('Address line 1', 'quote-manager-system-for-woocommerce') . '</label>';
+        echo '<label for="customer_address" class="billing-label">' . $get_icon('address') . esc_html__('Address', 'quote-manager-system-for-woocommerce') . '</label>';
         echo '<input type="text" class="quote-input" id="customer_address" name="customer_address" value="' . esc_attr($get_meta('customer_address')) . '" />';
         echo '</div>';
 
@@ -188,7 +188,7 @@ class Quote_Manager_Metaboxes
         echo '</div>';
 
         echo '<div class="quote-field-col">';
-        echo '<label for="customer_postcode" class="billing-label">' . $get_icon('postcode') . esc_html__('Postcode / ZIP', 'quote-manager-system-for-woocommerce') . '</label>';
+        echo '<label for="customer_postcode" class="billing-label">' . $get_icon('postcode') . esc_html__('Postcode', 'quote-manager-system-for-woocommerce') . '</label>';
         echo '<input type="text" class="quote-input" id="customer_postcode" name="customer_postcode" value="' . esc_attr($get_meta('customer_postcode')) . '" />';
         echo '</div>';
 
@@ -198,7 +198,7 @@ class Quote_Manager_Metaboxes
         echo '<div class="quote-field-row">';
 
         echo '<div class="quote-field-col">';
-        echo '<label for="customer_country" class="billing-label">' . $get_icon('country') . esc_html__('Country / Region', 'quote-manager-system-for-woocommerce') . '</label>';
+        echo '<label for="customer_country" class="billing-label">' . $get_icon('country') . esc_html__('Country', 'quote-manager-system-for-woocommerce') . '</label>';
         echo '<select class="quote-select" id="customer_country" name="customer_country">';
 
         $selected_country = $get_meta('customer_country') ?: 'GR';
@@ -210,7 +210,7 @@ class Quote_Manager_Metaboxes
         echo '</div>';
 
         echo '<div class="quote-field-col">';
-        echo '<label for="customer_state" class="billing-label">' . $get_icon('state') . esc_html__('State / County', 'quote-manager-system-for-woocommerce') . '</label>';
+        echo '<label for="customer_state" class="billing-label">' . $get_icon('state') . esc_html__('State', 'quote-manager-system-for-woocommerce') . '</label>';
 
         $selected_country = $get_meta('customer_country') ?: 'GR';
         $selected_state = $get_meta('customer_state');
@@ -277,7 +277,7 @@ class Quote_Manager_Metaboxes
 
         // Address lines
         echo '<div class="quote-field">';
-        echo '<label for="shipping_address" class="shipping-label">' . $get_icon('address') . esc_html__('Address line 1', 'quote-manager-system-for-woocommerce') . '</label>';
+        echo '<label for="shipping_address" class="shipping-label">' . $get_icon('address') . esc_html__('Address', 'quote-manager-system-for-woocommerce') . '</label>';
         echo '<input type="text" class="quote-input" id="shipping_address" name="shipping_address" value="' . esc_attr($get_meta('shipping_address')) . '" />';
         echo '</div>';
 
@@ -290,7 +290,7 @@ class Quote_Manager_Metaboxes
         echo '</div>';
 
         echo '<div class="quote-field-col">';
-        echo '<label for="shipping_postcode" class="shipping-label">' . $get_icon('postcode') . esc_html__('Postcode / ZIP', 'quote-manager-system-for-woocommerce') . '</label>';
+        echo '<label for="shipping_postcode" class="shipping-label">' . $get_icon('postcode') . esc_html__('Postcode', 'quote-manager-system-for-woocommerce') . '</label>';
         echo '<input type="text" class="quote-input" id="shipping_postcode" name="shipping_postcode" value="' . esc_attr($get_meta('shipping_postcode')) . '" />';
         echo '</div>';
 
@@ -300,7 +300,7 @@ class Quote_Manager_Metaboxes
         echo '<div class="quote-field-row">';
 
         echo '<div class="quote-field-col">';
-        echo '<label for="shipping_country" class="shipping-label">' . $get_icon('country') . esc_html__('Country / Region', 'quote-manager-system-for-woocommerce') . '</label>';
+        echo '<label for="shipping_country" class="shipping-label">' . $get_icon('country') . esc_html__('Country', 'quote-manager-system-for-woocommerce') . '</label>';
         echo '<select class="quote-select" id="shipping_country" name="shipping_country">';
 
         $selected_country = $get_meta('shipping_country') ?: 'GR';
@@ -312,7 +312,7 @@ class Quote_Manager_Metaboxes
         echo '</div>';
 
         echo '<div class="quote-field-col">';
-        echo '<label for="shipping_state" class="shipping-label">' . $get_icon('state') . esc_html__('State / County', 'quote-manager-system-for-woocommerce') . '</label>';
+        echo '<label for="shipping_state" class="shipping-label">' . $get_icon('state') . esc_html__('State', 'quote-manager-system-for-woocommerce') . '</label>';
 
         $selected_country = $get_meta('shipping_country') ?: 'GR';
         $selected_state = $get_meta('shipping_state');
@@ -350,6 +350,7 @@ class Quote_Manager_Metaboxes
         echo '<div class="customer-search-wrap">';
         echo '<input type="text" id="search-customer" class="customer-search-input" placeholder="' . esc_attr__('Search customers by name, email or company...', 'quote-manager-system-for-woocommerce') . '" autocomplete="off" />';
         echo '<div id="customer-suggestions" class="customer-suggestions"></div>';
+        echo wp_nonce_field('quote_manager_search_customers', 'search_customers_nonce', false, false);
         echo '</div>';
         echo '</div>';
 

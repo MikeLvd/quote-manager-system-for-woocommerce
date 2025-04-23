@@ -178,6 +178,7 @@ class Quote_Manager_System_For_Woocommerce_Admin
                     'attachmentDeleteNonce' => wp_create_nonce('quote_attachment_delete'),
                     'statesNonce' => wp_create_nonce('quote_manager_get_states'),
                     'createCustomerNonce' => wp_create_nonce('create_customer_from_quote'),
+					'searchCustomersNonce' => wp_create_nonce('quote_manager_search_customers'),
 
                     // Add translations
                     'i18n' => array(
