@@ -113,13 +113,18 @@ class Quote_Manager_Ajax_Handlers
                 $image_url = function_exists('wc_placeholder_img_src') ? wc_placeholder_img_src() : '';
             }
 
+            // Get the product cost
+            $product_id = $product->get_id();
+            $product_cost = get_post_meta($product_id, '_wc_cog_cost', true);
+            
             $results[] = array(
-                'id' => $product->get_id(),
+                'id' => $product_id,
                 'title' => $title,
                 'sku' => $product->get_sku(),
                 'price' => wc_get_price_including_tax($product), // final price without VAT
                 'regular_price' => wc_get_price_including_tax($product, array('price' => $product->get_regular_price())), // regular price without VAT
                 'image' => $image_url,
+                'purchase_price' => $product_cost, // Add the cost price from meta
             );
         }
 

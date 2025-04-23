@@ -852,7 +852,7 @@ input.price-error {
 
 /* Email tracking column in list table */
 .column-email_tracking .quote-tracking-icon {
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1;
     display: inline-block;
     cursor: default;

@@ -1214,10 +1214,6 @@ class Quote_Manager_Metaboxes
                 <!-- Email Subject -->
                 <div class="form-group">
                     <label for="quote_email_message"><strong>Message:</strong></label>
-                    <p class="description">
-                        Use <code>{{quote_view_url}}</code> to include a link where customers can view and respond to
-                        this quote.
-                    </p>
                     <?php
                     wp_editor(
                         $default_message,
@@ -1230,7 +1226,7 @@ class Quote_Manager_Metaboxes
                             'quicktags' => false,
                         ]
                     );
-                    ?>
+                    ?>					
                     <p class="description">
                         You can use placeholders:
                         <code>{{customer_first_name}}</code>,
@@ -1249,7 +1245,7 @@ class Quote_Manager_Metaboxes
                 <div class="form-group">
                     <strong>📎 <?php _e('Attachments:', 'quote-manager-system-for-woocommerce'); ?></strong>
                     <ul class="email-attachments-list">
-                        <li><code>QUOTE_<?php echo esc_attr($post->ID); ?>.pdf</code>
+                        <li><code>PROSFORA_#<?php echo esc_attr($post->ID); ?>.pdf</code>
                             (<?php _e('Quote PDF', 'quote-manager-system-for-woocommerce'); ?>)
                         </li>
 

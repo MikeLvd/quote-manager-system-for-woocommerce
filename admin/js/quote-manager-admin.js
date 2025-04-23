@@ -648,6 +648,7 @@
                             data-sku="${safeSku}"
                             data-price="${product.price}"
                             data-regular_price="${product.regular_price}"
+                            data-purchase_price="${product.purchase_price || ''}"
                             data-image="${product.image}">
                             <img src="${product.image}" />
                             <span>${safeTitle}</span>
@@ -666,15 +667,17 @@
          */
         handleProductSelect: function (e) {
             const $item = $(e.currentTarget);
+            
             const productData = {
                 id: $item.data('id'),
                 image: $item.data('image'),
                 title: $item.data('title'),
                 sku: $item.data('sku'),
                 price: $item.data('price'),
-                regular_price: $item.data('regular_price')
+                regular_price: $item.data('regular_price'),
+                purchase_price: $item.data('purchase_price')
             };
-
+        
             this.addProductRow(productData);
             this.elements.$suggestions.slideUp().empty();
             this.elements.$search.val('');
@@ -871,7 +874,12 @@
             const title = product.title || '';
             const sku = product.sku || '';
             const id = product.id || '';
-
+            
+            // Extract purchase price
+            const purchasePrice = (typeof product.purchase_price !== 'undefined' && product.purchase_price !== null && product.purchase_price !== '')
+                ? parseFloat(product.purchase_price)
+                : '';
+        
             const listPrice = (typeof product.regular_price !== 'undefined')
                 ? parseFloat(product.regular_price).toFixed(2)
                 : '';
@@ -887,7 +895,7 @@
                     discount = discPercent.toFixed(2);
                 }
             }
-
+        
             const finalInclPrice = finalExPrice
                 ? (parseFloat(finalExPrice) * (1 + this.config.taxRate)).toFixed(2)
                 : '';
@@ -913,7 +921,7 @@
                     </td>
                     <td class="quote-td-title"><input type="text" class="quote-input" name="quote_products[${index}][title]" value="${safeTitle}" /></td>
                     <td class="quote-td-sku"><input type="text" class="quote-input" name="quote_products[${index}][sku]" value="${safeSku}" /></td>
-                    <td class="quote-td-purchase"><input type="text" class="quote-input" name="quote_products[${index}][purchase_price]" value="" placeholder="${quoteManagerData.i18n.cost}" /></td>
+                    <td class="quote-td-purchase"><input type="text" class="quote-input" name="quote_products[${index}][purchase_price]" value="${purchasePrice ? this.formatPrice(purchasePrice) : ''}" placeholder="${quoteManagerData.i18n.cost}" /></td>
                     <td class="quote-td-listprice"><input type="text" class="quote-input" name="quote_products[${index}][list_price]" value="${formattedListPrice}" /></td>
                     <td class="quote-td-discount"><input type="text" class="quote-input" name="quote_products[${index}][discount]" value="${formattedDiscount}" /></td>
                     <td class="quote-td-final-excl"><input type="text" class="quote-input" name="quote_products[${index}][final_price_excl]" value="${formattedFinalExPrice}" /></td>
