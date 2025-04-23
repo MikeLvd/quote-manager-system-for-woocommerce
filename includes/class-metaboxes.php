@@ -344,6 +344,15 @@ class Quote_Manager_Metaboxes
 
         // Add "Save as Customer" button with WooCommerce styling
         echo '<div class="save-as-customer-container">';
+		
+        // Add customer search field
+        echo '<div class="search-customer-field">';
+        echo '<div class="customer-search-wrap">';
+        echo '<input type="text" id="search-customer" class="customer-search-input" placeholder="' . esc_attr__('Search customers by name, email or company...', 'quote-manager-system-for-woocommerce') . '" autocomplete="off" />';
+        echo '<div id="customer-suggestions" class="customer-suggestions"></div>';
+        echo '</div>';
+        echo '</div>';
+
         echo '<button type="button" id="save-as-customer-btn" class="button button-primary save-customer-button">' .
             '<span class="dashicons dashicons-admin-users"></span> ' .
             esc_html__('Save as New Customer', 'quote-manager-system-for-woocommerce') .

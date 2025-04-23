@@ -184,10 +184,139 @@
     color: #46b450; /* WP green color for shipping labels */
 }
 
+/* Customer search field */
+.save-as-customer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.search-customer-field {
+    position: relative;
+    flex: 1;
+    margin-right: 20px;
+}
+
+.customer-search-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.customer-search-input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Improved Customer search dropdown styling */
+.customer-suggestions {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.customer-list {
+    list-style: none;
+    margin: 5px;
+    padding: 5px;
+}
+
+.customer-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.customer-item:hover {
+    background-color: #f0f7fb;
+}
+
+.customer-item:last-child {
+    border-bottom: none;
+}
+
+.customer-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #e1f5fe;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: #0288d1;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.customer-info {
+    flex: 1;
+}
+
+.customer-name {
+    font-weight: 600;
+    color: #23282d;
+    display: block;
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+
+.customer-details {
+    display: flex;
+    font-size: 12px;
+    color: #50575e;
+}
+
+.customer-company {
+    margin-right: 10px;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.customer-email {
+    color: #135e96;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Add hover effects */
+.customer-item:hover .customer-name {
+    color: #2271b1;
+}
+
+/* Empty state for no results */
+.no-customers-found {
+    padding: 15px;
+    text-align: center;
+    color: #646970;
+    font-style: italic;
+}
+
 /* Save as Customer button styling */
 .save-as-customer-container {
     margin-top: 15px;
-    text-align: right;
+    text-align: left;
     clear: both;
     padding-top: 10px;
     border-top: 1px solid #eee;

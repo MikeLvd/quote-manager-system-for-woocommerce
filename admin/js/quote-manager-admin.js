@@ -424,6 +424,174 @@
                 });
             });
 
+
+             // Customer search functionality
+            // Variables for customer search
+            let customerTypingTimer = null;
+            const customerDoneTypingInterval = 300; // ms
+            
+            // Customer search functionality - real time
+            $('#search-customer').on('keyup', function(e) {
+                clearTimeout(customerTypingTimer);
+                
+                const term = $(this).val().trim();
+                if (term.length < 2) {
+                    $('#customer-suggestions').slideUp().empty();
+                    return;
+                }
+                
+                customerTypingTimer = setTimeout(function() {
+                    performCustomerSearch(term);
+                }, customerDoneTypingInterval);
+            });
+            
+            // Function to perform customer search via AJAX
+            function performCustomerSearch(term) {
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'quote_manager_search_customers',
+                        term: term
+                    },
+                    success: function(customers) {
+                        handleCustomerResults(customers);
+                    },
+                    error: function() {
+                        $('#customer-suggestions').slideUp().empty();
+                    }
+                });
+            }
+            
+            // Handle customer search results
+            function handleCustomerResults(customers) {
+                const $suggestions = $('#customer-suggestions');
+                
+                if (customers && customers.length) {
+                    let html = '<ul class="customer-list">';
+                    
+                    customers.forEach(function(customer) {
+                        // Get customer details
+                        const firstName = customer.data.first_name || '';
+                        const lastName = customer.data.last_name || '';
+                        const fullName = (firstName + ' ' + lastName).trim();
+                        const company = customer.data.company || '';
+                        const email = customer.data.email || '';
+                        
+                        // Create avatar with initials
+                        let initials = '';
+                        if (firstName) initials += firstName.charAt(0).toUpperCase();
+                        if (lastName) initials += lastName.charAt(0).toUpperCase();
+                        if (!initials) initials = '?';
+                        
+                        // Encode the customer data as an attribute
+                        const customerDataAttr = encodeURIComponent(JSON.stringify(customer.data));
+                        
+                        html += `
+                            <li class="customer-item" data-customer="${customerDataAttr}">
+                                <div class="customer-avatar">${initials}</div>
+                                <div class="customer-info">
+                                    <span class="customer-name">${fullName || 'Unknown Customer'}</span>
+                                    <div class="customer-details">
+                                        ${company ? '<span class="customer-company">' + company + '</span>' : ''}
+                                        <span class="customer-email">${email}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                    });
+                    
+                    html += '</ul>';
+                    $suggestions.html(html).slideDown();
+                } else {
+                    $suggestions.html('<div class="no-customers-found">No customers found matching your search</div>').slideDown();
+                    
+                    // Hide after a short delay if no results
+                    setTimeout(function() {
+                        $suggestions.slideUp();
+                    }, 3000);
+                }
+            }
+            
+            // Handle customer selection
+            $(document).on('click', '.customer-item', function() {
+                // Get the customer data
+                const customerDataEncoded = $(this).data('customer');
+                const customerData = JSON.parse(decodeURIComponent(customerDataEncoded));
+                
+                // Fill in the billing fields
+                $('#customer_first_name').val(customerData.first_name);
+                $('#customer_last_name').val(customerData.last_name);
+                $('#customer_company').val(customerData.company);
+                $('#customer_address').val(customerData.address);
+                $('#customer_city').val(customerData.city);
+                $('#customer_postcode').val(customerData.postcode);
+                $('#customer_email').val(customerData.email);
+                $('#customer_phone').val(customerData.phone);
+                
+                // Set country and trigger change event to load states
+                if (customerData.country) {
+                    $('#customer_country').val(customerData.country).trigger('change');
+                    
+                    // Add small delay to allow states to load before setting state
+                    setTimeout(function() {
+                        if (customerData.state) {
+                            if ($('#customer_state').is('select')) {
+                                $('#customer_state').val(customerData.state);
+                            } else {
+                                $('#customer_state').val(customerData.state);
+                            }
+                        }
+                    }, 500);
+                }
+            /*    
+                // Fill shipping fields if available (for the quote purpose this its not needed, as the admin can hit the Copy billing address button)
+                if (customerData.shipping_first_name || customerData.shipping_last_name) {
+                    $('#shipping_first_name').val(customerData.shipping_first_name);
+                    $('#shipping_last_name').val(customerData.shipping_last_name);
+                    $('#shipping_company').val(customerData.shipping_company);
+                    $('#shipping_address').val(customerData.shipping_address);
+                    $('#shipping_city').val(customerData.shipping_city);
+                    $('#shipping_postcode').val(customerData.shipping_postcode);
+                    $('#shipping_phone').val(customerData.shipping_phone);
+                    
+                    // Set shipping country and state
+                    if (customerData.shipping_country) {
+                        $('#shipping_country').val(customerData.shipping_country).trigger('change');
+                        
+                        // Add small delay for states
+                        setTimeout(function() {
+                            if (customerData.shipping_state) {
+                                if ($('#shipping_state').is('select')) {
+                                    $('#shipping_state').val(customerData.shipping_state);
+                                } else {
+                                    $('#shipping_state').val(customerData.shipping_state);
+                                }
+                            }
+                        }, 500);
+                    }
+                }
+            */    
+                // Hide the suggestions
+                $('#customer-suggestions').slideUp().empty();
+                
+                // Clear the search input
+                $('#search-customer').val('');
+                
+                // Show success message
+                const $status = $('<div class="notice notice-success inline" style="margin:8px 0;padding:6px 12px;"><p>✓ Customer data loaded successfully</p></div>')
+                    .insertAfter('#search-customer')
+                    .delay(3000)
+                    .fadeOut(500, function() { $(this).remove(); });
+            });
+            
+            // Close customer suggestions when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.customer-search-wrap').length) {
+                    $('#customer-suggestions').slideUp();
+                }
+            });
+
             // Save as customer button
             $('#save-as-customer-btn').on('click', function () {
                 var $button = $(this);

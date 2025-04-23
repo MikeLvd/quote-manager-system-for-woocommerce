@@ -169,6 +169,105 @@ class Quote_Manager_Ajax_Handlers
         }
     }
 
+
+/**
+ * Search for existing WooCommerce customers - real-time version
+ */
+public function search_customers() {
+    // Check permissions
+    if (!current_user_can('manage_woocommerce')) {
+        wp_send_json_error(['message' => __('Access denied', 'quote-manager-system-for-woocommerce')]);
+    }
+
+    // Get and sanitize search term
+    $term = isset($_POST['term']) ? sanitize_text_field(wp_unslash($_POST['term'])) : '';
+    if (empty($term) || strlen($term) < 2) {
+        wp_send_json([]);
+    }
+
+    // Prepare the search - use direct DB query for better performance
+    global $wpdb;
+    
+    // Escape the search term for SQL
+    $like = '%' . $wpdb->esc_like($term) . '%';
+    
+    // Get users by email, name, or meta values
+    $sql = $wpdb->prepare(
+        "SELECT DISTINCT u.ID 
+        FROM {$wpdb->users} u 
+        LEFT JOIN {$wpdb->usermeta} um1 ON (u.ID = um1.user_id AND um1.meta_key = 'billing_email')
+        LEFT JOIN {$wpdb->usermeta} um2 ON (u.ID = um2.user_id AND um2.meta_key = 'billing_first_name')
+        LEFT JOIN {$wpdb->usermeta} um3 ON (u.ID = um3.user_id AND um3.meta_key = 'billing_last_name')
+        LEFT JOIN {$wpdb->usermeta} um4 ON (u.ID = um4.user_id AND um4.meta_key = 'billing_company')
+        LEFT JOIN {$wpdb->usermeta} um5 ON (u.ID = um5.user_id AND um5.meta_key = 'billing_phone')
+        WHERE 
+            u.user_email LIKE %s OR 
+            um1.meta_value LIKE %s OR
+            um2.meta_value LIKE %s OR 
+            um3.meta_value LIKE %s OR
+            um4.meta_value LIKE %s OR
+            um5.meta_value LIKE %s OR
+            CONCAT(um2.meta_value, ' ', um3.meta_value) LIKE %s
+        LIMIT 10",
+        $like, $like, $like, $like, $like, $like, $like
+    );
+    
+    $user_ids = $wpdb->get_col($sql);
+    $results = array();
+
+    // Process each user
+    if (!empty($user_ids)) {
+        foreach ($user_ids as $user_id) {
+            // Get user object
+            $user = get_userdata($user_id);
+            if (!$user) continue;
+            
+            // Check if user has customer role or admin role
+            if (!in_array('customer', $user->roles) && !in_array('administrator', $user->roles)) {
+                continue;
+            }
+            
+            // Get user meta
+            $first_name = get_user_meta($user_id, 'billing_first_name', true);
+            $last_name = get_user_meta($user_id, 'billing_last_name', true);
+            $company = get_user_meta($user_id, 'billing_company', true);
+            $email = $user->user_email;
+            
+            // Format data for frontend
+            $results[] = array(
+                'id' => $user_id,
+                'data' => array(
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'company' => $company,
+                    'address' => get_user_meta($user_id, 'billing_address_1', true),
+                    'city' => get_user_meta($user_id, 'billing_city', true),
+                    'postcode' => get_user_meta($user_id, 'billing_postcode', true),
+                    'country' => get_user_meta($user_id, 'billing_country', true),
+                    'state' => get_user_meta($user_id, 'billing_state', true),
+                    'phone' => get_user_meta($user_id, 'billing_phone', true),
+                    'email' => $email,
+					
+					/*
+					// (for the quote purpose this its not needed, as the admin can hit the Copy billing address button)
+                    'shipping_first_name' => get_user_meta($user_id, 'shipping_first_name', true),
+                    'shipping_last_name' => get_user_meta($user_id, 'shipping_last_name', true),
+                    'shipping_company' => get_user_meta($user_id, 'shipping_company', true),
+                    'shipping_address' => get_user_meta($user_id, 'shipping_address_1', true),
+                    'shipping_city' => get_user_meta($user_id, 'shipping_city', true),
+                    'shipping_postcode' => get_user_meta($user_id, 'shipping_postcode', true),
+                    'shipping_country' => get_user_meta($user_id, 'shipping_country', true),
+                    'shipping_state' => get_user_meta($user_id, 'shipping_state', true),
+                    'shipping_phone' => get_user_meta($user_id, 'shipping_phone', true),
+					*/
+                )
+            );
+        }
+    }
+
+    wp_send_json($results);
+}
+
     /**
      * Create a new WooCommerce customer from quote data
      */

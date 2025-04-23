@@ -156,6 +156,7 @@ class Quote_Manager_System_For_Woocommerce
         $this->loader->add_action('wp_ajax_quote_manager_upload_attachment', $ajax, 'upload_attachment');
         $this->loader->add_action('wp_ajax_quote_delete_attachment', $ajax, 'delete_attachment');
         $this->loader->add_action('wp_ajax_quote_manager_get_states', $ajax, 'get_states');
+		$this->loader->add_action('wp_ajax_quote_manager_search_customers', $ajax, 'search_customers');
         $this->loader->add_action('wp_ajax_quote_manager_create_customer', $ajax, 'create_customer_from_quote');
         $this->loader->add_action('wp_ajax_quote_manager_update_status', $ajax, 'update_quote_status');
         $this->loader->add_action('wp_ajax_quote_manager_check_expired', $ajax, 'check_expired_quotes');
