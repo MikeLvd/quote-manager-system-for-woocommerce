@@ -1,66 +1,127 @@
-# 🧾 Quote Manager System For WooCommerce
-
-A powerful custom WooCommerce plugin to generate detailed product offers for your clients, including internal pricing analysis and advanced price handling.
-
----
-
-## ✨ Features
-
-- 🔍 **AJAX Product Search** by title or SKU
-- ✍️ **Manual Product Entry** with full price controls
-- 🧾 **Dynamic Pricing Fields**:
-- 📄 **Send Quote to customer via email with predefined email message**:
-    - List Price (Excl. VAT)
-    - Discount (%)
-    - Final Price (Excl. VAT / Incl. VAT)
-    - Total Row Calculation
-- 📥 **VAT toggle option** (include/exclude in quote)
-- 📸 **Image from Media Library or URL**
-- 📄 **Internal Information Panel** with automatic calculation of:
-    - Cost (with or without VAT)
-    - Markup (%)
-    - Margin (%)
-    - Profit summary per item and total
-- 📤 Save quotes in admin with all quote data
-- 📄 Ready for PDF/print output
+# 🧾 Quote Manager System for WooCommerce
+A custom WooCommerce plugin designed to streamline the process of creating, managing, and sharing product quotes with your clients. Empower your business with granular pricing controls, advanced internal metrics, and easy quote generation.
 
 ---
 
-## 🚀 Installation
+## ✨ Key Features
 
-1. Download or clone this repository.
-2. Upload the plugin folder to your `/wp-content/plugins/` directory.
-3. Activate it from the **Plugins > Installed Plugins** section in WordPress admin.
-4. Go to **Customer Quotes > Add New** to create your first quote.
+- 🔍 **AJAX Product Search**  
+  Quickly search products by their title or SKU for faster quote creation.
+
+- ✍️ **Manual Product Entry**  
+  Add custom products or services with full flexibility over pricing.
+
+- 🧾 **Dynamic Pricing Options**  
+  Easily manage and display:
+  - List Price (Excl. VAT)
+  - Discounts (% or fixed)
+  - Final Price (Excl. VAT / Incl. VAT)
+  - Total Row Calculations.
+
+- 📥 **VAT Toggle**  
+  An intuitive toggle to include or exclude VAT rates in quotes.
+
+- 📸 **Custom Product Images**  
+  Add images via WordPress Media Library or from external URLs for polished and professional quotes.
+
+- 📄 **Detailed Internal Metrics**  
+  View internal-only data, including:
+  - Product Cost (Excl. & Incl. VAT)
+  - Markup (%)
+  - Margin (%)
+  - Per-item and total profit summary.
+
+- 📧 **Email Integration**  
+  Send quotes directly to customers via email with customizable email templates.
+
+- 📤 **Save and Revisit Quotes**  
+  Every quote is saved in the system for easy access and retrieval.
+
+- 📄 **PDF & Print Output**  
+  Generate professional and ready-to-print PDFs for quotes.
+
+---
+
+## 🚀 Installation Guide
+
+1. **Download or Clone**  
+   Download the plugin from this repository or clone it using Git.
+
+2. **Upload Files**  
+   Upload the plugin folder to your `/wp-content/plugins/` directory.
+
+3. **Activate the Plugin**  
+   Go to **Plugins > Installed Plugins** in your WordPress admin panel and activate the plugin.
+
+4. **Start Creating Quotes**  
+   Navigate to **Customer Quotes > Add New** to build your first quote.
 
 ---
 
 ## 🛠️ Requirements
 
-- WordPress 5.6+
-- WooCommerce 8.0+
-- PHP 7.4+
+- WordPress 5.6 or higher
+- WooCommerce 8.0 or higher
+- PHP 7.4 or higher (PHP 8.x recommended for better performance)
 
 ---
 
-## 🧪 Development Notes
+## 🧪 Development and Code Insights
 
-- The plugin is fully extensible and built following WordPress and WooCommerce standards.
-- Data is saved as meta on a custom post type called `customer_quote`.
-- Uses `wc_get_price_including_tax()` and product meta `_wc_cog_cost` for accurate profit metrics.
+- **Custom Post Type**  
+  Quotes are built using a custom post type called `customer_quote`, allowing seamless integration with WordPress infrastructure.
+
+- **Data Persistence**  
+  Quote data is stored in post meta, ensuring compatibility with WordPress's core database structure.
+
+- **Tax Calculation**  
+  Utilizes WooCommerce helper functions like `wc_get_price_including_tax()` to ensure pricing accuracy. Cost price adjustments and profit margin calculations use the `_wc_cog_cost` meta field.
+
+- **Standards and Extensibility**  
+  Adheres to WordPress and WooCommerce coding standards, enabling easy extension and customization.
+
+### 🔧 Potential Code Enhancements
+- **PDF Library Options**  
+  Explore better alternatives to existing libraries (e.g., [TCPDF](https://tcpdf.org) or [DOMPDF](https://github.com/dompdf/dompdf)) for improved PDF generation performance and styling.
+
+- **Hooks and Filters**  
+  Expand the use of WordPress `actions` and `filters` to let developers customize workflows (e.g., modifying email content or dynamic fields).
+
+- **AJAX Enhancement**  
+  Implement debounce or rate-limiting mechanisms to optimize AJAX product searches for large WooCommerce stores.
+
+- **Customizable Quote Templates**  
+  Provide options for users to upload or customize their quote designs (e.g., adding logos, different styles, etc.).
+
+- **REST API Support**  
+  Add REST API endpoints to allow integrations with third-party systems.
+
+- **Multilingual Compatibility**  
+  Integrate multilingual support with plugins like WPML or Polylang.
 
 ---
 
-## 📌 Roadmap / To-do
-- [ ] Add metabox for predefined quote terms and conditions with edit ability
-- [ ] Add quote version mechanism for tracking quote changes like products removed/added
-- [ ] Add an quote status mechanism (e.g., draft, sent, accepted, rejected) with ability for customer to accept/reject via custom link and signature
+## 📌 Roadmap & Future Enhancements
+
+- 🌐 **Multilingual Support**  
+  Add native integration for translations in customer-facing quotes.
+
+- 🤝 **Bulk Quote Generation**  
+  Enable creation of quotes for multiple customers simultaneously.
+
+- 📜 **Advanced Reporting**  
+  Build reporting dashboards to view revenue and performance based on saved quotes.
+
+- 🔄 **Integration with WooCommerce Orders**  
+  Add the ability to convert a customer quote directly into a WooCommerce order.
+
+- 🖼️ **Enhanced Template Builder**  
+  Develop a drag-and-drop builder for customizing the look and feel of quotes.
 
 ---
 
 ## 🧑‍💻 Author
 
-Developed by [Mike Lvd]
+Developed with care by **[Mike Lvd]**. For inquiries or support, feel free to reach out.
 
 ---
-
