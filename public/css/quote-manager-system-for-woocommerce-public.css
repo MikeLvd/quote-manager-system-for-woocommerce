@@ -204,8 +204,12 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Message containers for already accepted/rejected/expired quotes */
@@ -336,15 +340,15 @@
         padding: 20px;
         margin: 20px;
     }
-    
+
     .quote-actions {
         flex-direction: column;
     }
-    
+
     .quote-title {
         font-size: 24px;
     }
-    
+
     .quote-subtitle {
         font-size: 16px;
     }

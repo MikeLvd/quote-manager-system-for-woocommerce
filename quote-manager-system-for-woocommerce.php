@@ -6,7 +6,7 @@
  * Plugin Name:       Quote Manager System For WooCommerce
  * Plugin URI:        https://github.com/MikeLvd/quote-manager-system-for-woocommerce
  * Description:       A custom WordPress plugin that allows you to create detailed product offers inside the WooCommerce backend. Ideal for retail stores, B2B sales, and client advanced quotations.
- * Version:           1.6.5
+ * Version:           1.6.9
  * Author:            Mike Lvd
  * Author URI:        https://goldenbath.gr/
  * Requires at least: 5.9
@@ -22,14 +22,16 @@
  */
 
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
-    die;
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
+
+if (!defined('ABSPATH')) {
+    exit;
 }
 
 /**
  * Currently plugin version.
  */
-define('QUOTE_MANAGER_VERSION', '1.6.5');
+define('QUOTE_MANAGER_VERSION', '1.6.9');
 define('QUOTE_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('QUOTE_MANAGER_URL', plugin_dir_url(__FILE__));
 
@@ -37,6 +39,7 @@ define('QUOTE_MANAGER_URL', plugin_dir_url(__FILE__));
  * Load the Activator class for activation tasks
  */
 require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce-activator.php';
+require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce-deactivator.php';
 
 /**
  * Register activation hook
@@ -45,14 +48,15 @@ register_activation_hook(__FILE__, array('Quote_Manager_System_For_Woocommerce_A
 
 // Register deactivation hook
 register_deactivation_hook(__FILE__, array('Quote_Manager_System_For_Woocommerce_Deactivator', 'deactivate'));
+
 /**
  * Check for WooCommerce dependency
  */
 add_action('plugins_loaded', 'quote_manager_check_woocommerce_dependency');
 
-add_action('before_woocommerce_init', function() {
-    if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
-        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+add_action('before_woocommerce_init', function () {
+    if (class_exists(FeaturesUtil::class)) {
+        FeaturesUtil::declare_compatibility(
             'custom_order_tables',
             __FILE__,
             true
@@ -65,7 +69,8 @@ add_action('before_woocommerce_init', function() {
  */
 add_action('admin_init', 'quote_manager_ensure_directories_exist');
 
-function quote_manager_ensure_directories_exist() {
+function quote_manager_ensure_directories_exist()
+{
     // Only run once per session
     if (!get_transient('quote_manager_directories_checked')) {
         Quote_Manager_System_For_Woocommerce_Activator::ensure_directories();
@@ -74,7 +79,8 @@ function quote_manager_ensure_directories_exist() {
     }
 }
 
-function quote_manager_check_woocommerce_dependency() {
+function quote_manager_check_woocommerce_dependency()
+{
     // Check if WooCommerce is active
     $is_woocommerce_active = class_exists('WooCommerce') || in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')));
 
@@ -93,7 +99,7 @@ function quote_manager_check_woocommerce_dependency() {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
             deactivate_plugins(plugin_basename(__FILE__));
 
-            // Remove "Plugin activated" notice
+            // Remove the "Plugin activated" notice
             if (isset($_GET['activate'])) {
                 unset($_GET['activate']);
             }
@@ -101,13 +107,14 @@ function quote_manager_check_woocommerce_dependency() {
     } else {
         // WooCommerce is active - load plugin functionality
         require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce.php';
-        
+
         // Run the plugin
-        function run_quote_manager_system_for_woocommerce() {
+        function run_quote_manager_system_for_woocommerce()
+        {
             $plugin = new Quote_Manager_System_For_Woocommerce();
             $plugin->run();
         }
-        
+
         run_quote_manager_system_for_woocommerce();
     }
 }

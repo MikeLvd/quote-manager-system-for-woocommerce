@@ -2,7 +2,7 @@
 Plugin Name:       Quote Manager System For WooCommerce
 Plugin URI:        https://github.com/MikeLvd/quote-manager-system-for-woocommerce
 Description:       A custom WordPress plugin that allows you to create detailed product offers inside the WooCommerce backend. Ideal for retail stores, B2B sales, and client advanced quotations.
-Version:           1.6.5
+Version:           1.6.9
 Author:            Mike Lvd
 Author URI:        https://goldenbath.gr/
 Requires at least: 5.9
@@ -60,6 +60,41 @@ You can choose from Media Library or insert a remote image URL.
 3. Internal pricing analysis table
 
 == Changelog ==
+
+= 1.6.9 =
+Bug Fixes & Improvements
+
+• Fixed: When a quote is signed, it now overwrites the original PDF instead of creating a separate file, reducing directory size
+• Removed: Eliminated creation of backup PDF files to improve storage efficiency
+• Added: Automatic deletion of PDF files when a quote is rejected
+• Security: Prevented access to PDF files for rejected quotes
+• Reformated the code files for better readability and maintainability
+
+Signature Handling
+
+• Fixed: Customer signatures now properly display in PDFs
+• Improved: Better positioning of signature in PDF to prevent overlap with terms section
+• Enhanced: Signature section styling for better readability
+
+URL Handling
+
+• Fixed: 404 error when accessing quote-response page after accepting a quote
+• Improved: Quote response page now properly handles all status types
+• Enhanced: Endpoint registration to ensure proper URL routing
+
+Security Enhancements
+
+• Added: Status checking to prevent download of rejected quotes
+• Fixed: Proper cleanup of temporary signature flags
+• Improved: PDF access controls based on quote status
+• Added direct checks on all php files
+
+Frontend Experience
+
+• Improved: Better messaging for rejected quotes
+• Updated: View quote page now hides download buttons for rejected quotes
+• Enhanced: More consistent user experience throughout quote workflow
+
 = 1.6.5 =
 * Started implementing the quote status feature with automated accept/reject function
 

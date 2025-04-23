@@ -13,62 +13,16 @@
  * @subpackage Quote_Manager_System_For_Woocommerce/includes
  */
 
+// If this file is called directly, abort.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * The core plugin class.
  */
-class Quote_Manager_System_For_Woocommerce {
-
-    /**
-     * The loader that's responsible for maintaining and registering all hooks that power
-     * the plugin.
-     *
-     * @since    1.0.0
-     * @access   protected
-     * @var      Quote_Manager_System_For_Woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
-     */
-    protected $loader;
-
-    /**
-     * The unique identifier of this plugin.
-     *
-     * @since    1.0.0
-     * @access   protected
-     * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-     */
-    protected $plugin_name;
-
-    /**
-     * The current version of the plugin.
-     *
-     * @since    1.0.0
-     * @access   protected
-     * @var      string    $version    The current version of the plugin.
-     */
-    protected $version;
-    
-    /**
-     * Define the core functionality of the plugin.
-     */
-    public function __construct() {
-        if (defined('QUOTE_MANAGER_VERSION')) {
-            $this->version = QUOTE_MANAGER_VERSION;
-        } else {
-            $this->version = '1.0.0';
-        }
-        $this->plugin_name = 'quote-manager-system-for-woocommerce';
-        
-        // Ensure required directories exist before proceeding
-        require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce-activator.php';
-        Quote_Manager_System_For_Woocommerce_Activator::ensure_directories();
-        
-        $this->load_dependencies();
-        $this->set_locale();
-        $this->define_admin_hooks();
-        $this->define_public_hooks();
-        
-        // Add email tracking handler
-        $this->setup_email_tracking();
-    }
+class Quote_Manager_System_For_Woocommerce
+{
 
     /**
      * Quote statuses
@@ -78,54 +32,70 @@ class Quote_Manager_System_For_Woocommerce {
     const STATUS_ACCEPTED = 'accepted';
     const STATUS_REJECTED = 'rejected';
     const STATUS_EXPIRED = 'expired';
-    
     /**
-     * Get all available quote statuses
-     * 
-     * @return array Array of status keys and labels
+     * The loader that's responsible for maintaining and registering all hooks that power
+     * the plugin.
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      Quote_Manager_System_For_Woocommerce_Loader $loader Maintains and registers all hooks for the plugin.
      */
-    public static function get_quote_statuses() {
-        return array(
-            self::STATUS_DRAFT => __('Draft', 'quote-manager-system-for-woocommerce'),
-            self::STATUS_SENT => __('Sent', 'quote-manager-system-for-woocommerce'),
-            self::STATUS_ACCEPTED => __('Accepted', 'quote-manager-system-for-woocommerce'),
-            self::STATUS_REJECTED => __('Rejected', 'quote-manager-system-for-woocommerce'),
-            self::STATUS_EXPIRED => __('Expired', 'quote-manager-system-for-woocommerce'),
-        );
-    }
-    
+    protected $loader;
     /**
-     * Get status label from status key
-     * 
-     * @param string $status Status key
-     * @return string Status label
+     * The unique identifier of this plugin.
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      string $plugin_name The string used to uniquely identify this plugin.
      */
-    public static function get_status_label($status) {
-        $statuses = self::get_quote_statuses();
-        return isset($statuses[$status]) ? $statuses[$status] : __('Unknown', 'quote-manager-system-for-woocommerce');
-    }
+    protected $plugin_name;
+    /**
+     * The current version of the plugin.
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      string $version The current version of the plugin.
+     */
+    protected $version;
 
     /**
-     * Setup email tracking functionality
+     * Define the core functionality of the plugin.
      */
-    private function setup_email_tracking() {
-        require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
-        $email_manager = new Quote_Manager_Email_Manager();
-        add_action('init', array($email_manager, 'handle_email_open_tracking'));
+    public function __construct()
+    {
+        if (defined('QUOTE_MANAGER_VERSION')) {
+            $this->version = QUOTE_MANAGER_VERSION;
+        } else {
+            $this->version = '1.0.0';
+        }
+        $this->plugin_name = 'quote-manager-system-for-woocommerce';
+
+        // Ensure required directories exist before proceeding
+        require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce-activator.php';
+        Quote_Manager_System_For_Woocommerce_Activator::ensure_directories();
+
+        $this->load_dependencies();
+        $this->set_locale();
+        $this->define_admin_hooks();
+        $this->define_public_hooks();
+
+        // Add email tracking handler
+        $this->setup_email_tracking();
     }
 
     /**
      * Load the required dependencies for this plugin.
      */
-    private function load_dependencies() {
+    private function load_dependencies()
+    {
         // Core classes
         require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce-loader.php';
         require_once QUOTE_MANAGER_PATH . 'includes/class-quote-manager-system-for-woocommerce-i18n.php';
-        
+
         // Admin and public classes
         require_once QUOTE_MANAGER_PATH . 'admin/class-quote-manager-system-for-woocommerce-admin.php';
         require_once QUOTE_MANAGER_PATH . 'public/class-quote-manager-system-for-woocommerce-public.php';
-        
+
         // Quote manager specific classes
         require_once QUOTE_MANAGER_PATH . 'includes/class-post-type.php';
         require_once QUOTE_MANAGER_PATH . 'includes/class-metaboxes.php';
@@ -133,27 +103,8 @@ class Quote_Manager_System_For_Woocommerce {
         require_once QUOTE_MANAGER_PATH . 'includes/class-pdf-generator.php';
         require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
         require_once QUOTE_MANAGER_PATH . 'includes/class-settings.php';
-        
-        $this->loader = new Quote_Manager_System_For_Woocommerce_Loader();
-    }
 
-    /**
-     * Ensure required directories exist
-     */
-    private function ensure_required_directories() {
-        $upload_dir = wp_upload_dir();
-        
-        // Create quotes directory if it doesn't exist
-        $quotes_dir = $upload_dir['basedir'] . '/quote-manager/quotes/';
-        if (!file_exists($quotes_dir)) {
-            wp_mkdir_p($quotes_dir);
-        }
-        
-        // Create attachments directory if it doesn't exist
-        $attachments_dir = $upload_dir['basedir'] . '/quote-manager/attachments/';
-        if (!file_exists($attachments_dir)) {
-            wp_mkdir_p($attachments_dir);
-        }
+        $this->loader = new Quote_Manager_System_For_Woocommerce_Loader();
     }
 
     /**
@@ -165,21 +116,23 @@ class Quote_Manager_System_For_Woocommerce {
      * @since    1.0.0
      * @access   private
      */
-    private function set_locale() {
+    private function set_locale()
+    {
         $plugin_i18n = new Quote_Manager_System_For_Woocommerce_i18n();
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
-    
+
     /**
      * Register all of the hooks related to the admin area functionality
      */
-    private function define_admin_hooks() {
+    private function define_admin_hooks()
+    {
         $plugin_admin = new Quote_Manager_System_For_Woocommerce_Admin($this->get_plugin_name(), $this->get_version());
-        
+
         // Admin assets
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-        
+
         // Post type and metaboxes
         $post_type = new Quote_Manager_Post_Type();
         $this->loader->add_action('init', $post_type, 'register_post_type');
@@ -187,13 +140,13 @@ class Quote_Manager_System_For_Woocommerce {
         $this->loader->add_action('manage_customer_quote_posts_custom_column', $post_type, 'custom_column', 10, 2);
         $this->loader->add_filter('manage_edit-customer_quote_sortable_columns', $post_type, 'sortable_columns');
         $this->loader->add_action('pre_get_posts', $post_type, 'column_orderby');
-        
+
         // Metaboxes
         $metaboxes = new Quote_Manager_Metaboxes();
         $this->loader->add_action('add_meta_boxes', $metaboxes, 'add_meta_boxes');
         $this->loader->add_action('save_post_customer_quote', $metaboxes, 'save_quote_post');
         $this->loader->add_action('admin_footer', $metaboxes, 'render_modals');
-        
+
         // Ajax handlers
         $ajax = new Quote_Manager_Ajax_Handlers();
         $this->loader->add_action('wp_ajax_quote_manager_search_products', $ajax, 'search_products');
@@ -201,16 +154,39 @@ class Quote_Manager_System_For_Woocommerce {
         $this->loader->add_action('wp_ajax_quote_download_pdf', $ajax, 'generate_pdf_download');
         $this->loader->add_action('wp_ajax_quote_manager_send_email', $ajax, 'send_email');
         $this->loader->add_action('wp_ajax_quote_manager_upload_attachment', $ajax, 'upload_attachment');
-		$this->loader->add_action('wp_ajax_quote_delete_attachment', $ajax, 'delete_attachment');
-		$this->loader->add_action('wp_ajax_quote_manager_get_states', $ajax, 'get_states');
-		$this->loader->add_action('wp_ajax_quote_manager_create_customer', $ajax, 'create_customer_from_quote');
-		$this->loader->add_action('wp_ajax_quote_manager_update_status', $ajax, 'update_quote_status');
-		$this->loader->add_action('wp_ajax_quote_manager_check_expired', $ajax, 'check_expired_quotes');
-        
+        $this->loader->add_action('wp_ajax_quote_delete_attachment', $ajax, 'delete_attachment');
+        $this->loader->add_action('wp_ajax_quote_manager_get_states', $ajax, 'get_states');
+        $this->loader->add_action('wp_ajax_quote_manager_create_customer', $ajax, 'create_customer_from_quote');
+        $this->loader->add_action('wp_ajax_quote_manager_update_status', $ajax, 'update_quote_status');
+        $this->loader->add_action('wp_ajax_quote_manager_check_expired', $ajax, 'check_expired_quotes');
+
         // Settings
         $settings = new Quote_Manager_Settings();
         $this->loader->add_action('admin_init', $settings, 'register_settings');
         $this->loader->add_action('admin_menu', $settings, 'add_settings_page');
+    }
+
+    /**
+     * The name of the plugin used to uniquely identify it within the context of
+     * WordPress and to define internationalization functionality.
+     *
+     * @return    string    The name of the plugin.
+     * @since     1.0.0
+     */
+    public function get_plugin_name()
+    {
+        return $this->plugin_name;
+    }
+
+    /**
+     * Retrieve the version number of the plugin.
+     *
+     * @return    string    The version number of the plugin.
+     * @since     1.0.0
+     */
+    public function get_version()
+    {
+        return $this->version;
     }
 
     /**
@@ -220,83 +196,163 @@ class Quote_Manager_System_For_Woocommerce {
      * @since    1.0.0
      * @access   private
      */
-    private function define_public_hooks() {
-    $plugin_public = new Quote_Manager_System_For_Woocommerce_Public($this->get_plugin_name(), $this->get_version());
-    
-    $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
-    $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
-    
-    // Init Response Handler
-    require_once QUOTE_MANAGER_PATH . 'public/class-quote-response-handler.php';
-    $response_handler = new Quote_Manager_Response_Handler();
-}
+    private function define_public_hooks()
+    {
+        $plugin_public = new Quote_Manager_System_For_Woocommerce_Public($this->get_plugin_name(), $this->get_version());
+
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+        $this->loader->add_action('init', $plugin_public, 'register_shortcodes');
+
+        // Init Response Handler
+        require_once QUOTE_MANAGER_PATH . 'public/class-quote-response-handler.php';
+        $response_handler = new Quote_Manager_Response_Handler();
+    }
+
+    /**
+     * Setup email tracking functionality
+     */
+    private function setup_email_tracking()
+    {
+        require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
+        $email_manager = new Quote_Manager_Email_Manager();
+        add_action('init', array($email_manager, 'handle_email_open_tracking'));
+    }
+
+    /**
+     * Get status label from status key
+     *
+     * @param string $status Status key
+     * @return string Status label
+     */
+    public static function get_status_label($status)
+    {
+        $statuses = self::get_quote_statuses();
+        return isset($statuses[$status]) ? $statuses[$status] : __('Unknown', 'quote-manager-system-for-woocommerce');
+    }
+
+    /**
+     * Get all available quote statuses
+     *
+     * @return array Array of status keys and labels
+     */
+    public static function get_quote_statuses()
+    {
+        return array(
+            self::STATUS_DRAFT => __('Draft', 'quote-manager-system-for-woocommerce'),
+            self::STATUS_SENT => __('Sent', 'quote-manager-system-for-woocommerce'),
+            self::STATUS_ACCEPTED => __('Accepted', 'quote-manager-system-for-woocommerce'),
+            self::STATUS_REJECTED => __('Rejected', 'quote-manager-system-for-woocommerce'),
+            self::STATUS_EXPIRED => __('Expired', 'quote-manager-system-for-woocommerce'),
+        );
+    }
+
+    /**
+     * Get the default email template with placeholders
+     *
+     * @return string Default email template
+     */
+    public static function get_default_email_template()
+    {
+        return '
+            <p>Dear {{customer_first_name}},</p>
+            
+            <p>Thank you for your interest in our products and services. We are pleased to present you with a customized solution for your needs.</p>
+        
+        
+            
+            <p>Attached you will find our detailed quote (no. #{{quote_id}}) in PDF format, which has been prepared specifically for you.</p>
+            
+            <p><strong>You can also view and respond to this quote online at:</strong> <a href="{{quote_view_url}}">{{quote_view_url}}</a></p>
+            
+            <p><strong>Important information:</strong><br>
+            - Quote valid until: {{quote_expiry}}<br>
+            - For immediate assistance: (+30) 210 XXX XXXX</p>
+            
+            <p>Please review the quote and do not hesitate to contact us for any clarifications or adjustments you would like. We are always available to discuss how we can better meet your needs.</p>
+            
+            <p>Thank you for choosing our company and we look forward to working with you!</p>
+            
+            <p>Best regards,<br>
+            {{site_name}}</p>';
+    }
+
+    /**
+     * Delete quote PDF files when a quote is rejected
+     *
+     * @param int $quote_id The quote ID
+     * @return bool Whether files were deleted successfully
+     */
+    public static function delete_quote_pdf_files($quote_id)
+    {
+        if (empty($quote_id)) {
+            return false;
+        }
+
+        $upload_dir = wp_upload_dir();
+        $quotes_dir = $upload_dir['basedir'] . '/quote-manager/quotes/';
+
+        // List of possible PDF files for this quote
+        $pdf_files = array(
+            $quotes_dir . 'PROSFORA_' . $quote_id . '.pdf',
+            $quotes_dir . 'SIGNED_QUOTE_' . $quote_id . '.pdf',
+            $quotes_dir . 'BACKUP_' . $quote_id . '.pdf'
+        );
+
+        $deleted = false;
+
+        // Delete each file if it exists
+        foreach ($pdf_files as $file) {
+            if (file_exists($file)) {
+                if (unlink($file)) {
+                    $deleted = true;
+                } else {
+                    error_log('Quote Manager: Failed to delete file: ' . $file);
+                }
+            }
+        }
+
+        return $deleted;
+    }
 
     /**
      * Run the loader to execute all of the hooks with WordPress.
      *
      * @since    1.0.0
      */
-    public function run() {
+    public function run()
+    {
         $this->loader->run();
-    }
-
-    /**
-     * The name of the plugin used to uniquely identify it within the context of
-     * WordPress and to define internationalization functionality.
-     *
-     * @since     1.0.0
-     * @return    string    The name of the plugin.
-     */
-    public function get_plugin_name() {
-        return $this->plugin_name;
     }
 
     /**
      * The reference to the class that orchestrates the hooks with the plugin.
      *
-     * @since     1.0.0
      * @return    Quote_Manager_System_For_Woocommerce_Loader    Orchestrates the hooks of the plugin.
+     * @since     1.0.0
      */
-    public function get_loader() {
+    public function get_loader()
+    {
         return $this->loader;
     }
 
     /**
-     * Retrieve the version number of the plugin.
-     *
-     * @since     1.0.0
-     * @return    string    The version number of the plugin.
+     * Ensure required directories exist
      */
-    public function get_version() {
-        return $this->version;
-    }
-    
-    /**
-     * Get the default email template with placeholders
-     *
-     * @return string Default email template
-     */
-    public static function get_default_email_template() {
-        return '
-        <p>Dear {{customer_first_name}},</p>
-        
-        <p>Thank you for your interest in our products and services. We are pleased to present you with a customized solution for your needs.</p>
-    
-    
-        
-        <p>Attached you will find our detailed quote (no. #{{quote_id}}) in PDF format, which has been prepared specifically for you.</p>
-        
-        <p><strong>You can also view and respond to this quote online at:</strong> <a href="{{quote_view_url}}">{{quote_view_url}}</a></p>
-        
-        <p><strong>Important information:</strong><br>
-        - Quote valid until: {{quote_expiry}}<br>
-        - For immediate assistance: (+30) 210 XXX XXXX</p>
-        
-        <p>Please review the quote and do not hesitate to contact us for any clarifications or adjustments you would like. We are always available to discuss how we can better meet your needs.</p>
-        
-        <p>Thank you for choosing our company and we look forward to working with you!</p>
-        
-        <p>Best regards,<br>
-        {{site_name}}</p>';
+    private function ensure_required_directories()
+    {
+        $upload_dir = wp_upload_dir();
+
+        // Create quotes directory if it doesn't exist
+        $quotes_dir = $upload_dir['basedir'] . '/quote-manager/quotes/';
+        if (!file_exists($quotes_dir)) {
+            wp_mkdir_p($quotes_dir);
+        }
+
+        // Create attachments directory if it doesn't exist
+        $attachments_dir = $upload_dir['basedir'] . '/quote-manager/attachments/';
+        if (!file_exists($attachments_dir)) {
+            wp_mkdir_p($attachments_dir);
+        }
     }
 }

@@ -6,7 +6,7 @@
  * @subpackage Quote_Manager_System_For_Woocommerce/public/templates
  */
 
-// Security check
+// If this file is called directly, abort.
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -56,13 +56,13 @@ if ($status === 'accepted') {
         <div class="quote-response-icon <?php echo esc_attr($icon_class); ?>">
             <?php echo esc_html($icon); ?>
         </div>
-        
+
         <h1 class="quote-response-title"><?php echo esc_html($title); ?></h1>
-        
+
         <div class="quote-response-message">
             <?php echo wp_kses_post($message); ?>
         </div>
-        
+
         <div class="quote-response-actions">
             <a href="<?php echo esc_url(home_url()); ?>" class="quote-action-button quote-action-secondary">
                 <?php _e('Return to Homepage', 'quote-manager-system-for-woocommerce'); ?>

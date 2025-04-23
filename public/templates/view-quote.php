@@ -6,8 +6,8 @@
  * @subpackage Quote_Manager_System_For_Woocommerce/public/templates
  */
 
-// Security check
-if ( ! defined( 'ABSPATH' ) ) {
+// If this file is called directly, abort.
+if (!defined('ABSPATH')) {
     exit;
 }
 
@@ -29,12 +29,12 @@ if (is_array($quote_products)) {
     foreach ($quote_products as $product) {
         $price = isset($product['final_price_excl']) ? floatval($product['final_price_excl']) : 0;
         $qty = isset($product['qty']) ? intval($product['qty']) : 1;
-        
+
         if ($include_vat) {
             // Add 24% VAT
             $price *= 1.24;
         }
-        
+
         $quote_total += $price * $qty;
     }
 }
@@ -63,36 +63,36 @@ $message = isset($_GET['message']) ? sanitize_text_field($_GET['message']) : '';
 <div class="quote-view-container">
     <div class="quote-view-header">
         <h1><?php echo sprintf(__('Quote %s', 'quote-manager-system-for-woocommerce'), $quote_number); ?></h1>
-        
+
         <?php if (!empty($message)): ?>
             <div class="quote-message">
                 <?php echo esc_html($message); ?>
             </div>
         <?php endif; ?>
     </div>
-    
+
     <div class="quote-view-content">
         <div class="quote-view-info">
             <div class="quote-info-row">
                 <div class="quote-info-label"><?php _e('Customer:', 'quote-manager-system-for-woocommerce'); ?></div>
                 <div class="quote-info-value"><?php echo esc_html($customer_name); ?></div>
             </div>
-            
+
             <div class="quote-info-row">
                 <div class="quote-info-label"><?php _e('Date:', 'quote-manager-system-for-woocommerce'); ?></div>
                 <div class="quote-info-value"><?php echo get_the_date('', $quote); ?></div>
             </div>
-            
+
             <div class="quote-info-row">
                 <div class="quote-info-label"><?php _e('Valid until:', 'quote-manager-system-for-woocommerce'); ?></div>
                 <div class="quote-info-value"><?php echo esc_html($expiration_date); ?></div>
             </div>
-            
+
             <div class="quote-info-row">
                 <div class="quote-info-label"><?php _e('Total:', 'quote-manager-system-for-woocommerce'); ?></div>
                 <div class="quote-info-value quote-total"><?php echo esc_html($formatted_total); ?> €</div>
             </div>
-            
+
             <div class="quote-info-row">
                 <div class="quote-info-label"><?php _e('Status:', 'quote-manager-system-for-woocommerce'); ?></div>
                 <div class="quote-info-value quote-status quote-status-<?php echo esc_attr($quote_status); ?>">
@@ -100,20 +100,23 @@ $message = isset($_GET['message']) ? sanitize_text_field($_GET['message']) : '';
                 </div>
             </div>
         </div>
-        
+
         <div class="quote-view-actions">
             <p><?php _e('You can download the quote as a PDF, or respond to it using the buttons below.', 'quote-manager-system-for-woocommerce'); ?></p>
-            
+
             <div class="quote-action-buttons">
-                <a href="<?php echo esc_url(admin_url('admin-ajax.php?action=quote_download_pdf&quote_id=' . $quote_id)); ?>" class="quote-action-button quote-download-button">
-                    <?php _e('Download PDF', 'quote-manager-system-for-woocommerce'); ?>
-                </a>
-                
+                <?php if ($quote_status !== Quote_Manager_System_For_Woocommerce::STATUS_REJECTED): ?>
+                    <a href="<?php echo esc_url(admin_url('admin-ajax.php?action=quote_download_pdf&quote_id=' . $quote_id)); ?>"
+                       class="quote-action-button quote-download-button">
+                        <?php _e('Download PDF', 'quote-manager-system-for-woocommerce'); ?>
+                    </a>
+                <?php endif; ?>
+
                 <?php if ($quote_status === Quote_Manager_System_For_Woocommerce::STATUS_DRAFT || $quote_status === Quote_Manager_System_For_Woocommerce::STATUS_SENT): ?>
                     <a href="<?php echo esc_url($accept_url); ?>" class="quote-action-button quote-accept-button">
                         <?php _e('Accept Quote', 'quote-manager-system-for-woocommerce'); ?>
                     </a>
-                    
+
                     <a href="<?php echo esc_url($reject_url); ?>" class="quote-action-button quote-reject-button">
                         <?php _e('Decline Quote', 'quote-manager-system-for-woocommerce'); ?>
                     </a>

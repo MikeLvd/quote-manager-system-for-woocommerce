@@ -6,7 +6,7 @@
  * @subpackage Quote_Manager_System_For_Woocommerce/public/templates
  */
 
-// Security check
+// If this file is called directly, abort.
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -28,7 +28,7 @@ $error_message = isset($error) ? $error : '';
     <div class="quote-reject-header">
         <h1><?php echo sprintf(__('Decline Quote %s', 'quote-manager-system-for-woocommerce'), $quote_number); ?></h1>
     </div>
-    
+
     <div class="quote-reject-content">
         <p>
             <?php echo sprintf(
@@ -37,26 +37,28 @@ $error_message = isset($error) ? $error : '';
                 '<strong>' . esc_html($quote_number) . '</strong>'
             ); ?>
         </p>
-        
+
         <?php if (!empty($error_message)): ?>
             <div class="quote-form-error">
                 <?php echo esc_html($error_message); ?>
             </div>
         <?php endif; ?>
-        
+
         <form method="post" id="quote-reject-form">
             <?php wp_nonce_field('quote_reject_' . $quote_id, 'quote_reject_nonce'); ?>
-            
+
             <div class="quote-form-section">
                 <label for="reject-reason"><?php _e('Reason for declining (optional):', 'quote-manager-system-for-woocommerce'); ?></label>
-                <textarea name="reject_reason" id="reject-reason" rows="5" placeholder="<?php esc_attr_e('Please let us know why you are declining this quote...', 'quote-manager-system-for-woocommerce'); ?>"></textarea>
+                <textarea name="reject_reason" id="reject-reason" rows="5"
+                          placeholder="<?php esc_attr_e('Please let us know why you are declining this quote...', 'quote-manager-system-for-woocommerce'); ?>"></textarea>
             </div>
-            
+
             <div class="quote-form-actions">
-                <a href="<?php echo esc_url(site_url("view-quote?id=$quote_id&token=$token")); ?>" class="quote-action-button quote-action-secondary">
+                <a href="<?php echo esc_url(site_url("view-quote?id=$quote_id&token=$token")); ?>"
+                   class="quote-action-button quote-action-secondary">
                     <?php _e('Cancel', 'quote-manager-system-for-woocommerce'); ?>
                 </a>
-                
+
                 <button type="submit" name="quote_reject_submit" class="quote-action-button quote-reject-button">
                     <?php _e('Decline Quote', 'quote-manager-system-for-woocommerce'); ?>
                 </button>
