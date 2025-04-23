@@ -120,10 +120,10 @@ A custom WooCommerce plugin designed to streamline the process of creating, mana
 
 ---
 - 📸 **Plugin Images**
-- 
-![Image Alt Text](assets/plugin/Settings.png)
+-
+![Settings Page of the Plugin](assets/images/plugin/Settings.png)
 
-![Image Alt Text](assets/plugin/Quote Customer.png)
+![Quote Customer Page in the Plugin](assets/images/plugin/Quote Customer.png)
 
 ## 🧑‍💻 Author
 
