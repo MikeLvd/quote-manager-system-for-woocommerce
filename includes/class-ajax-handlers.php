@@ -115,7 +115,7 @@ class Quote_Manager_Ajax_Handlers
 
             // Get the product cost
             $product_id = $product->get_id();
-            $product_cost = get_post_meta($product_id, '_wc_cog_cost', true);
+            $product_cost = get_post_meta($product_id, '_cogs_total_value', true);
             
             $results[] = array(
                 'id' => $product_id,

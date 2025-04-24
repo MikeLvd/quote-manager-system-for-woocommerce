@@ -452,7 +452,7 @@ class Quote_Manager_Metaboxes
             // Format purchase cost
             $purchase_cost = '';
             if ($product_id > 0) {
-                $meta_cost = get_post_meta($product_id, '_wc_cog_cost', true);
+                $meta_cost = get_post_meta($product_id, '_cogs_total_value', true);
                 $purchase_cost = $meta_cost !== '' ? floatval($meta_cost) : '';
             }
             if (isset($prod['purchase_price']) && $prod['purchase_price'] !== '') {

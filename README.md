@@ -90,33 +90,21 @@ A custom WooCommerce plugin designed to streamline the process of creating, mana
 - **AJAX Enhancement**  
   Implement debounce or rate-limiting mechanisms to optimize AJAX product searches for large WooCommerce stores.
 
-- **Customizable Quote Templates**  
-  Provide options for users to upload or customize their quote designs (e.g., adding logos, different styles, etc.).
-
 - **REST API Support**  
   Add REST API endpoints to allow integrations with third-party systems.
-
-- **Multilingual Compatibility**  
-  Integrate multilingual support with plugins like WPML or Polylang.
 
 ---
 
 ## 📌 Roadmap & Future Enhancements
 
-- 🌐 **Multilingual Support**  
-  Add native integration for translations in customer-facing quotes.
-
-- 🤝 **Bulk Quote Generation**  
-  Enable creation of quotes for multiple customers simultaneously.
+- 📜 **Quote Logs**  
+  Build reporting dashboards to view rejected reason, response time etc.
 
 - 📜 **Advanced Reporting**  
   Build reporting dashboards to view revenue and performance based on saved quotes.
 
 - 🔄 **Integration with WooCommerce Orders**  
   Add the ability to convert a customer quote directly into a WooCommerce order.
-
-- 🖼️ **Enhanced Template Builder**  
-  Develop a drag-and-drop builder for customizing the look and feel of quotes.
 
 ---
 - 📸 **Plugin Images**
