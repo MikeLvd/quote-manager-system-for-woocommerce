@@ -68,6 +68,7 @@ if ($status === 'accepted') {
 
         <div class="quote-response-actions">
             <a href="<?php echo esc_url(home_url()); ?>" class="quote-action-button quote-action-secondary">
+                <span class="quote-button-icon">🏠</span>
                 <?php esc_html_e('Return to Homepage', 'quote-manager-system-for-woocommerce'); ?>
             </a>
         </div>

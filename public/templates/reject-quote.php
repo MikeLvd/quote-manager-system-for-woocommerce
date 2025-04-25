@@ -33,9 +33,6 @@ $view_url = add_query_arg(array(
     'id' => $quote_id,
     'token' => $token
 ), $page_url);
-
-// Generate nonce for AJAX submission
-$ajax_nonce = wp_create_nonce('quote_reject_nonce');
 ?>
 
 <div class="quote-reject-container">
@@ -65,105 +62,20 @@ $ajax_nonce = wp_create_nonce('quote_reject_nonce');
                       placeholder="<?php esc_attr_e('Please let us know why you are declining this quote...', 'quote-manager-system-for-woocommerce'); ?>"></textarea>
             </div>
 
-            <div class="quote-form-actions">
-                <a href="<?php echo esc_url($view_url); ?>"
-                   class="quote-action-button quote-action-secondary">
-                    <?php esc_html_e('Cancel', 'quote-manager-system-for-woocommerce'); ?>
-                </a>
-
-                <button type="button" id="decline-quote-button" class="quote-action-button quote-reject-button">
-                    <?php esc_html_e('Decline Quote', 'quote-manager-system-for-woocommerce'); ?>
-                </button>
-            </div>
+                <div class="quote-form-actions">
+                    <a href="<?php echo esc_url($view_url); ?>"
+                       class="quote-action-button quote-action-secondary">
+                        <span class="quote-button-icon">↩️</span>
+                        <?php esc_html_e('Cancel', 'quote-manager-system-for-woocommerce'); ?>
+                    </a>
+                
+                    <button type="button" id="decline-quote-button" class="quote-action-button quote-reject-button">
+                        <span class="quote-button-icon">✗</span>
+                        <?php esc_html_e('Decline Quote', 'quote-manager-system-for-woocommerce'); ?>
+                    </button>
+                </div>
             
             <div id="quote-reject-message" class="quote-message" style="display:none;margin-top:15px;"></div>
         </div>
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Submit button (using AJAX)
-    document.getElementById('decline-quote-button').addEventListener('click', function (e) {
-        // Show loading state
-        var button = this;
-        var originalText = button.textContent;
-        button.disabled = true;
-        button.textContent = '<?php echo esc_js(__('Processing...', 'quote-manager-system-for-woocommerce')); ?>';
-        
-        // Show message
-        var messageEl = document.getElementById('quote-reject-message');
-        messageEl.style.display = 'block';
-        messageEl.textContent = '<?php echo esc_js(__('Submitting your response. Please wait...', 'quote-manager-system-for-woocommerce')); ?>';
-        messageEl.className = 'quote-message';
-
-        // Get reason text
-        var reason = document.getElementById('reject-reason').value;
-        
-        // Prepare form data
-        var formData = new FormData();
-        formData.append('action', 'quote_manager_reject');
-        formData.append('nonce', '<?php echo esc_js($ajax_nonce); ?>');
-        formData.append('quote_id', '<?php echo esc_js($quote_id); ?>');
-        formData.append('token', '<?php echo esc_js($token); ?>');
-        formData.append('reason', reason);
-
-                // Send AJAX request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '<?php echo esc_js(admin_url('admin-ajax.php')); ?>', true);
-                        xhr.onload = function () {
-                            if (xhr.status >= 200 && xhr.status < 400) {
-                                var response;
-                                try {
-                                    response = JSON.parse(xhr.responseText);
-                                } catch (e) {
-                                    console.error('Error parsing response:', e);
-                                    messageEl.textContent = '<?php echo esc_js(__('An unexpected error occurred. Please try again.', 'quote-manager-system-for-woocommerce')); ?>';
-                                    messageEl.className = 'quote-message error';
-                                    button.disabled = false;
-                                    button.textContent = originalText;
-                                    return;
-                                }
-                                
-                if (response.success && response.data && response.data.redirect) {
-                    // Success - redirect to the success page
-                    messageEl.textContent = '<?php echo esc_js(__('Quote accepted successfully! Redirecting...', 'quote-manager-system-for-woocommerce')); ?>';
-                    messageEl.className = 'quote-message success';
-                    
-                    // Log the redirect URL for debugging
-                    console.log('Redirecting to: ' + response.data.redirect);
-                    
-                    setTimeout(function() {
-                        window.location.href = response.data.redirect;
-                    }, 1000); // Short delay for user to see the success message
-                } 
-				else {
-                    // Error
-                    messageEl.textContent = response.data && response.data.message ? 
-                        response.data.message : 
-                        '<?php echo esc_js(__('An error occurred while submitting your response. Please try again.', 'quote-manager-system-for-woocommerce')); ?>';
-                    messageEl.className = 'quote-message error';
-                    button.disabled = false;
-                    button.textContent = originalText;
-                }
-            } else {
-                // HTTP error
-                messageEl.textContent = '<?php echo esc_js(__('A server error occurred. Please try again later.', 'quote-manager-system-for-woocommerce')); ?>';
-                messageEl.className = 'quote-message error';
-                button.disabled = false;
-                button.textContent = originalText;
-            }
-        };
-        
-        xhr.onerror = function() {
-            // Network error
-            messageEl.textContent = '<?php echo esc_js(__('A network error occurred. Please check your connection and try again.', 'quote-manager-system-for-woocommerce')); ?>';
-            messageEl.className = 'quote-message error';
-            button.disabled = false;
-            button.textContent = originalText;
-        };
-        
-        xhr.send(formData);
-    });
-});
-</script>
