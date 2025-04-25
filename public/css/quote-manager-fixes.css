@@ -1,0 +1,183 @@
+/* Fix for WPBakery conflicts and other theme issues */
+.quote-view-container,
+.quote-accept-container,
+.quote-reject-container,
+.quote-response-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 800px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* Fix for WPBakery raw code display */
+.quote-view-container .vc_row,
+.quote-accept-container .vc_row,
+.quote-reject-container .vc_row,
+.quote-response-container .vc_row {
+    display: none !important;
+}
+
+/* Error message styling */
+.quote-error-message {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c2c7;
+}
+
+/* Message styling */
+.quote-message {
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+
+.quote-message.error {
+    background-color: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+}
+
+.quote-message.success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-color: #badbcc;
+}
+
+/* Form elements */
+.quote-form-section {
+    margin-bottom: 20px;
+}
+
+.quote-form-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.quote-form-section textarea,
+.quote-form-section input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.signature-pad-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+/* Action buttons */
+.quote-action-button {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.quote-action-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.quote-action-secondary:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.quote-accept-button {
+    background-color: #198754;
+    color: #fff;
+}
+
+.quote-accept-button:hover {
+    background-color: #157347;
+    color: #fff;
+}
+
+.quote-reject-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.quote-reject-button:hover {
+    background-color: #bb2d3b;
+    color: #fff;
+}
+
+.quote-download-button {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.quote-download-button:hover {
+    background-color: #0b5ed7;
+    color: #fff;
+}
+
+/* Response page */
+.quote-response-icon {
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 40px;
+    text-align: center;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    color: #fff;
+}
+
+.quote-response-icon-accepted {
+    background-color: #198754;
+}
+
+.quote-response-icon-rejected {
+    background-color: #dc3545;
+}
+
+.quote-response-icon-default {
+    background-color: #0d6efd;
+}
+
+.quote-response-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.quote-response-message {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.quote-response-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Form error message */
+.quote-form-error {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c2c7;
+}

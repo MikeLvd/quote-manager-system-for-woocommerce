@@ -124,82 +124,112 @@ class Quote_Manager_System_For_Woocommerce_Activator
 
 
     /**
-     * Create the quote response page
+     * Create the quote management page
      */
     public static function create_response_page()
     {
         // Check if the page already exists
-        $page_exists = get_page_by_path('quote-response');
-
+        $page_exists = get_page_by_path('quotes');
+    
         if (!$page_exists) {
-            // Create the page
+            // Create the page with the new shortcode
             $page_id = wp_insert_post([
-                'post_title' => __('Quote Response', 'quote-manager-system-for-woocommerce'),
-                'post_name' => 'quote-response',
+                'post_title' => __('Quotes', 'quote-manager-system-for-woocommerce'),
+                'post_name' => 'quotes',
                 'post_status' => 'publish',
                 'post_type' => 'page',
-                'post_content' => '<!-- wp:shortcode -->[quote_response]<!-- /wp:shortcode -->',
+                'post_content' => '<!-- wp:shortcode -->[quote_manager]<!-- /wp:shortcode -->',
                 'comment_status' => 'closed',
                 'ping_status' => 'closed'
             ]);
-
+    
             if ($page_id && !is_wp_error($page_id)) {
                 // Save the page ID for future reference
-                update_option('quote_manager_response_page_id', $page_id);
+                update_option('quote_manager_page_id', $page_id);
             }
         } else {
-            // Make sure the page has the shortcode
+            // Check if the page has the new shortcode
             $page = get_post($page_exists->ID);
-            if (strpos($page->post_content, '[quote_response]') === false) {
+            if (strpos($page->post_content, '[quote_manager]') === false) {
+                // Update to use the new shortcode
                 wp_update_post([
                     'ID' => $page_exists->ID,
-                    'post_content' => '<!-- wp:shortcode -->[quote_response]<!-- /wp:shortcode -->'
+                    'post_content' => '<!-- wp:shortcode -->[quote_manager]<!-- /wp:shortcode -->'
                 ]);
             }
-
-            // Make sure we store the ID for future reference
-            update_option('quote_manager_response_page_id', $page_exists->ID);
+    
+            // Store the ID for future reference
+            update_option('quote_manager_page_id', $page_exists->ID);
         }
-
-        // Flush rewrite rules to ensure our endpoints work
+        
+        // Handle legacy page for backward compatibility
+        $legacy_page = get_page_by_path('quote-response');
+        
+        if ($legacy_page) {
+            // Update legacy page to use the new shortcode
+            if (strpos($legacy_page->post_content, '[quote_manager]') === false) {
+                wp_update_post([
+                    'ID' => $legacy_page->ID,
+                    'post_content' => '<!-- wp:shortcode -->[quote_manager default_view="response"]<!-- /wp:shortcode -->'
+                ]);
+            }
+            
+            // Keep the old option for backward compatibility
+            update_option('quote_manager_response_page_id', $legacy_page->ID);
+        }
+    
+        // Flush rewrite rules to ensure clean URLs
         flush_rewrite_rules();
     }
-
+    
     /**
-     * Ensure required directories exist - can be called anytime
-     *
-     * This method can be used as a fallback to check and create
-     * directories if they don't exist during regular operation.
-     *
-     * @return   array    Array of created directory paths
-     * @since    1.5.1
-     */
-    public static function ensure_directories()
-    {
-        $upload_dir = wp_upload_dir();
-        $dirs = array();
-
-        // Create base directory if needed
-        $base_dir = $upload_dir['basedir'] . '/quote-manager/';
-        if (!file_exists($base_dir)) {
-            wp_mkdir_p($base_dir);
-            $dirs['base'] = $base_dir;
+         * Ensure required directories exist - can be called anytime
+         *
+         * This method can be used as a fallback to check and create
+         * directories if they don't exist during regular operation.
+         *
+         * @return   array    Array of created directory paths
+         * @since    1.5.1
+         */
+        public static function ensure_directories()
+        {
+            $upload_dir = wp_upload_dir();
+            $dirs = array();
+    
+            // Create base directory if needed
+            $base_dir = $upload_dir['basedir'] . '/quote-manager/';
+            if (!file_exists($base_dir)) {
+                wp_mkdir_p($base_dir);
+                $dirs['base'] = $base_dir;
+            }
+    
+            // Create quotes directory if needed
+            $quotes_dir = $base_dir . 'quotes/';
+            if (!file_exists($quotes_dir)) {
+                wp_mkdir_p($quotes_dir);
+                $dirs['quotes'] = $quotes_dir;
+            }
+    
+            // Create attachments directory if needed
+            $attachments_dir = $base_dir . 'attachments/';
+            if (!file_exists($attachments_dir)) {
+                wp_mkdir_p($attachments_dir);
+                $dirs['attachments'] = $attachments_dir;
+            }
+    
+            return $dirs;
         }
-
-        // Create quotes directory if needed
-        $quotes_dir = $base_dir . 'quotes/';
-        if (!file_exists($quotes_dir)) {
-            wp_mkdir_p($quotes_dir);
-            $dirs['quotes'] = $quotes_dir;
+        
+        /**
+         * Flush rewrite rules on activation
+         */
+        public static function flush_rewrite_rules() {
+            // First register the rules
+            require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-quote-response-handler.php';
+            $response_handler = new Quote_Manager_Response_Handler();
+            $response_handler->register_endpoints();
+            
+            // Then flush the rules
+            flush_rewrite_rules();
         }
-
-        // Create attachments directory if needed
-        $attachments_dir = $base_dir . 'attachments/';
-        if (!file_exists($attachments_dir)) {
-            wp_mkdir_p($attachments_dir);
-            $dirs['attachments'] = $attachments_dir;
-        }
-
-        return $dirs;
     }
-}

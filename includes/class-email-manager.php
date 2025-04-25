@@ -106,14 +106,34 @@ class Quote_Manager_Email_Manager
             $response_handler = new Quote_Manager_Response_Handler();
             $token = $response_handler->get_quote_token($quote_id);
 
-            // Generate quote view URL
-            $view_url = add_query_arg(
-                array(
-                    'id' => $quote_id,
-                    'token' => $token
-                ),
-                site_url('view-quote')
-            );
+            // Get the quotes page ID
+            $quotes_page_id = get_option('quote_manager_page_id');
+            
+            // If we don't have a quotes page ID, fall back to the response page ID
+            if (!$quotes_page_id) {
+                $quotes_page_id = get_option('quote_manager_response_page_id');
+            }
+            
+            // Generate view URL using the quotes page
+            if ($quotes_page_id) {
+                $view_url = add_query_arg(
+                    array(
+                        'view' => 'quote',
+                        'id' => $quote_id,
+                        'token' => $token
+                    ),
+                    get_permalink($quotes_page_id)
+                );
+            } else {
+                // Fallback to old URL structure if no page is found
+                $view_url = add_query_arg(
+                    array(
+                        'id' => $quote_id,
+                        'token' => $token
+                    ),
+                    site_url('view-quote')
+                );
+            }
 
             // Email Subject
             $subject = !empty($custom_subject)

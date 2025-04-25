@@ -18,7 +18,10 @@ $status = isset($_GET['status']) ? sanitize_text_field($_GET['status']) : '';
 // Validate quote
 $quote = get_post($quote_id);
 if (!$quote || $quote->post_type !== 'customer_quote') {
-    wp_die(__('Quote not found.', 'quote-manager-system-for-woocommerce'));
+    echo '<div class="quote-error-message">';
+    echo '<p>' . esc_html__('Quote not found.', 'quote-manager-system-for-woocommerce') . '</p>';
+    echo '</div>';
+    return;
 }
 
 $quote_number = '#' . str_pad($quote_id, 4, '0', STR_PAD_LEFT);
@@ -65,7 +68,7 @@ if ($status === 'accepted') {
 
         <div class="quote-response-actions">
             <a href="<?php echo esc_url(home_url()); ?>" class="quote-action-button quote-action-secondary">
-                <?php _e('Return to Homepage', 'quote-manager-system-for-woocommerce'); ?>
+                <?php esc_html_e('Return to Homepage', 'quote-manager-system-for-woocommerce'); ?>
             </a>
         </div>
     </div>

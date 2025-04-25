@@ -1,3 +1,24 @@
+/* Quote template wrapper */
+.quote-manager-template-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+.quote-manager-content-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 500px;
+}
+
+@media (max-width: 768px) {
+    .quote-manager-content-container {
+        padding: 20px 15px;
+    }
+}
+
 /* Quote Response Styles */
 .quote-view-container,
 .quote-accept-container,
