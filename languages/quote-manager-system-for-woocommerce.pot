@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Quote Manager System For WooCommerce\n"
-"POT-Creation-Date: 2025-04-25 12:57+0300\n"
+"POT-Creation-Date: 2025-04-26 10:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -150,12 +150,12 @@ msgid "Error creating customer."
 msgstr ""
 
 #: admin/class-quote-manager-system-for-woocommerce-admin.php:229
-#: includes/class-ajax-handlers.php:472
+#: includes/class-ajax-handlers.php:638
 msgid "File size exceeds the 2MB limit."
 msgstr ""
 
 #: admin/class-quote-manager-system-for-woocommerce-admin.php:230
-#: includes/class-ajax-handlers.php:493
+#: includes/class-ajax-handlers.php:659
 msgid "Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed."
 msgstr ""
 
@@ -188,98 +188,98 @@ msgstr ""
 msgid "%d quotes have been marked as expired."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:27 includes/class-ajax-handlers.php:152
-#: includes/class-ajax-handlers.php:179 includes/class-ajax-handlers.php:286
-#: includes/class-ajax-handlers.php:455 includes/class-ajax-handlers.php:580
-#: includes/class-ajax-handlers.php:661 includes/class-ajax-handlers.php:712
+#: includes/class-ajax-handlers.php:27 includes/class-ajax-handlers.php:318
+#: includes/class-ajax-handlers.php:345 includes/class-ajax-handlers.php:452
+#: includes/class-ajax-handlers.php:621 includes/class-ajax-handlers.php:746
+#: includes/class-ajax-handlers.php:827 includes/class-ajax-handlers.php:878
 msgid "Access denied"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:147 includes/class-ajax-handlers.php:450
-#: includes/class-ajax-handlers.php:574
+#: includes/class-ajax-handlers.php:313 includes/class-ajax-handlers.php:616
+#: includes/class-ajax-handlers.php:740
 msgid "Security check failed."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:159
+#: includes/class-ajax-handlers.php:325
 msgid "Country is required"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:168
+#: includes/class-ajax-handlers.php:334
 msgid "No states found for this country"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:184 includes/class-ajax-handlers.php:666
-#: includes/class-ajax-handlers.php:717
+#: includes/class-ajax-handlers.php:350 includes/class-ajax-handlers.php:832
+#: includes/class-ajax-handlers.php:883
 msgid "Security check failed"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:292
+#: includes/class-ajax-handlers.php:458
 msgid "Invalid quote ID"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:304
+#: includes/class-ajax-handlers.php:470
 msgid "Customer email is required"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:311
+#: includes/class-ajax-handlers.php:477
 msgid "A user with this email already exists"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:390
+#: includes/class-ajax-handlers.php:556
 msgid "Customer created successfully"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:460
+#: includes/class-ajax-handlers.php:626
 msgid "No file was uploaded."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:466 includes/class-pdf-generator.php:36
+#: includes/class-ajax-handlers.php:632 includes/class-pdf-generator.php:36
 msgid "Invalid quote ID."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:480
+#: includes/class-ajax-handlers.php:646
 #, php-format
 msgid "Maximum number of attachments (%d) reached."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:507
+#: includes/class-ajax-handlers.php:673
 msgid ""
 "Invalid file type detected. Only JPG, JPEG, PNG and PDF files are allowed."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:563
+#: includes/class-ajax-handlers.php:729
 msgid "Failed to upload file."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:590
+#: includes/class-ajax-handlers.php:756
 msgid "Missing required information."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:638
+#: includes/class-ajax-handlers.php:804
 msgid "Attachment removed successfully."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:643
+#: includes/class-ajax-handlers.php:809
 msgid "Attachment deleted successfully."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:648
+#: includes/class-ajax-handlers.php:814
 msgid "Attachment removed, but file could not be deleted from server."
 msgstr ""
 
-#: includes/class-ajax-handlers.php:674
+#: includes/class-ajax-handlers.php:840
 msgid "Invalid parameters"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:680
+#: includes/class-ajax-handlers.php:846
 msgid "Quote not found"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:686
+#: includes/class-ajax-handlers.php:852
 msgid "Invalid status"
 msgstr ""
 
-#: includes/class-ajax-handlers.php:699
+#: includes/class-ajax-handlers.php:865
 msgid "Status updated successfully"
 msgstr ""
 
@@ -288,11 +288,11 @@ msgstr ""
 msgid "Your quote from %s"
 msgstr ""
 
-#: includes/class-email-manager.php:178 includes/class-metaboxes.php:1259
+#: includes/class-email-manager.php:178 includes/class-metaboxes.php:1258
 msgid "Attachments:"
 msgstr ""
 
-#: includes/class-email-manager.php:179 includes/class-metaboxes.php:1262
+#: includes/class-email-manager.php:179 includes/class-metaboxes.php:1261
 msgid "Quote PDF"
 msgstr ""
 
@@ -681,7 +681,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: includes/class-metaboxes.php:1273
+#: includes/class-metaboxes.php:1272
 msgid "Attachment"
 msgstr ""
 

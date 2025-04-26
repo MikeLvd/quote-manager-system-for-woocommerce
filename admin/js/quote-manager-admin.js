@@ -114,13 +114,20 @@
             const self = this;
 
             // === SEARCH FUNCTIONALITY === //
-            // Product search - these must be separate from other handlers
             this.elements.$search.on('keyup', function (e) {
                 self.handleSearch(e);
             });
-
+            
             $(document).on('click', '.suggestion-item', function (e) {
                 self.handleProductSelect(e);
+            });
+            
+            // Close product suggestions when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.quote-search-wrap').length && 
+                    !$(e.target).closest('.quote-suggestions').length) {
+                    self.elements.$suggestions.slideUp().empty();
+                }
             });
 
             // === PRODUCT TABLE FUNCTIONALITY === //
@@ -810,6 +817,9 @@
                 products.forEach(function (product) {
                     const safeTitle = $('<div>').text(product.title).html();
                     const safeSku = $('<div>').text(product.sku).html();
+                    // Determine if there's a discount by comparing regular_price and price
+                    const hasDiscount = product.regular_price > product.price;
+                    
                     html += `
                         <li class="suggestion-item"
                             data-id="${product.id}"
@@ -819,9 +829,16 @@
                             data-regular_price="${product.regular_price}"
                             data-purchase_price="${product.purchase_price || ''}"
                             data-image="${product.image}">
-                            <img src="${product.image}" />
-                            <span>${safeTitle}</span>
-                            <small>${safeSku}</small>
+                            <div class="suggestion-item-image">
+                                <img src="${product.image}" alt="${safeTitle}" />
+                            </div>
+                            <div class="suggestion-item-details">
+                                <span class="suggestion-item-title">${safeTitle}</span>
+                                <div class="suggestion-item-meta">
+                                    <span class="suggestion-item-sku">SKU: <strong>${safeSku}</strong></span>
+                                    ${hasDiscount ? '<span class="suggestion-item-discount">On Sale</span>' : ''}
+                                </div>
+                            </div>
                         </li>`;
                 });
                 html += '</ul>';
@@ -1154,11 +1171,11 @@
             const $finalInclInput = $row.find('input[name*="[final_price_incl]"]');
             const $qtyInput = $row.find('input[name*="[qty]"]');
             const $lineTotal = $row.find('.quote-line-total');
-
+        
             const listVal = this.parsePrice($listInput.val()) || 0;
             const discountVal = this.parsePrice($discountInput.val()) || 0;
             const qtyVal = parseFloat($qtyInput.val()) || 0;
-
+        
             // Update final price based on which field the user is editing
             if ($(document.activeElement).is($listInput) || $(document.activeElement).is($discountInput)) {
                 let newFinalEx = listVal;
@@ -1167,23 +1184,24 @@
                 }
                 $finalExInput.val(this.formatPrice(newFinalEx));
             }
-
-            // Update discount based on final price
-            if ($(document.activeElement).is($finalExInput) && listVal > 0) {
-                const finalExVal = this.parsePrice($finalExInput.val());
-                const newDiscount = (1 - (finalExVal / listVal)) * 100;
-                $discountInput.val(this.formatPrice(newDiscount));
+        
+            // Remove automatic discount calculation when editing final price
+            // Only calculate discount when discount field is focused
+            if ($(document.activeElement).is($discountInput) && listVal > 0) {
+                // If user is editing the discount field directly, calculate final price
+                const finalExVal = listVal * (1 - discountVal / 100);
+                $finalExInput.val(this.formatPrice(finalExVal));
             }
-
+        
             // Calculate final price with VAT
             const finalExVal = this.parsePrice($finalExInput.val()) || 0;
             const updatedFinalIncl = finalExVal * (1 + this.config.taxRate);
             $finalInclInput.val(this.formatPrice(updatedFinalIncl));
-
+        
             // Calculate line total based on VAT setting
             const total = (this.config.includeVAT ? updatedFinalIncl : finalExVal) * qtyVal;
             $lineTotal.text(this.formatPrice(total) + quoteManagerData.currencySymbol);
-
+        
             // Update page totals
             this.calculateTotals();
         },

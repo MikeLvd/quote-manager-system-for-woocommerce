@@ -26,27 +26,27 @@ class Quote_Manager_Ajax_Handlers
         if (!current_user_can('manage_woocommerce')) {
             wp_send_json_error(__('Access denied', 'quote-manager-system-for-woocommerce'), 403);
         }
-
+    
         // Get and sanitize search term
         $term = isset($_POST['term']) ? sanitize_text_field(wp_unslash($_POST['term'])) : '';
         if (empty($term)) {
             wp_send_json(array());
         }
-
-        // Query by product title
+    
+        // Query by product title - include publish, draft, and private statuses
         $args_title = array(
             'post_type' => 'product',
-            'posts_per_page' => 10,
-            'post_status' => 'publish',
+            'posts_per_page' => 50, // Increased to account for showing variations
+            'post_status' => array('publish', 'draft', 'private'),
             's' => $term,
         );
         $query_title = new WP_Query($args_title);
-
-        // Query by SKU (including variations)
+    
+        // Query by SKU (including variations) - include publish, draft, and private statuses
         $args_sku = array(
             'post_type' => array('product', 'product_variation'),
-            'posts_per_page' => 10,
-            'post_status' => 'publish',
+            'posts_per_page' => 50, // Increased to account for showing variations
+            'post_status' => array('publish', 'draft', 'private'),
             'meta_query' => array(
                 array(
                     'key' => '_sku',
@@ -56,86 +56,252 @@ class Quote_Manager_Ajax_Handlers
             )
         );
         $query_sku = new WP_Query($args_sku);
-
+    
         // Combine results and ensure uniqueness
-        $posts = array();
-        if ($query_title->have_posts()) {
-            $posts = array_merge($posts, $query_title->posts);
-        }
-        if ($query_sku->have_posts()) {
-            $posts = array_merge($posts, $query_sku->posts);
-        }
-
-        $results = array();
+        $products_array = array();
+        $parent_products = array();
+        $variations = array();
         $seen_ids = array();
-        foreach ($posts as $post) {
-            if (in_array($post->ID, $seen_ids, true)) {
-                continue;
-            }
-            $seen_ids[] = $post->ID;
-            $product = wc_get_product($post->ID);
-            if (!$product) {
-                continue;
-            }
-
-            $title = $product->get_name();
-            // If variation, use parent product name and variation attributes
-            if ($product->is_type('variation')) {
-                $parent = wc_get_product($product->get_parent_id());
-                if ($parent) {
-                    $title = $parent->get_name();
+    
+        // Process products from title search
+        if ($query_title->have_posts()) {
+            foreach ($query_title->posts as $post) {
+                if (in_array($post->ID, $seen_ids, true)) {
+                    continue;
                 }
-                $attributes = $product->get_attributes();
-                $attr_values = array();
-                if (!empty($attributes)) {
-                    foreach ($attributes as $tax => $val) {
-                        $tax = str_replace('attribute_', '', $tax);
-                        $tax = str_replace('pa_', '', $tax);
-                        $term_obj = get_term_by('slug', $val, 'pa_' . $tax);
-                        if ($term_obj instanceof WP_Term) {
-                            $attr_values[] = $term_obj->name;
-                        } elseif (!is_array($val)) {
-                            $attr_values[] = $val;
-                        }
+                $seen_ids[] = $post->ID;
+                
+                $product = wc_get_product($post->ID);
+                if (!$product) {
+                    continue;
+                }
+                
+                if ($product->is_type('variable')) {
+                    // Store parent product for later
+                    $parent_products[$post->ID] = array(
+                        'id' => $product->get_id(),
+                        'title' => $product->get_name(),
+                        'sku' => $product->get_sku(),
+                        'price' => wc_get_price_including_tax($product),
+                        'regular_price' => wc_get_price_including_tax($product, array('price' => $product->get_regular_price())),
+                        'image' => $this->get_product_image($product),
+                        'purchase_price' => $this->get_product_cost($product->get_id()),
+                        'is_parent' => true
+                    );
+                    
+                    // Get all variations
+                    $args = array(
+                        'post_type'     => 'product_variation',
+                        'post_status'   => array('publish', 'draft', 'private'),
+                        'posts_per_page' => -1,
+                        'post_parent'   => $post->ID
+                    );
+                    
+                    $variation_posts = get_posts($args);
+                    
+                    foreach ($variation_posts as $variation_post) {
+                        $variation = wc_get_product($variation_post->ID);
+                        if (!$variation) continue;
+                        
+                        $attribute_string = $this->get_variation_attributes_string($variation);
+                        $variation_title = $product->get_name() . ' - ' . $attribute_string;
+                        
+                        $variations[] = array(
+                            'id' => $variation->get_id(),
+                            'title' => $variation_title,
+                            'sku' => $variation->get_sku(),
+                            'price' => wc_get_price_including_tax($variation),
+                            'regular_price' => wc_get_price_including_tax($variation, array('price' => $variation->get_regular_price())),
+                            'image' => $this->get_product_image($variation),
+                            'purchase_price' => $this->get_product_cost($variation->get_id()),
+                            'parent_id' => $product->get_id()
+                        );
+                        
+                        $seen_ids[] = $variation->get_id();
                     }
-                    if (!empty($attr_values)) {
-                        $title .= ' - ' . implode(', ', $attr_values);
-                    }
+                } else {
+                    // Simple product
+                    $products_array[] = array(
+                        'id' => $product->get_id(),
+                        'title' => $product->get_name(),
+                        'sku' => $product->get_sku(),
+                        'price' => wc_get_price_including_tax($product),
+                        'regular_price' => wc_get_price_including_tax($product, array('price' => $product->get_regular_price())),
+                        'image' => $this->get_product_image($product),
+                        'purchase_price' => $this->get_product_cost($product->get_id())
+                    );
                 }
             }
-
-            $image_url = '';
-            $image_id = $product->get_image_id();
-            if ($image_id) {
-                $image_url = wp_get_attachment_url($image_id);
+        }
+        
+        // Process products from SKU search (only process products not already found)
+        if ($query_sku->have_posts()) {
+            foreach ($query_sku->posts as $post) {
+                if (in_array($post->ID, $seen_ids, true)) {
+                    continue;
+                }
+                $seen_ids[] = $post->ID;
+                
+                $product = wc_get_product($post->ID);
+                if (!$product) {
+                    continue;
+                }
+                
+                if ($product->is_type('variation')) {
+                    // For variation, check if parent is already processed
+                    $parent_id = $product->get_parent_id();
+                    $parent_product = wc_get_product($parent_id);
+                    
+                    if (!$parent_product) continue;
+                    
+                    // Add parent if not already added
+                    if (!isset($parent_products[$parent_id]) && !in_array($parent_id, $seen_ids, true)) {
+                        $parent_products[$parent_id] = array(
+                            'id' => $parent_product->get_id(),
+                            'title' => $parent_product->get_name(),
+                            'sku' => $parent_product->get_sku(),
+                            'price' => wc_get_price_including_tax($parent_product),
+                            'regular_price' => wc_get_price_including_tax($parent_product, array('price' => $parent_product->get_regular_price())),
+                            'image' => $this->get_product_image($parent_product),
+                            'purchase_price' => $this->get_product_cost($parent_product->get_id()),
+                            'is_parent' => true
+                        );
+                        $seen_ids[] = $parent_id;
+                    }
+                    
+                    // Add the variation
+                    $attribute_string = $this->get_variation_attributes_string($product);
+                    $variation_title = $parent_product->get_name() . ' - ' . $attribute_string;
+                    
+                    $variations[] = array(
+                        'id' => $product->get_id(),
+                        'title' => $variation_title,
+                        'sku' => $product->get_sku(),
+                        'price' => wc_get_price_including_tax($product),
+                        'regular_price' => wc_get_price_including_tax($product, array('price' => $product->get_regular_price())),
+                        'image' => $this->get_product_image($product),
+                        'purchase_price' => $this->get_product_cost($product->get_id()),
+                        'parent_id' => $parent_id
+                    );
+                } else {
+                    // Simple product from SKU search
+                    $products_array[] = array(
+                        'id' => $product->get_id(),
+                        'title' => $product->get_name(),
+                        'sku' => $product->get_sku(),
+                        'price' => wc_get_price_including_tax($product),
+                        'regular_price' => wc_get_price_including_tax($product, array('price' => $product->get_regular_price())),
+                        'image' => $this->get_product_image($product),
+                        'purchase_price' => $this->get_product_cost($product->get_id())
+                    );
+                }
             }
-            if (empty($image_url)) {
-                $image_url = function_exists('wc_placeholder_img_src') ? wc_placeholder_img_src() : '';
-            }
-
-            // Get the product cost
-            $product_id = $product->get_id();
-            $product_cost = get_post_meta($product_id, '_cogs_total_value', true);
+        }
+        
+        // Build final results array - first add parent products, then variations organized by parent
+        $results = array();
+        
+        // Add simple products first
+        foreach ($products_array as $product_data) {
+            $results[] = $product_data;
+        }
+        
+        // Add variable products and their variations
+        foreach ($parent_products as $parent_id => $parent_data) {
+            // Add parent first
+            $results[] = $parent_data;
             
-            $results[] = array(
-                'id' => $product_id,
-                'title' => $title,
-                'sku' => $product->get_sku(),
-                'price' => wc_get_price_including_tax($product), // final price without VAT
-                'regular_price' => wc_get_price_including_tax($product, array('price' => $product->get_regular_price())), // regular price without VAT
-                'image' => $image_url,
-                'purchase_price' => $product_cost, // Add the cost price from meta
-            );
+            // Then add its variations
+            foreach ($variations as $variation) {
+                if ($variation['parent_id'] == $parent_id) {
+                    $results[] = $variation;
+                }
+            }
         }
-
-        // Limit to 10 results max
-        if (count($results) > 10) {
-            $results = array_slice($results, 0, 10);
+        
+        // Add any remaining variations (whose parents weren't in the search results)
+        $added_parents = array_keys($parent_products);
+        foreach ($variations as $variation) {
+            if (!in_array($variation['parent_id'], $added_parents)) {
+                $results[] = $variation;
+            }
         }
-
+    
+        // Limit to a reasonable number for display
+        if (count($results) > 50) {
+            $results = array_slice($results, 0, 50);
+        }
+    
         wp_send_json($results);
     }
-
+    
+    /**
+     * Get product image URL
+     *
+     * @param WC_Product $product
+     * @return string Image URL
+     */
+    private function get_product_image($product) {
+        $image_url = '';
+        $image_id = $product->get_image_id();
+        if ($image_id) {
+            $image_url = wp_get_attachment_url($image_id);
+        }
+        if (empty($image_url)) {
+            $image_url = function_exists('wc_placeholder_img_src') ? wc_placeholder_img_src() : '';
+        }
+        return $image_url;
+    }
+    
+    /**
+     * Get product cost (from meta)
+     *
+     * @param int $product_id
+     * @return string Formatted cost
+     */
+    private function get_product_cost($product_id) {
+        // First check for _cogs_total_value (compatible with WooCommerce COGS)
+        $cost = get_post_meta($product_id, '_cogs_total_value', true);
+        
+        // If not found, try _wc_cog_cost (compatible with SkyVerge Cost of Goods)
+        if ('' === $cost) {
+            $cost = get_post_meta($product_id, '_wc_cog_cost', true);
+        }
+        
+        return $cost;
+    }
+    
+    /**
+     * Get formatted variation attributes string
+     *
+     * @param WC_Product_Variation $variation
+     * @return string Formatted attribute string
+     */
+    private function get_variation_attributes_string($variation) {
+        $attributes = $variation->get_attributes();
+        $attribute_values = array();
+        
+        if (!empty($attributes)) {
+            foreach ($attributes as $tax => $val) {
+                $taxonomy = str_replace('attribute_', '', $tax);
+                
+                // If it's a taxonomy term, get the term name
+                if (taxonomy_exists($taxonomy)) {
+                    $term = get_term_by('slug', $val, $taxonomy);
+                    if ($term && !is_wp_error($term)) {
+                        $attribute_values[] = $term->name;
+                    } else {
+                        $attribute_values[] = $val;
+                    }
+                } else {
+                    // For custom product attributes
+                    $attribute_values[] = $val;
+                }
+            }
+        }
+        
+        return implode(', ', $attribute_values);
+    }
 
     /**
      * AJAX handler for getting states for a country

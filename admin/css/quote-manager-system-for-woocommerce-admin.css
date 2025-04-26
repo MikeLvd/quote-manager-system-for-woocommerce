@@ -1,35 +1,5 @@
 /* ================= QUOTE MANAGER ADMIN STYLES ================= */
 
-/* Style for TableDnD dragged row */
-.dragging {
-    background-color: #f0f8ff !important;
-    border: 2px solid #0073aa !important;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
-    opacity: 0.9 !important;
-}
-
-.tablednd-dragging-row td {
-    border: 1px solid #0073aa !important;
-}
-
-/* Style for number column (drag handle) */
-.quote-td-number {
-    cursor: move;
-    position: relative;
-    background-color: #f8f8f8;
-    transition: background-color 0.2s;
-}
-
-.quote-td-number:hover {
-    background-color: #e8e8e8;
-}
-
-.quote-td-number::before {
-    content: '☰';
-    margin-right: 5px;
-    color: #0073aa;
-}
-
 /* Project details */
 .quote-field label[for="project_name"] {
     font-size: 14px;
@@ -41,12 +11,6 @@
     font-size: 14px;
     padding: 8px 10px;
     height: 36px;
-}
-
-/* Price columns in quote table */
-.quote-th-purchase, .quote-td-purchase {
-    text-align: center;
-    width: 100px;
 }
 
 .quote-th-listprice, .quote-td-listprice,
@@ -184,35 +148,6 @@
     color: #46b450; /* WP green color for shipping labels */
 }
 
-/* Customer search field */
-.save-as-customer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
-}
-
-.search-customer-field {
-    position: relative;
-    flex: 1;
-    margin-right: 20px;
-}
-
-.customer-search-wrap {
-    position: relative;
-    width: 100%;
-}
-
-.customer-search-input {
-    width: 100%;
-    padding: 8px 10px;
-    font-size: 13px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
 /* Improved Customer search dropdown styling */
 .customer-suggestions {
     display: none;
@@ -313,13 +248,35 @@
     font-style: italic;
 }
 
-/* Save as Customer button styling */
+/* Customer search field */
 .save-as-customer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 15px;
-    text-align: left;
-    clear: both;
     padding-top: 10px;
     border-top: 1px solid #eee;
+    text-align: left;
+    clear: both;
+}
+
+.search-customer-field {
+    position: relative;
+    flex: 1;
+    margin-right: 20px;
+}
+
+.customer-search-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.customer-search-input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .save-customer-button {
@@ -401,12 +358,25 @@
     margin-bottom: 15px;
 }
 
-.quote-search-input {
+/* More specific selector for the search input */
+#quote-product-search.quote-search-input {
     width: 100%;
-    padding: 8px 10px;
-    font-size: 13px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 10px 15px !important; /* Force padding */
+    font-size: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    min-height: 40px !important; /* Increased height with !important */
+    line-height: 1.5 !important; /* Adjust line height */
+}
+
+#quote-product-search.quote-search-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    min-height: 45px !important; /* Maintain height on focus */
+    padding: 10px 15px !important; /* Maintain padding on focus */
 }
 
 /* Toolbar with search and add button */
@@ -424,56 +394,159 @@
 }
 
 .add-manual-product {
-    display: inline-block;
-    padding: 8px 12px;
+    display: inline-flex; /* Changed to flex for better vertical alignment */
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px; /* Horizontal padding only */
     font-size: 13px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     background: #0073aa;
     color: #fff;
     cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-weight: 500;
+    min-height: 40px; /* Match the input height */
 }
 
 .add-manual-product:hover {
     background: #005b8e;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .quote-suggestions {
-    display: none;
     position: absolute;
-    background: #fff;
-    border: 1px solid #ccc;
-    width: 100%;
-    z-index: 9999;
-    max-height: 300px;
-    overflow-y: auto;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: white;
 }
 
+/* Modern product suggestion styling */
 .suggestion-list {
     list-style: none;
     margin: 0;
     padding: 0;
+    max-height: 600px; /* 600px might be too tall for some screens */
+    overflow-y: auto;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #cbd5e0 #f7fafc; /* For Firefox */
 }
 
-/* Search dropdown items */
+/* Custom scrollbar for webkit browsers */
+.suggestion-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.suggestion-list::-webkit-scrollbar-track {
+    background: #f7fafc;
+}
+
+.suggestion-list::-webkit-scrollbar-thumb {
+    background-color: #cbd5e0;
+    border-radius: 4px;
+}
+
 .suggestion-item {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
+    padding: 12px 15px; /* Slightly increased padding */
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
 }
 
 .suggestion-item:hover {
-    background: #f1f1f1;
+    background-color: #f7fafc;
+    transform: translateY(-1px);
 }
 
-.suggestion-item img {
-    height: 32px;
-    width: 32px;
-    object-fit: cover;
-    border-radius: 3px;
+.suggestion-item-image {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-right: 15px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.suggestion-item-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.suggestion-item-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden; /* Prevent overflow */
+}
+
+.suggestion-item-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2d3748;
+    margin-bottom: 4px;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Truncate with ellipsis if too long */
+}
+
+.suggestion-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap; /* Allow wrapping for small screens */
+}
+
+.suggestion-item-sku {
+    font-size: 12px;
+    color: #718096;
+}
+
+.suggestion-item-discount {
+    font-size: 11px;
+    background-color: #fc8181;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Add price display if needed */
+.suggestion-item-price {
+    font-size: 12px;
+    color: #2d3748;
+    font-weight: 600;
+    margin-left: auto; /* Push to right */
+}
+
+/* Empty state styling */
+.suggestion-list-empty {
+    padding: 20px;
+    text-align: center;
+    color: #718096;
+    font-style: italic;
 }
 
 /* Products Table */
@@ -568,6 +641,36 @@ input.price-error {
 
 /* end */
 
+/* Style for TableDnD dragged row */
+.dragging {
+    background-color: #f0f8ff !important;
+    border: 2px solid #0073aa !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+    opacity: 0.9 !important;
+}
+
+.tablednd-dragging-row td {
+    border: 1px solid #0073aa !important;
+}
+
+/* Style for number column (drag handle) */
+.quote-td-number {
+    cursor: move;
+    position: relative;
+    background-color: #f8f8f8;
+    transition: background-color 0.2s;
+}
+
+.quote-td-number:hover {
+    background-color: #e8e8e8;
+}
+
+.quote-td-number::before {
+    content: '☰';
+    margin-right: 5px;
+    color: #0073aa;
+}
+
 /* Column widths */
 .quote-th-number,
 .quote-td-number {
@@ -633,11 +736,6 @@ input.price-error {
 .quote-td-total {
     width: 40px;
     text-align: center;
-}
-
-.quote-th-final-incl,
-.quote-td-final-incl {
-    color: #0073aa;
 }
 
 .quote-th-remove,

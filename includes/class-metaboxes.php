@@ -1226,7 +1226,6 @@ class Quote_Manager_Metaboxes
     
                 <!-- Email Subject -->
                 <div class="form-group">
-                    <label for="quote_email_message"><strong>Message:</strong></label>
                     <?php
                     wp_editor(
                         $default_message,
