@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Quote Manager System For WooCommerce\n"
-"POT-Creation-Date: 2025-04-26 10:03+0300\n"
+"POT-Creation-Date: 2025-04-28 10:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -129,7 +129,7 @@ msgid "Remove Attachment"
 msgstr ""
 
 #: admin/class-quote-manager-system-for-woocommerce-admin.php:220
-#: includes/class-metaboxes.php:930 includes/class-metaboxes.php:964
+#: includes/class-metaboxes.php:929 includes/class-metaboxes.php:963
 msgid "View File"
 msgstr ""
 
@@ -288,11 +288,11 @@ msgstr ""
 msgid "Your quote from %s"
 msgstr ""
 
-#: includes/class-email-manager.php:178 includes/class-metaboxes.php:1258
+#: includes/class-email-manager.php:178 includes/class-metaboxes.php:1300
 msgid "Attachments:"
 msgstr ""
 
-#: includes/class-email-manager.php:179 includes/class-metaboxes.php:1261
+#: includes/class-email-manager.php:179 includes/class-metaboxes.php:1303
 msgid "Quote PDF"
 msgstr ""
 
@@ -410,7 +410,7 @@ msgstr ""
 msgid "✚ Add Product"
 msgstr ""
 
-#: includes/class-metaboxes.php:433 includes/class-metaboxes.php:1023
+#: includes/class-metaboxes.php:433 includes/class-metaboxes.php:1022
 #: includes/class-pdf-generator-raw.php:645
 #: includes/class-pdf-generator-raw.php:691
 #: includes/class-pdf-generator.php:647 includes/class-pdf-generator.php:693
@@ -639,49 +639,49 @@ msgid ""
 "toolbar buttons for formatting."
 msgstr ""
 
-#: includes/class-metaboxes.php:905
+#: includes/class-metaboxes.php:904
 msgid ""
 "Add technical documents, specifications, or any other files that should be "
 "attached to this quote."
 msgstr ""
 
-#: includes/class-metaboxes.php:932 includes/class-metaboxes.php:966
+#: includes/class-metaboxes.php:931 includes/class-metaboxes.php:965
 msgid "Remove File"
 msgstr ""
 
-#: includes/class-metaboxes.php:943
+#: includes/class-metaboxes.php:942
 msgid "Add Attachment"
 msgstr ""
 
-#: includes/class-metaboxes.php:1010
+#: includes/class-metaboxes.php:1009
 msgid "PDF Document"
 msgstr ""
 
-#: includes/class-metaboxes.php:1013
+#: includes/class-metaboxes.php:1012
 msgid "Word Document"
 msgstr ""
 
-#: includes/class-metaboxes.php:1016
+#: includes/class-metaboxes.php:1015
 msgid "Excel Spreadsheet"
 msgstr ""
 
-#: includes/class-metaboxes.php:1019
+#: includes/class-metaboxes.php:1018
 msgid "PowerPoint Presentation"
 msgstr ""
 
-#: includes/class-metaboxes.php:1025
+#: includes/class-metaboxes.php:1024
 msgid "ZIP Archive"
 msgstr ""
 
-#: includes/class-metaboxes.php:1027
+#: includes/class-metaboxes.php:1026
 msgid "RAR Archive"
 msgstr ""
 
-#: includes/class-metaboxes.php:1029
+#: includes/class-metaboxes.php:1028
 msgid "File"
 msgstr ""
 
-#: includes/class-metaboxes.php:1272
+#: includes/class-metaboxes.php:1314
 msgid "Attachment"
 msgstr ""
 

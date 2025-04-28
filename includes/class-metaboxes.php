@@ -829,14 +829,14 @@ class Quote_Manager_Metaboxes
         // Get the quote-specific terms, or use the default if none exist
         $quote_terms = get_post_meta($post->ID, '_quote_terms', true);
         $default_terms = get_option('quote_manager_default_terms', '');
-
+    
         if (empty($quote_terms) && !empty($default_terms)) {
             $quote_terms = $default_terms;
         }
-
+    
         // Add a hidden nonce for security
         wp_nonce_field('quote_manager_save_terms', 'quote_manager_nonce_terms');
-
+    
         // Create editor settings
         $editor_settings = array(
             'textarea_name' => 'quote_terms',
@@ -845,23 +845,23 @@ class Quote_Manager_Metaboxes
             'teeny' => false,
             'quicktags' => true,
             'tinymce' => array(
-                'forced_root_block' => 'div',  // Use div instead of p to better preserve formatting
-                'keep_styles' => true,   // Keep styles when switching between visual/text
-                'entities' => '38,amp,60,lt,62,gt', // Preserve entities
-                'fix_list_elements' => true,   // Fix list elements
-                'preserve_cdata' => true,   // Preserve CDATA
-                'remove_redundant_brs' => false, // Don't remove BRs that might be intended
+                'forced_root_block' => 'div',
+                'keep_styles' => true,
+                'entities' => '38,amp,60,lt,62,gt',
+                'fix_list_elements' => true,
+                'preserve_cdata' => true,
+                'remove_redundant_brs' => false,
             ),
         );
-
+    
         // Show a reset button
         echo '<div style="margin-bottom:10px;">';
         echo '<button type="button" id="reset-to-default-terms" class="button">' . __('Reset to Default Terms', 'quote-manager-system-for-woocommerce') . '</button>';
         echo '</div>';
-
+    
         // Show the editor
         wp_editor($quote_terms, 'quote_terms_editor', $editor_settings);
-
+    
         // Show placeholders help
         echo '<p class="description">' . __('Available placeholders:', 'quote-manager-system-for-woocommerce') . ' 
             <code>{{customer_name}}</code>, 
@@ -872,19 +872,18 @@ class Quote_Manager_Metaboxes
             <code>{{company_name}}</code>,
             <code>{{today}}</code>
         </p>';
-
+    
         echo '<p class="description"><small>' .
             __('Tip: Use Shift+Enter for line breaks, Enter for new paragraphs, and the toolbar buttons for formatting.', 'quote-manager-system-for-woocommerce') .
             '</small></p>';
-
+    
         wp_localize_script('quote-manager-settings-js', 'quote_manager_vars', array(
             'default_terms' => $default_terms
         ));
-
+    
         wp_localize_script('quote-manager-settings-js', 'quote_manager_i18n', array(
             'reset_terms_confirm' => __('Reset to default terms? This will replace your current text.', 'quote-manager-system-for-woocommerce')
         ));
-
     }
 
     /**
@@ -1039,12 +1038,12 @@ class Quote_Manager_Metaboxes
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
-
+    
         // Verify permissions.
         if (!current_user_can('edit_post', $post_id)) {
             return;
         }
-
+    
         // Save customer fields if nonce is valid.
         if (isset($_POST['quote_manager_nonce_customer']) && wp_verify_nonce($_POST['quote_manager_nonce_customer'], 'quote_manager_save_customer')) {
             $fields = array(
@@ -1081,7 +1080,7 @@ class Quote_Manager_Metaboxes
                 }
             }
         }
-
+    
         // Save products fields if nonce is valid.
         if (isset($_POST['quote_manager_nonce_products']) && wp_verify_nonce($_POST['quote_manager_nonce_products'], 'quote_manager_save_products')) {
             if (!empty($_POST['quote_products']) && is_array($_POST['quote_products'])) {
@@ -1097,11 +1096,11 @@ class Quote_Manager_Metaboxes
                     $final_price_incl = isset($item['final_price_incl']) ? wc_format_decimal($item['final_price_incl']) : 0;
                     $qty = isset($item['qty']) ? intval($item['qty']) : 0;
                     $id = isset($item['id']) ? sanitize_text_field($item['id']) : '';
-
+    
                     if (empty($image) && empty($title) && empty($sku) && $list_price <= 0 && $qty <= 0) {
                         continue;
                     }
-
+    
                     $products_data[] = compact(
                         'image', 'title', 'sku', 'purchase_price',
                         'list_price', 'discount',
@@ -1109,7 +1108,7 @@ class Quote_Manager_Metaboxes
                         'qty', 'id'
                     );
                 }
-
+    
                 if (!empty($products_data)) {
                     update_post_meta($post_id, '_quote_products', $products_data);
                 } else {
@@ -1118,19 +1117,19 @@ class Quote_Manager_Metaboxes
             } else {
                 delete_post_meta($post_id, '_quote_products');
             }
-
+    
             // Save VAT checkbox
             if (isset($_POST['quote_include_vat'])) {
                 update_post_meta($post_id, '_quote_include_vat', '1');
             } else {
                 update_post_meta($post_id, '_quote_include_vat', '0');
             }
-
+    
             // Handle expiration date
             if (isset($_POST['quote_expiration_days'])) {
                 $expiration_days = sanitize_text_field($_POST['quote_expiration_days']);
                 update_post_meta($post_id, '_quote_expiration_days', $expiration_days);
-
+    
                 // Calculate expiration date
                 if ($expiration_days === 'custom' && isset($_POST['quote_expiration_date'])) {
                     // If custom date selected, save provided date
@@ -1144,31 +1143,74 @@ class Quote_Manager_Metaboxes
                 }
             }
         }
-
+    
+        // Save quote terms if nonce is valid
+        if (isset($_POST['quote_manager_nonce_terms']) && wp_verify_nonce($_POST['quote_manager_nonce_terms'], 'quote_manager_save_terms')) {
+            if (isset($_POST['quote_terms'])) {
+                // Define allowed HTML tags for terms
+                $allowed_html = array(
+                    'p' => array('style' => array()),
+                    'br' => array(),
+                    'em' => array(),
+                    'strong' => array(),
+                    'b' => array(),
+                    'i' => array(),
+                    'ul' => array('style' => array()),
+                    'ol' => array('style' => array()),
+                    'li' => array('style' => array()),
+                    'span' => array('style' => array()),
+                    'div' => array('style' => array(), 'class' => array()),
+                    'h1' => array('style' => array()),
+                    'h2' => array('style' => array()),
+                    'h3' => array('style' => array()),
+                    'h4' => array('style' => array()),
+                    'h5' => array('style' => array()),
+                    'h6' => array('style' => array()),
+                    'a' => array(
+                        'href' => array(),
+                        'target' => array(),
+                        'rel' => array(),
+                        'title' => array(),
+                        'class' => array(),
+                    ),
+                    'table' => array('style' => array(), 'class' => array(), 'border' => array()),
+                    'thead' => array(),
+                    'tbody' => array(),
+                    'tr' => array(),
+                    'th' => array('style' => array()),
+                    'td' => array('style' => array()),
+                    'hr' => array(),
+                );
+                
+                // Save terms with allowed HTML
+                update_post_meta($post_id, '_quote_terms', wp_kses($_POST['quote_terms'], $allowed_html));
+            }
+        }
+    
         // Save status if present
         if (isset($_POST['quote_status'])) {
             $status = sanitize_text_field($_POST['quote_status']);
             update_post_meta($post_id, '_quote_status', $status);
         }
-
+    
         // Save attachments if nonce is valid
         if (isset($_POST['quote_manager_nonce_attachments']) && wp_verify_nonce($_POST['quote_manager_nonce_attachments'], 'quote_manager_save_attachments')) {
             if (!empty($_POST['quote_attachments']) && is_array($_POST['quote_attachments'])) {
                 $attachments_data = array();
-
+    
                 foreach ($_POST['quote_attachments'] as $item) {
                     $attachment_id = isset($item['id']) ? sanitize_text_field($item['id']) : '';
                     $url = isset($item['url']) ? esc_url_raw($item['url']) : '';
                     $filename = isset($item['filename']) ? sanitize_text_field($item['filename']) : '';
                     $type = isset($item['type']) ? sanitize_text_field($item['type']) : '';
-
+    
                     if (empty($url) || empty($filename)) {
                         continue;
                     }
-
+    
                     $attachments_data[] = compact('id', 'url', 'filename', 'type');
                 }
-
+    
                 if (!empty($attachments_data)) {
                     update_post_meta($post_id, '_quote_attachments', $attachments_data);
                 } else {
@@ -1178,7 +1220,7 @@ class Quote_Manager_Metaboxes
                 delete_post_meta($post_id, '_quote_attachments');
             }
         }
-
+    
     }
 
     /**

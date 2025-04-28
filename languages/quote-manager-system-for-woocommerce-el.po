@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Quote Manager System For WooCommerce\n"
 "POT-Creation-Date: 2025-04-26 10:02+0300\n"
-"PO-Revision-Date: 2025-04-26 10:02+0300\n"
+"PO-Revision-Date: 2025-04-26 12:54+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ελληνικά\n"
 "Language: el\n"
@@ -297,7 +297,7 @@ msgstr "Η κατάσταση ενημερώθηκε με επιτυχία"
 #: includes/class-email-manager.php:141
 #, php-format
 msgid "Your quote from %s"
-msgstr "Η προσφορά σας από %s"
+msgstr "Η προσφορά σας από το %s"
 
 #: includes/class-email-manager.php:178 includes/class-metaboxes.php:1258
 msgid "Attachments:"
