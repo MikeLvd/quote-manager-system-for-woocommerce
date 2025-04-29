@@ -66,6 +66,28 @@ $reject_url = add_query_arg(array(
 
 // Get any messages
 $message = isset($_GET['message']) ? sanitize_text_field($_GET['message']) : '';
+
+// Check if quote is expired - display special message if it is
+if ($quote_status === Quote_Manager_System_For_Woocommerce::STATUS_EXPIRED) {
+    echo '<div class="quote-expired-container">';
+    echo '<div class="quote-expired-icon">⏱️</div>';
+    echo '<h1 class="quote-expired-title">' . esc_html__('Quote Has Expired', 'quote-manager-system-for-woocommerce') . '</h1>';
+    echo '<div class="quote-expired-message">';
+    echo '<p>' . sprintf(
+        esc_html__('Quote %s expired on %s and is no longer valid.', 'quote-manager-system-for-woocommerce'),
+        '<strong>' . esc_html($quote_number) . '</strong>',
+        '<strong>' . esc_html($expiration_date) . '</strong>'
+    ) . '</p>';
+    echo '<p>' . esc_html__('If you are interested in our products or services, please contact us for a new quote.', 'quote-manager-system-for-woocommerce') . '</p>';
+    echo '</div>';
+    echo '<div class="quote-expired-actions">';
+    echo '<a href="' . esc_url(home_url()) . '" class="quote-action-button quote-action-secondary">';
+    echo '<span class="quote-button-icon">🏠</span> ' . esc_html__('Return to Homepage', 'quote-manager-system-for-woocommerce');
+    echo '</a>';
+    echo '</div>';
+    echo '</div>';
+    return;
+}
 ?>
 
 <div class="quote-view-container">

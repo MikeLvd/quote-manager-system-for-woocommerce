@@ -440,37 +440,26 @@ class Quote_Manager_Response_Handler
         if (empty($quote_id) || empty($token)) {
             return false;
         }
-
+    
         // Get the quote
         $quote = get_post($quote_id);
         if (!$quote || $quote->post_type !== 'customer_quote') {
             return false;
         }
-
-        // Check if quote has expired
-        $expiration_date = get_post_meta($quote_id, '_quote_expiration_date', true);
-        if (!empty($expiration_date)) {
-            $expiry_timestamp = strtotime(str_replace('/', '-', $expiration_date));
-            $current_timestamp = current_time('timestamp');
-
-            if ($expiry_timestamp < $current_timestamp) {
-                // Quote has expired - update status if not already expired
-                $current_status = get_post_meta($quote_id, '_quote_status', true);
-                if ($current_status !== Quote_Manager_System_For_Woocommerce::STATUS_EXPIRED) {
-                    update_post_meta($quote_id, '_quote_status', Quote_Manager_System_For_Woocommerce::STATUS_EXPIRED);
-                }
-
-                return false;
-            }
-        }
-
+    
         // Check if the token matches
         $saved_token = get_post_meta($quote_id, '_quote_access_token', true);
         if (empty($saved_token)) {
             // Generate a new token if none exists
             $saved_token = $this->generate_quote_token($quote_id);
         }
-
+    
+        // Check if quote has expired - but still validate the token
+        $quote_status = get_post_meta($quote_id, '_quote_status', true);
+        $expiration_date = get_post_meta($quote_id, '_quote_expiration_date', true);
+        
+        // Even if the quote is expired, we still want to validate the token
+        // so users can see the expired message rather than an invalid token error
         return hash_equals($saved_token, $token);
     }
 

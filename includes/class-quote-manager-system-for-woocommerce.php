@@ -81,6 +81,9 @@ class Quote_Manager_System_For_Woocommerce
 
         // Add email tracking handler
         $this->setup_email_tracking();
+		
+        // Initialize quote expiration handler
+        $this->setup_expiration_handler();		
     }
 
     /**
@@ -103,6 +106,7 @@ class Quote_Manager_System_For_Woocommerce
         require_once QUOTE_MANAGER_PATH . 'includes/class-pdf-generator.php';
         require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
         require_once QUOTE_MANAGER_PATH . 'includes/class-settings.php';
+		require_once QUOTE_MANAGER_PATH . 'includes/class-quote-expiration-handler.php';
 
         $this->loader = new Quote_Manager_System_For_Woocommerce_Loader();
     }
@@ -218,6 +222,13 @@ class Quote_Manager_System_For_Woocommerce
         require_once QUOTE_MANAGER_PATH . 'includes/class-email-manager.php';
         $email_manager = new Quote_Manager_Email_Manager();
         add_action('init', array($email_manager, 'handle_email_open_tracking'));
+    }
+
+    /**
+     * Initialize the quote expiration handler
+     */
+    private function setup_expiration_handler() {
+        $expiration_handler = new Quote_Manager_Expiration_Handler();
     }
 
     /**

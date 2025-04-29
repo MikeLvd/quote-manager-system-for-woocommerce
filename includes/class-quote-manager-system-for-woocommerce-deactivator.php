@@ -24,6 +24,7 @@ class Quote_Manager_System_For_Woocommerce_Deactivator
     {
         // Clear any scheduled events
         wp_clear_scheduled_hook('quote_manager_scheduled_cleanup');
+		wp_clear_scheduled_hook('quote_manager_daily_expiration_check');
 
         // Remove transients
         delete_transient('quote_manager_directories_checked');

@@ -120,6 +120,9 @@ class Quote_Manager_System_For_Woocommerce_Activator
 
         // Create quote response page
         self::create_response_page();
+		
+		// Schedule events
+        self::schedule_events();
     }
 
 
@@ -180,6 +183,16 @@ class Quote_Manager_System_For_Woocommerce_Activator
     
         // Flush rewrite rules to ensure clean URLs
         flush_rewrite_rules();
+    }
+
+    /**
+     * Schedule daily event to check for expired quotes
+     */
+    public static function schedule_events() {
+        // Schedule daily quote expiration check if not already scheduled
+        if (!wp_next_scheduled('quote_manager_daily_expiration_check')) {
+            wp_schedule_event(time(), 'daily', 'quote_manager_daily_expiration_check');
+        }
     }
     
     /**

@@ -877,61 +877,29 @@ class Quote_Manager_Ajax_Handlers
         if (!current_user_can('manage_woocommerce')) {
             wp_send_json_error(['message' => __('Access denied', 'quote-manager-system-for-woocommerce')]);
         }
-
+    
         // Verify nonce
         if (!check_ajax_referer('quote_expired_check', 'security', false)) {
             wp_send_json_error(['message' => __('Security check failed', 'quote-manager-system-for-woocommerce')]);
         }
-
-        $expired_count = 0;
-
-        // Get quotes that might be expired
-        $args = array(
-            'post_type' => 'customer_quote',
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'meta_query' => array(
-                'relation' => 'AND',
-                array(
-                    'key' => '_quote_status',
-                    'value' => array(Quote_Manager_System_For_Woocommerce::STATUS_DRAFT, Quote_Manager_System_For_Woocommerce::STATUS_SENT),
-                    'compare' => 'IN'
-                ),
-                array(
-                    'key' => '_quote_expiration_date',
-                    'compare' => 'EXISTS'
-                )
-            )
-        );
-
-        $quotes = get_posts($args);
-
-        // Current date
-        $current_date = current_time('Y-m-d');
-
-        // Loop through quotes and check expiration
-        foreach ($quotes as $quote) {
-            $expiration_date = get_post_meta($quote->ID, '_quote_expiration_date', true);
-
-            if (!empty($expiration_date)) {
-                // Convert dd/mm/yyyy to yyyy-mm-dd
-                $expiration_parts = explode('/', $expiration_date);
-                if (count($expiration_parts) === 3) {
-                    $expiration_formatted = $expiration_parts[2] . '-' . $expiration_parts[1] . '-' . $expiration_parts[0];
-
-                    // Check if expired
-                    if ($expiration_formatted < $current_date) {
-                        // Update status to expired
-                        update_post_meta($quote->ID, '_quote_status', Quote_Manager_System_For_Woocommerce::STATUS_EXPIRED);
-                        $expired_count++;
-                    }
-                }
-            }
-        }
-
+    
+        // Use the expiration handler class to check for expired quotes
+        require_once QUOTE_MANAGER_PATH . 'includes/class-quote-expiration-handler.php';
+        $handler = new Quote_Manager_Expiration_Handler();
+        $expired_count = $handler->check_expired_quotes();
+    
         // Return results
         wp_send_json_success([
-            'expired_count' => $expired_count
+            'expired_count' => $expired_count,
+            'message' => sprintf(
+                _n(
+                    '%d quote has been marked as expired.',
+                    '%d quotes have been marked as expired.',
+                    $expired_count,
+                    'quote-manager-system-for-woocommerce'
+                ),
+                $expired_count
+            )
         ]);
     }
 }

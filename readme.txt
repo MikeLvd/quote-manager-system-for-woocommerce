@@ -2,7 +2,7 @@
 Plugin Name:       Quote Manager System For WooCommerce
 Plugin URI:        https://github.com/MikeLvd/quote-manager-system-for-woocommerce
 Description:       A custom WordPress plugin that allows you to create detailed product offers inside the WooCommerce backend. Ideal for retail stores, B2B sales, and client advanced quotations.
-Version:           1.9.1
+Version:           1.9.2
 Author:            Mike Lvd
 Author URI:        https://goldenbath.gr/
 Requires at least: 5.9
@@ -60,6 +60,36 @@ You can choose from Media Library or insert a remote image URL.
 3. Internal pricing analysis table
 
 == Changelog ==
+= 1.9.2 =
+New Features
+
+- Added automatic quote expiration system that runs daily to mark expired quotes
+- Added customer email notifications when quotes expire
+- Added special message for expired quotes on the public quote page
+- Added expiration status logging to track when quotes expire
+- Fixed token validation to properly handle expired quotes
+
+Improvements
+
+- Enhanced expired quote display with custom styling
+- Added professional email template for expiration notifications
+- Implemented safeguards to prevent duplicate expiration emails
+- Added proper cleanup of scheduled events on plugin deactivation
+
+Code Improvements and Optimization
+
+- Refactored admin class to use modern PHP syntax and coding standards
+- Improved script and style loading efficiency in admin interface
+- Reorganized code structure for better maintainability
+- Replaced older array() syntax with modern short [] syntax throughout the plugin
+- Fixed duplicate script loading in admin screens
+- Enhanced code organization with helper methods for determining page context
+- Optimized localization data handling with consolidated script variables
+- Fixed empty functions with proper implementation
+- Reduced code complexity and improved readability
+- Updated code to better align with WordPress and WooCommerce coding standards
+- Improved PHP 8.0+ compatibility throughout the codebase
+
 = 1.9.1 =
 Bug Fixes
 • Fixed terms not been saved during quote creation
