@@ -13,7 +13,7 @@
  * Tested up to:      6.8
  * Requires PHP:      8.0
  * WC requires at least: 9.0
- * WC tested up to:   9.8
+ * WC tested up to:   9.8.5
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       quote-manager-system-for-woocommerce
