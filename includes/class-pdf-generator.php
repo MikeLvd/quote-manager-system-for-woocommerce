@@ -330,7 +330,6 @@ class Quote_Manager_PDF_Generator
                     }
                     
                     .products-table tr:last-child td {
-                        font-size: 9pt;
                         border-bottom: none;
                     }
                     
@@ -341,12 +340,10 @@ class Quote_Manager_PDF_Generator
                     
                     .product-name-cell {
                         text-align: left;
-                        font-weight: 500;
                     }
                     
                     .discount-cell {
                         color: #b6c3c7;
-                        font-weight: bold;
                     }
                     
                     .price-original {
@@ -356,16 +353,11 @@ class Quote_Manager_PDF_Generator
                     }
                     
                     .price-final {
-                        font-weight: bold;
+                        
                         color: <?php echo $text_color; ?>;
                     }
-                    
-                    .quantity-cell {
-                        font-weight: bold;
-                    }
-                    
+
                     .total-cell {
-                        font-weight: bold;
                         color: <?php echo $secondary_color; ?>;
                     }
                     
